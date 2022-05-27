@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import './App.css';
 import {
-  Button, Card, CardActionArea, CardContent, CardMedia, Container, Drawer, Grid,
+  Button, Card, CardActionArea, CardContent, CardMedia, Container, Drawer, Grid, Typography,
 } from '@mui/material';
 import SkinThemeSet from './SkinThemeSet';
 import skinThemeSets from './skinThemeSets';
@@ -27,6 +27,21 @@ const findThemes = (champions: string[]) => {
   return answers;
 };
 
+const buttonEnabled = (champion: string, themes: string[]) => {
+  if (themes.length === 0) {
+    return true;
+  }
+  let found = false;
+  themes.forEach((theme) => {
+    skinThemeSets[theme].forEach((c) => {
+      if (c === champion) {
+        found = true;
+      }
+    });
+  });
+  return found;
+};
+
 const App = () => {
   const [champs, setChamps] = useState<string[]>([]);
   return (
@@ -40,17 +55,19 @@ const App = () => {
                   component="img"
                   image={entry[1]}
                   alt={entry[0]}
-                  onClick={() => {
-                    if (!champs.includes(entry[0])) {
-                      setChamps([...champs, entry[0]]);
-                    } else {
-                      setChamps(champs.filter((c) => c !== entry[0]));
-                    }
-                  }}
+                  // onClick={() => {
+                  //   if (!champs.includes(entry[0])) {
+                  //     setChamps([...champs, entry[0]]);
+                  //   } else {
+                  //     setChamps(champs.filter((c) => c !== entry[0]));
+                  //   }
+                  // }}
                 />
                 <CardContent>
                   <Button
+                    disabled={!buttonEnabled(entry[0], findThemes(champs))}
                     variant={champs.includes(entry[0]) ? 'contained' : 'outlined'}
+                    // variant="text"
                     onClick={() => {
                       if (!champs.includes(entry[0])) {
                         setChamps([...champs, entry[0]]);
@@ -69,10 +86,8 @@ const App = () => {
       </Grid>
       <Drawer
         sx={{
-          // width: drawerWidth,
           flexShrink: 0,
           '& .MuiDrawer-paper': {
-            // width: drawerWidth,
             boxSizing: 'border-box',
           },
         }}
@@ -80,6 +95,18 @@ const App = () => {
         anchor="left"
       >
         {findThemes(champs).map((theme) => <SkinThemeSet theme={theme} />)}
+      </Drawer>
+      <Drawer
+        sx={{
+          flexShrink: 0,
+          '& .MuiDrawer-paper': {
+            boxSizing: 'border-box',
+          },
+        }}
+        variant="permanent"
+        anchor="right"
+      >
+        {champs.map((c) => <Typography>{c}</Typography>)}
       </Drawer>
     </Container>
   );
