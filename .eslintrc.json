@@ -30,6 +30,7 @@
             "ignorePropertyModificationsFor": [
                 "state"
             ]
-        }]
+        }],
+        "linebreak-style": ["error", "windows"],
     }
 }
