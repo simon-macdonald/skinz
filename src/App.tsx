@@ -53,7 +53,7 @@ const App = () => {
   const dispatch = useAppDispatch();
 
   return (
-    <Container>
+    <Container maxWidth="xl">
       {error ? (
         <>Oh no, there was an error</>
       ) : isLoading ? (
@@ -65,7 +65,7 @@ const App = () => {
         </h3>
       ) : null}
       {`Latest Pick: ${title}`}
-      <Grid container>
+      <Grid container spacing={2} columns={16}>
         {Object.entries(squareChampionImages).map((entry) => (
           <Grid item xs={1}>
             <Card>
@@ -87,7 +87,6 @@ const App = () => {
                   && (
                     <Chip
                       label={entry[0]}
-                      variant="outlined"
                     />
                   )}
                 {(!champs.includes(entry[0]) && buttonEnabled(entry[0], findThemes(champs)))
