@@ -1,11 +1,14 @@
 import React, { useState } from 'react';
 import './App.css';
 import {
-  Button, Card, CardActionArea, CardContent, CardMedia, Container, Drawer, Grid, Typography,
+  Card, CardActions, CardMedia, Chip, Container, Drawer, Grid, Typography,
 } from '@mui/material';
 import SkinThemeSet from './SkinThemeSet';
 import skinThemeSets from './skinThemeSets';
 import squareChampionImages from './squareChampionImages';
+import { useGetChampionByIdQuery } from './champions/champions';
+import { useAppDispatch, useAppSelector } from './hooks';
+import { selectTitle, setTitle } from './champions/championSlice';
 
 const findThemes = (champions: string[]) => {
   if (champions.length === 0) {
@@ -44,42 +47,62 @@ const buttonEnabled = (champion: string, themes: string[]) => {
 
 const App = () => {
   const [champs, setChamps] = useState<string[]>([]);
+  const { data, error, isLoading } = useGetChampionByIdQuery(1);
+
+  const title = useAppSelector(selectTitle);
+  const dispatch = useAppDispatch();
+
   return (
     <Container>
+      {error ? (
+        <>Oh no, there was an error</>
+      ) : isLoading ? (
+        <>Loading...</>
+      ) : data ? (
+        <h3>
+          Query:
+          {data.name}
+        </h3>
+      ) : null}
+      {`Latest Pick: ${title}`}
       <Grid container>
         {Object.entries(squareChampionImages).map((entry) => (
           <Grid item xs={1}>
             <Card>
-              <CardActionArea>
-                <CardMedia
-                  component="img"
-                  image={entry[1]}
-                  alt={entry[0]}
-                  // onClick={() => {
-                  //   if (!champs.includes(entry[0])) {
-                  //     setChamps([...champs, entry[0]]);
-                  //   } else {
-                  //     setChamps(champs.filter((c) => c !== entry[0]));
-                  //   }
-                  // }}
-                />
-                <CardContent>
-                  <Button
-                    disabled={!buttonEnabled(entry[0], findThemes(champs))}
-                    variant={champs.includes(entry[0]) ? 'contained' : 'outlined'}
-                    // variant="text"
-                    onClick={() => {
-                      if (!champs.includes(entry[0])) {
+              <CardMedia
+                component="img"
+                image={entry[1]}
+                alt={entry[0]}
+              />
+              <CardActions>
+                {champs.includes(entry[0])
+                  && (
+                  <Chip
+                    label={entry[0]}
+                    color="primary"
+                    onDelete={() => setChamps(champs.filter((c) => c !== entry[0]))}
+                  />
+                  )}
+                {(!champs.includes(entry[0]) && !buttonEnabled(entry[0], findThemes(champs)))
+                  && (
+                    <Chip
+                      label={entry[0]}
+                      variant="outlined"
+                    />
+                  )}
+                {(!champs.includes(entry[0]) && buttonEnabled(entry[0], findThemes(champs)))
+                  && (
+                    <Chip
+                      label={entry[0]}
+                      color="primary"
+                      variant="outlined"
+                      onClick={() => {
                         setChamps([...champs, entry[0]]);
-                      } else {
-                        setChamps(champs.filter((c) => c !== entry[0]));
-                      }
-                    }}
-                  >
-                    {entry[0]}
-                  </Button>
-                </CardContent>
-              </CardActionArea>
+                        dispatch(setTitle(entry[0]));
+                      }}
+                    />
+                  )}
+              </CardActions>
             </Card>
           </Grid>
         ))}
