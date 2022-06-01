@@ -6,7 +6,7 @@ const squareChampionImages = {
   Alistar: 'https://static.wikia.nocookie.net/lolesports_gamepedia_en/images/3/34/AlistarSquare.png',
   Amumu: 'https://static.wikia.nocookie.net/lolesports_gamepedia_en/images/2/26/AmumuSquare.png',
   Anivia: 'https://static.wikia.nocookie.net/lolesports_gamepedia_en/images/0/01/AniviaSquare.png',
-  Annie: 'https://static.wikia.nocookie.net/lolesports_gamepedia_en/images/6/6f/AnnieSquare.png',
+  Annie: 'https://raw.communitydragon.org/latest/plugins/rcp-be-lol-game-data/global/default/v1/champion-tiles/1/1000.jpg',
   Aphelios: 'https://static.wikia.nocookie.net/lolesports_gamepedia_en/images/1/13/ApheliosSquare.png',
   Ashe: 'https://static.wikia.nocookie.net/lolesports_gamepedia_en/images/4/4a/AsheSquare.png',
   'Aurelion Sol': 'https://static.wikia.nocookie.net/lolesports_gamepedia_en/images/c/c3/Aurelion_SolSquare.png',
