@@ -65,17 +65,21 @@ const App = () => {
         </h3>
       ) : null}
       {`Latest Pick: ${title}`}
-      <Grid container spacing={2} columns={16}>
-        {Object.entries(squareChampionImages).map((entry) => (
-          <Grid item xs={1}>
-            <Card>
-              <CardMedia
-                component="img"
-                image={entry[1]}
-                alt={entry[0]}
-              />
-              <CardActions>
-                {champs.includes(entry[0])
+      <Grid container spacing={2} columns={60}>
+        {Object
+          .entries(squareChampionImages)
+          .filter((entry) => champs.includes(entry[0])
+          || (!champs.includes(entry[0]) && buttonEnabled(entry[0], findThemes(champs))))
+          .map((entry) => (
+            <Grid item xs={15} sm={10} md={6} lg={5} xl={4}>
+              <Card>
+                <CardMedia
+                  component="img"
+                  image={entry[1]}
+                  alt={entry[0]}
+                />
+                <CardActions>
+                  {champs.includes(entry[0])
                   && (
                   <Chip
                     label={entry[0]}
@@ -83,13 +87,7 @@ const App = () => {
                     onDelete={() => setChamps(champs.filter((c) => c !== entry[0]))}
                   />
                   )}
-                {(!champs.includes(entry[0]) && !buttonEnabled(entry[0], findThemes(champs)))
-                  && (
-                    <Chip
-                      label={entry[0]}
-                    />
-                  )}
-                {(!champs.includes(entry[0]) && buttonEnabled(entry[0], findThemes(champs)))
+                  {(!champs.includes(entry[0]) && buttonEnabled(entry[0], findThemes(champs)))
                   && (
                     <Chip
                       label={entry[0]}
@@ -101,10 +99,10 @@ const App = () => {
                       }}
                     />
                   )}
-              </CardActions>
-            </Card>
-          </Grid>
-        ))}
+                </CardActions>
+              </Card>
+            </Grid>
+          ))}
       </Grid>
       <Drawer
         sx={{
