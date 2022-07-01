@@ -4,40 +4,62 @@ import {
   Card, CardActions, CardMedia, Chip, Container, Drawer, Grid, Typography,
 } from '@mui/material';
 import SkinThemeSet from './SkinThemeSet';
-import skinThemeSets from './skinThemeSets';
-import squareChampionImages from './squareChampionImages';
-import { useGetChampionByIdQuery } from './champions/champions';
+import {
+  useGetChampionSummaryQuery,
+  useGetSkinLinesQuery,
+  useGetSkinsQuery,
+} from './champions/champions';
 import { useAppDispatch, useAppSelector } from './hooks';
 import { selectTitle, setTitle } from './champions/championSlice';
 
-const findThemes = (champions: string[]) => {
-  if (champions.length === 0) {
+function findThemes(champions: string[], skinLines: any, skins: any, championsHook: any) {
+  if (champions.length === 0
+    || skinLines.error
+    || skinLines.isLoading
+    || !skinLines.data
+    || skins.error
+    || skins.isLoading
+    || !skins.data
+    || championsHook.error
+    || championsHook.isLoading
+    || !championsHook.data) {
     return [];
   }
-  const answers: string[] = [];
-  Object.keys(skinThemeSets).forEach((k) => {
-    const champs = skinThemeSets[k];
+
+  const answers1: string[] = [];
+  skinLines.data.ids.forEach((k: number) => {
+    const champs = skinLines.data.entities[k].champions
+      .map((id: string) => championsHook.data.entities[id].name);
     let allIn = true;
     champions.forEach((c) => {
-      if (!champs.includes(c)) {
+      if (!champs || !champs.includes(c)) {
         allIn = false;
       }
     });
     if (allIn) {
-      answers.push(k);
+      answers1.push(skinLines.data.entities[k].id);
     }
   });
-  return answers;
-};
+  return answers1;
+}
 
-const buttonEnabled = (champion: string, themes: string[]) => {
+const buttonEnabled = (champion: string, themes: string[], skinLines: any, championsHook: any) => {
+  if (skinLines.error
+    || skinLines.isLoading
+    || !skinLines.data
+    || championsHook.error
+    || championsHook.isLoading
+    || !championsHook.data) {
+    return true;
+  }
+
   if (themes.length === 0) {
     return true;
   }
   let found = false;
   themes.forEach((theme) => {
-    skinThemeSets[theme].forEach((c) => {
-      if (c === champion) {
+    skinLines.data.entities[theme].champions.forEach((c: number) => {
+      if (champion === championsHook.data.entities[c].name) {
         found = true;
       }
     });
@@ -47,62 +69,81 @@ const buttonEnabled = (champion: string, themes: string[]) => {
 
 const App = () => {
   const [champs, setChamps] = useState<string[]>([]);
-  const { data, error, isLoading } = useGetChampionByIdQuery(1);
+  // const [id, setId] = useState<number>(1);
+  // const { data, error, isLoading } = useGetChampionByIdQuery(id);
+
+  const skins = useGetSkinsQuery('');
+  const skinLines = useGetSkinLinesQuery('', { skip: !skins.isSuccess });
+
+  const champions = useGetChampionSummaryQuery('');
+  const championSummaryData = champions.data;
+  const championSummaryError = champions.error;
+  const championSummaryIsLoading = champions.isLoading;
 
   const title = useAppSelector(selectTitle);
   const dispatch = useAppDispatch();
 
   return (
     <Container maxWidth="xl">
-      {error ? (
-        <>Oh no, there was an error</>
-      ) : isLoading ? (
-        <>Loading...</>
-      ) : data ? (
-        <h3>
-          Query:
-          {data.name}
-        </h3>
-      ) : null}
       {`Latest Pick: ${title}`}
       <Grid container spacing={2} columns={60}>
-        {Object
-          .entries(squareChampionImages)
-          .filter((entry) => champs.includes(entry[0])
-          || (!champs.includes(entry[0]) && buttonEnabled(entry[0], findThemes(champs))))
-          .map((entry) => (
-            <Grid item xs={15} sm={10} md={6} lg={5} xl={4}>
-              <Card>
-                <CardMedia
-                  component="img"
-                  image={entry[1]}
-                  alt={entry[0]}
-                />
-                <CardActions>
-                  {champs.includes(entry[0])
+        {championSummaryError ? (
+          <>Oh no, there was an error</>
+        ) : championSummaryIsLoading ? (
+          <>Loading...</>
+        ) : championSummaryData ? (
+          championSummaryData.ids
+            .filter((id) => id > 0)
+            .filter((id) => champs.includes(championSummaryData.entities[id]!.name)
+              || (!champs.includes(championSummaryData.entities[id]!.name)
+                && buttonEnabled(
+                  championSummaryData.entities[id]!.name,
+                  findThemes(champs, skinLines, skins, champions),
+                  skinLines,
+                  champions,
+                )))
+            .map((id) => (
+              <Grid item xs={15} sm={10} md={6} lg={5} xl={4}>
+                <Card>
+                  <CardMedia
+                    component="img"
+                    image={`https://raw.communitydragon.org/latest/plugins/rcp-be-lol-game-data/global/default/${championSummaryData.entities[id]!.squarePortraitPath.replace('/lol-game-data/assets/', '')}`}
+                    alt={championSummaryData.entities[id]!.name}
+                  />
+                  <CardActions>
+                    {champs.includes(championSummaryData.entities[id]!.name)
                   && (
                   <Chip
-                    label={entry[0]}
+                    label={championSummaryData.entities[id]!.name}
                     color="primary"
-                    onDelete={() => setChamps(champs.filter((c) => c !== entry[0]))}
+                    onDelete={() => setChamps(
+                      champs.filter((c) => c !== championSummaryData.entities[id]!.name),
+                    )}
                   />
                   )}
-                  {(!champs.includes(entry[0]) && buttonEnabled(entry[0], findThemes(champs)))
+                    {(!champs.includes(championSummaryData.entities[id]!.name)
+                      && buttonEnabled(
+                        championSummaryData.entities[id]!.name,
+                        findThemes(champs, skinLines, skins, champions),
+                        skinLines,
+                        champions,
+                      ))
                   && (
                     <Chip
-                      label={entry[0]}
+                      label={championSummaryData.entities[id]!.name}
                       color="primary"
                       variant="outlined"
                       onClick={() => {
-                        setChamps([...champs, entry[0]]);
-                        dispatch(setTitle(entry[0]));
+                        setChamps([...champs, championSummaryData.entities[id]!.name]);
+                        dispatch(setTitle(championSummaryData.entities[id]!.name));
+                        // setId(2);
                       }}
                     />
                   )}
-                </CardActions>
-              </Card>
-            </Grid>
-          ))}
+                  </CardActions>
+                </Card>
+              </Grid>
+            ))) : null}
       </Grid>
       <Drawer
         sx={{
@@ -114,7 +155,8 @@ const App = () => {
         variant="permanent"
         anchor="left"
       >
-        {findThemes(champs).map((theme) => <SkinThemeSet theme={theme} />)}
+        {findThemes(champs, skinLines, skins, champions)
+          .map((theme) => <SkinThemeSet theme={theme} />)}
       </Drawer>
       <Drawer
         sx={{
