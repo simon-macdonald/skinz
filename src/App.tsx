@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React from 'react';
 import './App.css';
 import {
   Card, CardActions, CardMedia, Chip, Container, Drawer, Grid, Typography,
@@ -10,9 +10,10 @@ import {
   useGetSkinsQuery,
 } from './champions/champions';
 import { useAppDispatch, useAppSelector } from './hooks';
-import { selectTitle, setTitle } from './champions/championSlice';
+import { selectTitle } from './champions/championSlice';
+import { clickChampion, selectChosenChampions } from './champions/chosenChampionsSlice';
 
-function findThemes(champions: string[], skinLines: any, skins: any, championsHook: any) {
+function findThemes(champions: number[], skinLines: any, skins: any, championsHook: any) {
   if (champions.length === 0
     || skinLines.error
     || skinLines.isLoading
@@ -28,8 +29,7 @@ function findThemes(champions: string[], skinLines: any, skins: any, championsHo
 
   const answers1: string[] = [];
   skinLines.data.ids.forEach((k: number) => {
-    const champs = skinLines.data.entities[k].champions
-      .map((id: string) => championsHook.data.entities[id].name);
+    const champs = skinLines.data.entities[k].champions;
     let allIn = true;
     champions.forEach((c) => {
       if (!champs || !champs.includes(c)) {
@@ -43,7 +43,12 @@ function findThemes(champions: string[], skinLines: any, skins: any, championsHo
   return answers1;
 }
 
-const buttonEnabled = (champion: string, themes: string[], skinLines: any, championsHook: any) => {
+const buttonEnabled = (
+  championId: number,
+  themes: string[],
+  skinLines: any,
+  championsHook: any,
+) => {
   if (skinLines.error
     || skinLines.isLoading
     || !skinLines.data
@@ -59,7 +64,7 @@ const buttonEnabled = (champion: string, themes: string[], skinLines: any, champ
   let found = false;
   themes.forEach((theme) => {
     skinLines.data.entities[theme].champions.forEach((c: number) => {
-      if (champion === championsHook.data.entities[c].name) {
+      if (championId === c) {
         found = true;
       }
     });
@@ -68,10 +73,6 @@ const buttonEnabled = (champion: string, themes: string[], skinLines: any, champ
 };
 
 const App = () => {
-  const [champs, setChamps] = useState<string[]>([]);
-  // const [id, setId] = useState<number>(1);
-  // const { data, error, isLoading } = useGetChampionByIdQuery(id);
-
   const skins = useGetSkinsQuery('');
   const skinLines = useGetSkinLinesQuery('', { skip: !skins.isSuccess });
 
@@ -81,10 +82,11 @@ const App = () => {
   const championSummaryIsLoading = champions.isLoading;
 
   const title = useAppSelector(selectTitle);
+  const champs = useAppSelector(selectChosenChampions);
   const dispatch = useAppDispatch();
 
   return (
-    <Container maxWidth="xl">
+    <Container>
       {`Latest Pick: ${title}`}
       <Grid container spacing={2} columns={60}>
         {championSummaryError ? (
@@ -94,14 +96,13 @@ const App = () => {
         ) : championSummaryData ? (
           championSummaryData.ids
             .filter((id) => id > 0)
-            .filter((id) => champs.includes(championSummaryData.entities[id]!.name)
-              || (!champs.includes(championSummaryData.entities[id]!.name)
-                && buttonEnabled(
-                  championSummaryData.entities[id]!.name,
-                  findThemes(champs, skinLines, skins, champions),
-                  skinLines,
-                  champions,
-                )))
+            .filter((id) => champs.champions.includes(id as number)
+              || buttonEnabled(
+                id as number,
+                findThemes(champs.champions, skinLines, skins, champions),
+                skinLines,
+                champions,
+              ))
             .map((id) => (
               <Grid item xs={15} sm={10} md={6} lg={5} xl={4}>
                 <Card>
@@ -111,20 +112,20 @@ const App = () => {
                     alt={championSummaryData.entities[id]!.name}
                   />
                   <CardActions>
-                    {champs.includes(championSummaryData.entities[id]!.name)
+                    {champs.champions.includes(id as number)
                   && (
                   <Chip
                     label={championSummaryData.entities[id]!.name}
                     color="primary"
-                    onDelete={() => setChamps(
-                      champs.filter((c) => c !== championSummaryData.entities[id]!.name),
-                    )}
+                    onDelete={() => {
+                      dispatch(clickChampion(id as number));
+                    }}
                   />
                   )}
-                    {(!champs.includes(championSummaryData.entities[id]!.name)
+                    {(!champs.champions.includes(id as number)
                       && buttonEnabled(
-                        championSummaryData.entities[id]!.name,
-                        findThemes(champs, skinLines, skins, champions),
+                        id as number,
+                        findThemes(champs.champions, skinLines, skins, champions),
                         skinLines,
                         champions,
                       ))
@@ -134,9 +135,7 @@ const App = () => {
                       color="primary"
                       variant="outlined"
                       onClick={() => {
-                        setChamps([...champs, championSummaryData.entities[id]!.name]);
-                        dispatch(setTitle(championSummaryData.entities[id]!.name));
-                        // setId(2);
+                        dispatch(clickChampion(id as number));
                       }}
                     />
                   )}
@@ -155,7 +154,7 @@ const App = () => {
         variant="permanent"
         anchor="left"
       >
-        {findThemes(champs, skinLines, skins, champions)
+        {findThemes(champs.champions, skinLines, skins, champions)
           .map((theme) => <SkinThemeSet theme={theme} />)}
       </Drawer>
       <Drawer
@@ -168,7 +167,7 @@ const App = () => {
         variant="permanent"
         anchor="right"
       >
-        {champs.map((c) => <Typography>{c}</Typography>)}
+        {champs.champions.map((c) => <Typography>{c}</Typography>)}
       </Drawer>
     </Container>
   );
