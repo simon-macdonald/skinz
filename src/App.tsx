@@ -112,33 +112,14 @@ const App = () => {
                     alt={championSummaryData.entities[id]!.name}
                   />
                   <CardActions>
-                    {champs.champions.includes(id as number)
-                  && (
-                  <Chip
-                    label={championSummaryData.entities[id]!.name}
-                    color="primary"
-                    onDelete={() => {
-                      dispatch(clickChampion(id as number));
-                    }}
-                  />
-                  )}
-                    {(!champs.champions.includes(id as number)
-                      && buttonEnabled(
-                        id as number,
-                        findThemes(champs.champions, skinLines, skins, champions),
-                        skinLines,
-                        champions,
-                      ))
-                  && (
                     <Chip
                       label={championSummaryData.entities[id]!.name}
                       color="primary"
-                      variant="outlined"
+                      variant={champs.champions.includes(id as number) ? 'filled' : 'outlined'}
                       onClick={() => {
                         dispatch(clickChampion(id as number));
                       }}
                     />
-                  )}
                   </CardActions>
                 </Card>
               </Grid>
