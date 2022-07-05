@@ -17,6 +17,7 @@ export interface SkinLineItem {
   id: number,
   name: string,
   champions: number[],
+  skins: number[],
 }
 const skinLineItemAdapter = createEntityAdapter<SkinLineItem>({
   sortComparer: (a, b) => a.name.localeCompare(b.name),
@@ -25,6 +26,7 @@ const skinLineItemAdapter = createEntityAdapter<SkinLineItem>({
 export interface SkinItem {
   id: number,
   name: string,
+  tilePath: string,
   skinLines: {
     id: number;
   }[];
@@ -61,13 +63,16 @@ export const championApi = createApi({
         const otherwise = skinLines.data as SkinLineItem[];
         otherwise.forEach((element) => {
           element.champions = []; // eslint-disable-line no-param-reassign
+          element.skins = []; // eslint-disable-line no-param-reassign
         });
         const skins = await fetchWithBQ('skins.json');
         Object.values(skins.data as SkinItem[]).forEach((entry) => {
           if (entry.skinLines) {
-            entry.skinLines.forEach(
-              (skinLine) => otherwise[skinLine.id].champions.push(Math.floor(entry.id / 1000)),
-            );
+            entry.skinLines.forEach((skinLine) => {
+              const championId = Math.floor(entry.id / 1000);
+              otherwise[skinLine.id].champions.push(championId);
+              otherwise[skinLine.id].skins.push(entry.id);
+            });
           }
         });
         const result = skinLineItemAdapter.addMany(

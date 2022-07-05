@@ -1,26 +1,33 @@
-import { Popover, Typography } from '@mui/material';
+import {
+  Popover, Typography,
+} from '@mui/material';
 import React from 'react';
 import { championApi } from './champions/champions';
-import { useAppSelector } from './hooks';
+import { hoverAway, hoverOver } from './champions/skinLineHoverSlice';
+import { useAppDispatch, useAppSelector } from './hooks';
 
-const SkinThemeSet = (props: { theme: string }) => {
-  const champions = useAppSelector(championApi.endpoints.getChampionSummary.select(''));
+const SkinThemeSet = (props: { theme: number }) => {
+  const { theme } = props;
+
+  // const champions = useAppSelector(championApi.endpoints.getChampionSummary.select(''));
   const skins = useAppSelector(championApi.endpoints.getSkins.select(''));
   const skinLines = useAppSelector(championApi.endpoints.getSkinLines.select(''));
+
+  const dispatch = useAppDispatch();
 
   const [anchorEl, setAnchorEl] = React.useState<HTMLElement | null>(null);
 
   const handlePopoverOpen = (event: React.MouseEvent<HTMLElement>) => {
     setAnchorEl(event.currentTarget);
+    dispatch(hoverOver(theme));
   };
 
   const handlePopoverClose = () => {
     setAnchorEl(null);
+    dispatch(hoverAway());
   };
 
   const open = Boolean(anchorEl);
-
-  const { theme } = props;
 
   return (
     <>
@@ -50,7 +57,7 @@ const SkinThemeSet = (props: { theme: string }) => {
         onClose={handlePopoverClose}
         disableRestoreFocus
       >
-        <Typography sx={{ p: 1 }}>{skinLines.data?.entities[theme]?.champions.map((champion) => champions.data?.entities[champion]?.name).join(' ')}</Typography>
+        {skinLines.data?.entities[theme]?.skins.map((skin) => skins.data?.entities[skin]?.name).map((skinName) => <Typography sx={{ p: 1 }}>{skinName}</Typography>)}
       </Popover>
     </>
   );

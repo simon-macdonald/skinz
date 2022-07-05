@@ -12,13 +12,14 @@ import {
 import { useAppDispatch, useAppSelector } from './hooks';
 import { selectTitle } from './champions/championSlice';
 import { clickChampion, selectChosenChampions } from './champions/chosenChampionsSlice';
+import { selectSkinLineHover } from './champions/skinLineHoverSlice';
 
-function findThemes(champions: number[], skinLines: any, skins: any, championsHook: any) {
+function findThemes(champions: number[], skinLines: any) {
   if (champions.length === 0) {
     return [];
   }
 
-  const answers1: string[] = [];
+  const answers1: number[] = [];
   skinLines.data.ids.forEach((k: number) => {
     const champs = skinLines.data.entities[k].champions;
     let allIn = true;
@@ -36,7 +37,7 @@ function findThemes(champions: number[], skinLines: any, skins: any, championsHo
 
 const buttonEnabled = (
   championId: number,
-  themes: string[],
+  themes: number[],
   skinLines: any,
 ) => {
   if (themes.length === 0) {
@@ -59,6 +60,7 @@ const App = () => {
   const skinLines = useGetSkinLinesQuery('', { skip: !skins.isSuccess });
 
   const title = useAppSelector(selectTitle);
+  const skinLineHover = useAppSelector(selectSkinLineHover);
   const champs = useAppSelector(selectChosenChampions);
   const dispatch = useAppDispatch();
 
@@ -82,7 +84,7 @@ const App = () => {
           .filter((id) => champs.champions.includes(id as number)
               || buttonEnabled(
                 id as number,
-                findThemes(champs.champions, skinLines, skins, champions),
+                findThemes(champs.champions, skinLines),
                 skinLines,
               ))
           .map((id) => (
@@ -90,14 +92,18 @@ const App = () => {
               <Card>
                 <CardMedia
                   component="img"
-                  image={`https://raw.communitydragon.org/latest/plugins/rcp-be-lol-game-data/global/default/${champions.data.entities[id]!.squarePortraitPath.replace('/lol-game-data/assets/', '')}`}
+                  image={
+                    skinLineHover === 0 ? `https://raw.communitydragon.org/latest/plugins/rcp-be-lol-game-data/global/default/${champions.data.entities[id]!.squarePortraitPath.replace('/lol-game-data/assets/', '')}`
+                      : skinLines.data.entities[skinLineHover]?.champions.includes(id as number) ? `https://raw.communitydragon.org/latest/plugins/rcp-be-lol-game-data/global/default/${skins.data!.entities[skinLines.data!.entities[skinLineHover]!.skins[skinLines.data!.entities[skinLineHover]!.champions.indexOf(id as number)]]!.tilePath.replace('/lol-game-data/assets/', '')}`
+                        : `https://raw.communitydragon.org/latest/plugins/rcp-be-lol-game-data/global/default/${champions.data.entities[id]!.squarePortraitPath.replace('/lol-game-data/assets/', '')}`
+                }
                   alt={champions.data.entities[id]!.name}
                 />
                 <CardActions>
                   <Chip
                     label={champions.data.entities[id]!.name}
-                    color="primary"
-                    variant={champs.champions.includes(id as number) ? 'filled' : 'outlined'}
+                    color={skinLines.data.entities[skinLineHover]?.champions.includes(id as number) ? 'secondary' : 'primary'}
+                    variant={champs.champions.includes(id as number) || skinLines.data.entities[skinLineHover]?.champions.includes(id as number) ? 'filled' : 'outlined'}
                     onClick={() => {
                       dispatch(clickChampion(id as number));
                     }}
@@ -107,7 +113,7 @@ const App = () => {
             </Grid>
           ))}
       </Grid>
-      skinz.lol isn't endorsed by Riot Games and doesn't reflect the views or opinions of Riot Games or anyone officially involved in producing or managing Riot Games properties. Riot Games, and all associated properties are trademarks or registered trademarks of Riot Games, Inc.
+      skinz.lol isn&apos;t endorsed by Riot Games and doesn&apos;t reflect the views or opinions of Riot Games or anyone officially involved in producing or managing Riot Games properties. Riot Games, and all associated properties are trademarks or registered trademarks of Riot Games, Inc.
       {false && `Latest Pick: ${title}`}
       <Drawer
         sx={{
@@ -119,7 +125,7 @@ const App = () => {
         variant="permanent"
         anchor="left"
       >
-        {findThemes(champs.champions, skinLines, skins, champions).map((theme) => <SkinThemeSet theme={theme} />)}
+        {findThemes(champs.champions, skinLines).map((theme) => <SkinThemeSet theme={theme} />)}
       </Drawer>
       <Drawer
         sx={{
