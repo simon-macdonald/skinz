@@ -87,7 +87,6 @@ const App = () => {
 
   return (
     <Container>
-      {`Latest Pick: ${title}`}
       <Grid container spacing={2} columns={60}>
         {championSummaryError ? (
           <>Oh no, there was an error</>
@@ -125,6 +124,8 @@ const App = () => {
               </Grid>
             ))) : null}
       </Grid>
+      {"skinz.lol isn't endorsed by Riot Games and doesn't reflect the views or opinions of Riot Games or anyone officially involved in producing or managing Riot Games properties. Riot Games, and all associated properties are trademarks or registered trademarks of Riot Games, Inc."}
+      {false && `Latest Pick: ${title}`}
       <Drawer
         sx={{
           flexShrink: 0,
