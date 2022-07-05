@@ -136,8 +136,7 @@ const App = () => {
         variant="permanent"
         anchor="left"
       >
-        {findThemes(champs.champions, skinLines, skins, champions)
-          .map((theme) => <SkinThemeSet theme={theme} />)}
+        {findThemes(champs.champions, skinLines, skins, champions).map((theme) => <SkinThemeSet theme={theme} />)}
       </Drawer>
       <Drawer
         sx={{

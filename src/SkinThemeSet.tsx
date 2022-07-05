@@ -1,23 +1,12 @@
 import { Popover, Typography } from '@mui/material';
 import React from 'react';
-import { useGetChampionSummaryQuery, useGetSkinLinesQuery, useGetSkinsQuery } from './champions/champions';
+import { championApi } from './champions/champions';
+import { useAppSelector } from './hooks';
 
 const SkinThemeSet = (props: { theme: string }) => {
-  const champions = useGetChampionSummaryQuery('');
-  const skins = useGetSkinsQuery('');
-  const skinLines = useGetSkinLinesQuery('', { skip: !skins.isSuccess });
-
-  if (skinLines.error
-    || skinLines.isLoading
-    || !skinLines.data
-    || skins.error
-    || skins.isLoading
-    || !skins.data
-    || champions.error
-    || champions.isLoading
-    || !champions.data) {
-    return (null);
-  }
+  const champions = useAppSelector(championApi.endpoints.getChampionSummary.select(''));
+  const skins = useAppSelector(championApi.endpoints.getSkins.select(''));
+  const skinLines = useAppSelector(championApi.endpoints.getSkinLines.select(''));
 
   const [anchorEl, setAnchorEl] = React.useState<HTMLElement | null>(null);
 
@@ -41,7 +30,7 @@ const SkinThemeSet = (props: { theme: string }) => {
         onMouseEnter={handlePopoverOpen}
         onMouseLeave={handlePopoverClose}
       >
-        {skinLines.data.entities[theme]!.name}
+        {skinLines.data?.entities[theme]!.name}
       </Typography>
       <Popover
         id="mouse-over-popover"
@@ -61,7 +50,7 @@ const SkinThemeSet = (props: { theme: string }) => {
         onClose={handlePopoverClose}
         disableRestoreFocus
       >
-        <Typography sx={{ p: 1 }}>{skinLines.data.entities[theme]!.champions.map((champion) => champions.data.entities[champion]!.name).join(' ')}</Typography>
+        <Typography sx={{ p: 1 }}>{skinLines.data?.entities[theme]?.champions.map((champion) => champions.data?.entities[champion]?.name).join(' ')}</Typography>
       </Popover>
     </>
   );
