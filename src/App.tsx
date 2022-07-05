@@ -148,7 +148,11 @@ const App = () => {
         variant="permanent"
         anchor="right"
       >
-        {champs.champions.map((c) => <Typography>{c}</Typography>)}
+        {champs.champions.map((c) => (
+          <Typography>
+            {championSummaryData?.entities[c]?.name}
+          </Typography>
+        ))}
       </Drawer>
     </Container>
   );
