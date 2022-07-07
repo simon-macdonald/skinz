@@ -1,7 +1,8 @@
 import React from 'react';
 import './App.css';
 import {
-  Card, CardActions, CardMedia, Chip, Container, Drawer, Grid, Typography,
+  Box,
+  Card, CardActionArea, CardContent, CardMedia, Container, Divider, Drawer, Grid, Typography,
 } from '@mui/material';
 import SkinThemeSet from './SkinThemeSet';
 import {
@@ -14,9 +15,9 @@ import { selectTitle } from './champions/championSlice';
 import { clickChampion, selectChosenChampions } from './champions/chosenChampionsSlice';
 import { selectSkinLineHover } from './champions/skinLineHoverSlice';
 
-function findThemes(champions: number[], skinLines: any) {
+function findThemes(champions: number[], skinLines: any): number[] {
   if (champions.length === 0) {
-    return [];
+    return skinLines.data.ids;
   }
 
   const answers1: number[] = [];
@@ -88,27 +89,33 @@ const App = () => {
                 skinLines,
               ))
           .map((id) => (
-            <Grid item xs={15} sm={10} md={6} lg={5} xl={4}>
+            <Grid item xs={30} sm={20} md={12} lg={10} xl={6}>
               <Card>
-                <CardMedia
-                  component="img"
-                  image={
+                <CardActionArea onClick={() => { dispatch(clickChampion(id as number)); }}>
+                  <CardMedia
+                    component="img"
+                    image={
                     skinLineHover === 0 ? `https://raw.communitydragon.org/latest/plugins/rcp-be-lol-game-data/global/default/${champions.data.entities[id]!.squarePortraitPath.replace('/lol-game-data/assets/', '')}`
                       : skinLines.data.entities[skinLineHover]?.champions.includes(id as number) ? `https://raw.communitydragon.org/latest/plugins/rcp-be-lol-game-data/global/default/${skins.data!.entities[skinLines.data!.entities[skinLineHover]!.skins[skinLines.data!.entities[skinLineHover]!.champions.indexOf(id as number)]]!.tilePath.replace('/lol-game-data/assets/', '')}`
                         : `https://raw.communitydragon.org/latest/plugins/rcp-be-lol-game-data/global/default/${champions.data.entities[id]!.squarePortraitPath.replace('/lol-game-data/assets/', '')}`
                 }
-                  alt={champions.data.entities[id]!.name}
-                />
-                <CardActions>
-                  <Chip
-                    label={champions.data.entities[id]!.name}
-                    color={skinLines.data.entities[skinLineHover]?.champions.includes(id as number) ? 'secondary' : 'primary'}
-                    variant={champs.champions.includes(id as number) || skinLines.data.entities[skinLineHover]?.champions.includes(id as number) ? 'filled' : 'outlined'}
-                    onClick={() => {
-                      dispatch(clickChampion(id as number));
-                    }}
+                    alt={champions.data.entities[id]!.name}
                   />
-                </CardActions>
+                  <CardContent sx={{
+                    bgcolor: skinLines.data.entities[skinLineHover]?.champions.includes(id as number) ? 'secondary.light' : champs.champions.includes(id as number) || skinLines.data.entities[skinLineHover]?.champions.includes(id as number) ? 'primary.light' : 'transparent',
+                  }}
+                  >
+                    <Typography component="div" noWrap align="center">
+                      <Box sx={{
+                        fontWeight: 'bold',
+                        textTransform: 'capitalize',
+                      }}
+                      >
+                        {champions.data.entities[id]!.name}
+                      </Box>
+                    </Typography>
+                  </CardContent>
+                </CardActionArea>
               </Card>
             </Grid>
           ))}
@@ -125,6 +132,10 @@ const App = () => {
         variant="permanent"
         anchor="left"
       >
+        <Typography variant="h4">
+          Skin Lines
+        </Typography>
+        <Divider />
         {findThemes(champs.champions, skinLines).map((theme) => <SkinThemeSet theme={theme} />)}
       </Drawer>
       <Drawer
