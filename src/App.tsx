@@ -2,7 +2,7 @@ import React from 'react';
 import './App.css';
 import {
   Box,
-  Card, CardActionArea, CardContent, CardMedia, Container, Divider, Drawer, Grid, Typography,
+  Card, CardActionArea, CardContent, CardMedia, Container, createTheme, Divider, Drawer, GlobalStyles, Grid, ThemeProvider, Typography, useMediaQuery,
 } from '@mui/material';
 import SkinThemeSet from './SkinThemeSet';
 import {
@@ -59,6 +59,7 @@ const App = () => {
   const champions = useGetChampionSummaryQuery('');
   const skins = useGetSkinsQuery('');
   const skinLines = useGetSkinLinesQuery('', { skip: !skins.isSuccess });
+  const prefersDarkMode = useMediaQuery('(prefers-color-scheme: dark)');
 
   const title = useAppSelector(selectTitle);
   const skinLineHover = useAppSelector(selectSkinLineHover);
@@ -77,84 +78,99 @@ const App = () => {
     return <Typography>Loading</Typography>;
   }
 
+  const theme = createTheme({
+    palette: {
+      mode: prefersDarkMode ? 'dark' : 'light',
+    },
+  });
+
   return (
-    <Container>
-      <Grid container spacing={2} columns={60}>
-        {champions.data.ids
-          .filter((id) => id > 0)
-          .filter((id) => champs.champions.includes(id as number)
+    <ThemeProvider theme={theme}>
+      <Container>
+        {prefersDarkMode && (
+        <GlobalStyles
+          styles={{
+            body: { backgroundColor: '#121212' },
+          }}
+        />
+        )}
+        <Grid container spacing={2} columns={60}>
+          {champions.data.ids
+            .filter((id) => id > 0)
+            .filter((id) => champs.champions.includes(id as number)
               || buttonEnabled(
                 id as number,
                 findThemes(champs.champions, skinLines),
                 skinLines,
               ))
-          .map((id) => (
-            <Grid item xs={30} sm={20} md={12} lg={10} xl={6}>
-              <Card>
-                <CardActionArea onClick={() => { dispatch(clickChampion(id as number)); }}>
-                  <CardMedia
-                    component="img"
-                    image={
+            .map((id) => (
+              <Grid item xs={30} sm={20} md={12} lg={10} xl={6}>
+                <Card>
+                  <CardActionArea onClick={() => { dispatch(clickChampion(id as number)); }}>
+                    <CardMedia
+                      component="img"
+                      image={
                     skinLineHover === 0 ? `https://raw.communitydragon.org/latest/plugins/rcp-be-lol-game-data/global/default/${champions.data.entities[id]!.squarePortraitPath.replace('/lol-game-data/assets/', '')}`
                       : skinLines.data.entities[skinLineHover]?.champions.includes(id as number) ? `https://raw.communitydragon.org/latest/plugins/rcp-be-lol-game-data/global/default/${skins.data!.entities[skinLines.data!.entities[skinLineHover]!.skins[skinLines.data!.entities[skinLineHover]!.champions.indexOf(id as number)]]!.tilePath.replace('/lol-game-data/assets/', '')}`
                         : `https://raw.communitydragon.org/latest/plugins/rcp-be-lol-game-data/global/default/${champions.data.entities[id]!.squarePortraitPath.replace('/lol-game-data/assets/', '')}`
                 }
-                    alt={champions.data.entities[id]!.name}
-                  />
-                  <CardContent sx={{
-                    bgcolor: skinLines.data.entities[skinLineHover]?.champions.includes(id as number) ? 'secondary.light' : champs.champions.includes(id as number) || skinLines.data.entities[skinLineHover]?.champions.includes(id as number) ? 'primary.light' : 'transparent',
-                  }}
-                  >
-                    <Typography component="div" noWrap align="center">
-                      <Box sx={{
-                        fontWeight: 'bold',
-                        textTransform: 'capitalize',
-                      }}
-                      >
-                        {champions.data.entities[id]!.name}
-                      </Box>
-                    </Typography>
-                  </CardContent>
-                </CardActionArea>
-              </Card>
-            </Grid>
-          ))}
-      </Grid>
-      skinz.lol isn&apos;t endorsed by Riot Games and doesn&apos;t reflect the views or opinions of Riot Games or anyone officially involved in producing or managing Riot Games properties. Riot Games, and all associated properties are trademarks or registered trademarks of Riot Games, Inc.
-      {false && `Latest Pick: ${title}`}
-      <Drawer
-        sx={{
-          flexShrink: 0,
-          '& .MuiDrawer-paper': {
-            boxSizing: 'border-box',
-          },
-        }}
-        variant="permanent"
-        anchor="left"
-      >
-        <Typography variant="h4">
-          Skin Lines
-        </Typography>
-        <Divider />
-        {findThemes(champs.champions, skinLines).map((theme) => <SkinThemeSet theme={theme} />)}
-      </Drawer>
-      <Drawer
-        sx={{
-          flexShrink: 0,
-          '& .MuiDrawer-paper': {
-            boxSizing: 'border-box',
-          },
-        }}
-        variant="permanent"
-        anchor="right"
-      >
-        {champs.champions.map((c) => (
-          <Typography>
-            {champions.data?.entities[c]?.name}
+                      alt={champions.data.entities[id]!.name}
+                    />
+                    <CardContent sx={{
+                      bgcolor: skinLines.data.entities[skinLineHover]?.champions.includes(id as number) ? 'secondary.main' : champs.champions.includes(id as number) || skinLines.data.entities[skinLineHover]?.champions.includes(id as number) ? 'primary.main' : 'transparent',
+                    }}
+                    >
+                      <Typography component="div" noWrap align="center">
+                        <Box sx={{
+                          fontWeight: 'bold',
+                          textTransform: 'capitalize',
+                        }}
+                        >
+                          {champions.data.entities[id]!.name}
+                        </Box>
+                      </Typography>
+                    </CardContent>
+                  </CardActionArea>
+                </Card>
+              </Grid>
+            ))}
+        </Grid>
+        skinz.lol isn&apos;t endorsed by Riot Games and doesn&apos;t reflect the views or opinions of Riot Games or anyone officially involved in producing or managing Riot Games properties. Riot Games, and all associated properties are trademarks or registered trademarks of Riot Games, Inc.
+        {false && `Latest Pick: ${title}`}
+        <Drawer
+          sx={{
+            flexShrink: 0,
+            '& .MuiDrawer-paper': {
+              boxSizing: 'border-box',
+            },
+          }}
+          variant="permanent"
+          anchor="left"
+        >
+          <Typography variant="h4">
+            Skin Lines
           </Typography>
-        ))}
-      </Drawer>
-    </Container>
+          <Divider />
+          {findThemes(champs.champions, skinLines).map((skinLine) => <SkinThemeSet theme={skinLine} />)}
+        </Drawer>
+        <Drawer
+          sx={{
+            flexShrink: 0,
+            '& .MuiDrawer-paper': {
+              boxSizing: 'border-box',
+            },
+          }}
+          variant="permanent"
+          anchor="right"
+        >
+          {champs.champions.map((c) => (
+            <Typography>
+              {champions.data?.entities[c]?.name}
+            </Typography>
+          ))}
+        </Drawer>
+      </Container>
+    </ThemeProvider>
   );
 };
 
