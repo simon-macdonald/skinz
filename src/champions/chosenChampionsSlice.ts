@@ -18,10 +18,13 @@ export const chosenChampionsSlice = createSlice({
         ? state.champions.filter((c) => c !== action.payload)
         : [...state.champions, action.payload];
     },
+    clearChosenChampions: (state) => {
+      state.champions = [];
+    }
   },
 });
 
-export const { clickChampion } = chosenChampionsSlice.actions;
+export const { clickChampion, clearChosenChampions } = chosenChampionsSlice.actions;
 
 export const selectChosenChampions = (state: RootState) => state.chosenChampions;
 

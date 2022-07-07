@@ -12,7 +12,7 @@ import {
 } from './champions/champions';
 import { useAppDispatch, useAppSelector } from './hooks';
 import { selectTitle } from './champions/championSlice';
-import { clickChampion, selectChosenChampions } from './champions/chosenChampionsSlice';
+import { clearChosenChampions, clickChampion, selectChosenChampions } from './champions/chosenChampionsSlice';
 import { selectSkinLineHover } from './champions/skinLineHoverSlice';
 
 function findThemes(champions: number[], skinLines: any): number[] {
@@ -134,6 +134,30 @@ const App = () => {
                 </Card>
               </Grid>
             ))}
+            {champs.champions.length > 0 && (
+              <Grid item xs={30} sm={20} md={12} lg={10} xl={6}>
+                <Card>
+                  <CardActionArea onClick={() => { dispatch(clearChosenChampions()); }}>
+                    <CardMedia
+                      component="img"
+                      image={`https://raw.communitydragon.org/latest/plugins/rcp-be-lol-game-data/global/default/${champions.data.entities[-1]!.squarePortraitPath.replace('/lol-game-data/assets/', '')}`}
+                      alt='Clear Champions'
+                    />
+                    <CardContent>
+                      <Typography component="div" noWrap align="center">
+                        <Box sx={{
+                          fontWeight: 'bold',
+                          textTransform: 'capitalize',
+                        }}
+                        >
+                          Clear
+                        </Box>
+                      </Typography>
+                    </CardContent>
+                  </CardActionArea>
+                </Card>
+              </Grid>
+            )}
         </Grid>
         <Paper>
           <Typography variant="h5">
