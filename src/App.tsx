@@ -2,7 +2,7 @@ import React from 'react';
 import './App.css';
 import {
   Box,
-  Card, CardActionArea, CardContent, CardMedia, Container, createTheme, Divider, Drawer, GlobalStyles, Grid, ThemeProvider, Typography, useMediaQuery,
+  Card, CardActionArea, CardContent, CardMedia, Container, createTheme, Divider, Drawer, GlobalStyles, Grid, Paper, ThemeProvider, Typography, useMediaQuery,
 } from '@mui/material';
 import SkinThemeSet from './SkinThemeSet';
 import {
@@ -135,7 +135,11 @@ const App = () => {
               </Grid>
             ))}
         </Grid>
-        skinz.lol isn&apos;t endorsed by Riot Games and doesn&apos;t reflect the views or opinions of Riot Games or anyone officially involved in producing or managing Riot Games properties. Riot Games, and all associated properties are trademarks or registered trademarks of Riot Games, Inc.
+        <Paper>
+          <Typography variant="h5">
+            skinz.lol isn&apos;t endorsed by Riot Games and doesn&apos;t reflect the views or opinions of Riot Games or anyone officially involved in producing or managing Riot Games properties. Riot Games, and all associated properties are trademarks or registered trademarks of Riot Games, Inc.
+          </Typography>
+        </Paper>
         {false && `Latest Pick: ${title}`}
         <Drawer
           sx={{
