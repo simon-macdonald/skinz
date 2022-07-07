@@ -20,7 +20,7 @@ export const chosenChampionsSlice = createSlice({
     },
     clearChosenChampions: (state) => {
       state.champions = [];
-    }
+    },
   },
 });
 
