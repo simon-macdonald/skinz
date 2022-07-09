@@ -9,7 +9,6 @@ import { useAppDispatch, useAppSelector } from './hooks';
 const SkinThemeSet = (props: { theme: number }) => {
   const { theme } = props;
 
-  // const champions = useAppSelector(championApi.endpoints.getChampionSummary.select(''));
   const skins = useAppSelector(championApi.endpoints.getSkins.select(''));
   const skinLines = useAppSelector(championApi.endpoints.getSkinLines.select(''));
 

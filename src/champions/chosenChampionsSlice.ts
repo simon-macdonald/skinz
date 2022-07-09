@@ -14,17 +14,19 @@ export const chosenChampionsSlice = createSlice({
   initialState,
   reducers: {
     clickChampion: (state, action: PayloadAction<number>) => {
+      if (action.payload === -1) {
+        state.champions = [];
+        return;
+      }
+
       state.champions = state.champions.includes(action.payload)
         ? state.champions.filter((c) => c !== action.payload)
         : [...state.champions, action.payload];
     },
-    clearChosenChampions: (state) => {
-      state.champions = [];
-    },
   },
 });
 
-export const { clickChampion, clearChosenChampions } = chosenChampionsSlice.actions;
+export const { clickChampion } = chosenChampionsSlice.actions;
 
 export const selectChosenChampions = (state: RootState) => state.chosenChampions;
 

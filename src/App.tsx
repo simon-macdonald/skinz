@@ -1,8 +1,7 @@
 import React from 'react';
 import './App.css';
 import {
-  Box,
-  Card, CardActionArea, CardContent, CardMedia, Container, createTheme, Divider, Drawer, GlobalStyles, Grid, Paper, ThemeProvider, Typography, useMediaQuery,
+  Container, createTheme, Divider, Drawer, GlobalStyles, Grid, Paper, ThemeProvider, Typography, useMediaQuery,
 } from '@mui/material';
 import SkinThemeSet from './SkinThemeSet';
 import {
@@ -10,10 +9,12 @@ import {
   useGetSkinLinesQuery,
   useGetSkinsQuery,
 } from './champions/champions';
-import { useAppDispatch, useAppSelector } from './hooks';
+import { useAppSelector } from './hooks';
 import { selectTitle } from './champions/championSlice';
-import { clearChosenChampions, clickChampion, selectChosenChampions } from './champions/chosenChampionsSlice';
-import { selectSkinLineHover } from './champions/skinLineHoverSlice';
+import {
+  selectChosenChampions,
+} from './champions/chosenChampionsSlice';
+import PortraitCard from './PortraitCard';
 
 function findThemes(champions: number[], skinLines: any): number[] {
   if (champions.length === 0) {
@@ -62,9 +63,7 @@ const App = () => {
   const prefersDarkMode = useMediaQuery('(prefers-color-scheme: dark)');
 
   const title = useAppSelector(selectTitle);
-  const skinLineHover = useAppSelector(selectSkinLineHover);
   const champs = useAppSelector(selectChosenChampions);
-  const dispatch = useAppDispatch();
 
   if (skinLines.error
     || skinLines.isLoading
@@ -104,60 +103,9 @@ const App = () => {
                 skinLines,
               ))
             .map((id) => (
-              <Grid item xs={30} sm={20} md={12} lg={10} xl={6}>
-                <Card>
-                  <CardActionArea onClick={() => { dispatch(clickChampion(id as number)); }}>
-                    <CardMedia
-                      component="img"
-                      image={
-                    skinLineHover === 0 ? `https://raw.communitydragon.org/latest/plugins/rcp-be-lol-game-data/global/default/${champions.data.entities[id]!.squarePortraitPath.replace('/lol-game-data/assets/', '')}`
-                      : skinLines.data.entities[skinLineHover]?.champions.includes(id as number) ? `https://raw.communitydragon.org/latest/plugins/rcp-be-lol-game-data/global/default/${skins.data!.entities[skinLines.data!.entities[skinLineHover]!.skins[skinLines.data!.entities[skinLineHover]!.champions.indexOf(id as number)]]!.tilePath.replace('/lol-game-data/assets/', '')}`
-                        : `https://raw.communitydragon.org/latest/plugins/rcp-be-lol-game-data/global/default/${champions.data.entities[id]!.squarePortraitPath.replace('/lol-game-data/assets/', '')}`
-                }
-                      alt={champions.data.entities[id]!.name}
-                    />
-                    <CardContent sx={{
-                      bgcolor: skinLines.data.entities[skinLineHover]?.champions.includes(id as number) ? 'secondary.main' : champs.champions.includes(id as number) || skinLines.data.entities[skinLineHover]?.champions.includes(id as number) ? 'primary.main' : 'transparent',
-                    }}
-                    >
-                      <Typography component="div" noWrap align="center">
-                        <Box sx={{
-                          fontWeight: 'bold',
-                          textTransform: 'capitalize',
-                        }}
-                        >
-                          {champions.data.entities[id]!.name}
-                        </Box>
-                      </Typography>
-                    </CardContent>
-                  </CardActionArea>
-                </Card>
-              </Grid>
+              <PortraitCard id={id} />
             ))}
-          {champs.champions.length > 0 && (
-          <Grid item xs={30} sm={20} md={12} lg={10} xl={6}>
-            <Card>
-              <CardActionArea onClick={() => { dispatch(clearChosenChampions()); }}>
-                <CardMedia
-                  component="img"
-                  image={`https://raw.communitydragon.org/latest/plugins/rcp-be-lol-game-data/global/default/${champions.data.entities[-1]!.squarePortraitPath.replace('/lol-game-data/assets/', '')}`}
-                  alt="Clear Champions"
-                />
-                <CardContent>
-                  <Typography component="div" noWrap align="center">
-                    <Box sx={{
-                      fontWeight: 'bold',
-                      textTransform: 'capitalize',
-                    }}
-                    >
-                      Clear
-                    </Box>
-                  </Typography>
-                </CardContent>
-              </CardActionArea>
-            </Card>
-          </Grid>
-          )}
+          {champs.champions.length > 0 && <PortraitCard id={-1} />}
         </Grid>
         <Paper>
           <Typography variant="h5">
