@@ -129,22 +129,6 @@ const App = () => {
           <Divider />
           {findThemes(champs.champions, skinLines).map((skinLine) => <SkinThemeSet theme={skinLine} />)}
         </Drawer>
-        <Drawer
-          sx={{
-            flexShrink: 0,
-            '& .MuiDrawer-paper': {
-              boxSizing: 'border-box',
-            },
-          }}
-          variant="permanent"
-          anchor="right"
-        >
-          {champs.champions.map((c) => (
-            <Typography>
-              {champions.data?.entities[c]?.name}
-            </Typography>
-          ))}
-        </Drawer>
       </Container>
     </ThemeProvider>
   );
