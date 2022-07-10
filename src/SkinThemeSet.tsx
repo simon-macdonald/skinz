@@ -2,6 +2,7 @@ import {
   Popover, Typography,
 } from '@mui/material';
 import React from 'react';
+import { Link } from 'react-router-dom';
 import { championApi } from './champions/champions';
 import { hoverAway, hoverOver } from './champions/skinLineHoverSlice';
 import { useAppDispatch, useAppSelector } from './hooks';
@@ -36,7 +37,9 @@ const SkinThemeSet = (props: { theme: number }) => {
         onMouseEnter={handlePopoverOpen}
         onMouseLeave={handlePopoverClose}
       >
-        {skinLines.data?.entities[theme]!.name}
+        <Link to={`/skinLines/${theme}`} className="button muted-button">
+          {skinLines.data?.entities[theme]!.name}
+        </Link>
       </Typography>
       <Popover
         id="mouse-over-popover"
