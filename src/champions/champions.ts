@@ -27,6 +27,8 @@ export interface SkinItem {
   id: number,
   name: string,
   tilePath: string,
+  splashPath: string,
+  uncenteredSplashPath: string,
   skinLines: {
     id: number;
   }[];

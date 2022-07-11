@@ -15,7 +15,7 @@ const SkinCard = (props: any) => {
       <Card>
         <CardMedia
           component="img"
-          image={`https://raw.communitydragon.org/latest/plugins/rcp-be-lol-game-data/global/default/${skins.data!.entities[id]!.tilePath.replace('/lol-game-data/assets/', '')}`}
+          image={`https://raw.communitydragon.org/latest/plugins/rcp-be-lol-game-data/global/default/${skins.data!.entities[id]!.splashPath.replace('/lol-game-data/assets/', '')}`}
         />
         <CardContent>
           <Typography component="div" noWrap align="center">

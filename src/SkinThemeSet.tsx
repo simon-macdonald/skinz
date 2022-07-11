@@ -1,4 +1,5 @@
 import {
+  Box,
   Popover, Typography,
 } from '@mui/material';
 import React from 'react';
@@ -38,7 +39,16 @@ const SkinThemeSet = (props: { theme: number }) => {
         onMouseLeave={handlePopoverClose}
       >
         <Link to={`/skinLines/${theme}`} className="button muted-button">
-          {skinLines.data?.entities[theme]!.name}
+          <Typography component="div">
+            <Box sx={{
+              fontWeight: 'bold',
+              textTransform: 'capitalize',
+              textDecoration: 'none',
+            }}
+            >
+              {skinLines.data?.entities[theme]!.name}
+            </Box>
+          </Typography>
         </Link>
       </Typography>
       <Popover
