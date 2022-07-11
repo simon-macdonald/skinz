@@ -38,12 +38,15 @@ const SkinThemeSet = (props: { theme: number }) => {
         onMouseEnter={handlePopoverOpen}
         onMouseLeave={handlePopoverClose}
       >
-        <Link to={`/skinLines/${theme}`} className="button muted-button">
+        <Link to={`/skinLines/${theme}`} className="button muted-button" style={{
+          textDecoration: 'none',
+          color: 'primary.main',
+        }}>
           <Typography component="div">
             <Box sx={{
               fontWeight: 'bold',
               textTransform: 'capitalize',
-              textDecoration: 'none',
+              textEmphasisColor: 'primary.main',
             }}
             >
               {skinLines.data?.entities[theme]!.name}
