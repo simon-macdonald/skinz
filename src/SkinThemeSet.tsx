@@ -40,13 +40,11 @@ const SkinThemeSet = (props: { theme: number }) => {
       >
         <Link to={`/skinLines/${theme}`} className="button muted-button" style={{
           textDecoration: 'none',
-          color: 'primary.main',
         }}>
-          <Typography component="div">
+          <Typography component="div" color={open ? 'secondary.main' : 'primary.main'}>
             <Box sx={{
               fontWeight: 'bold',
               textTransform: 'capitalize',
-              textEmphasisColor: 'primary.main',
             }}
             >
               {skinLines.data?.entities[theme]!.name}
