@@ -38,9 +38,14 @@ const SkinThemeSet = (props: { theme: number }) => {
         onMouseEnter={handlePopoverOpen}
         onMouseLeave={handlePopoverClose}
       >
-        <Link to={`/skinLines/${theme}`} className="button muted-button" style={{
-          textDecoration: 'none',
-        }}>
+        <Link
+          to={`/skinLines/${theme}`}
+          className="button muted-button"
+          onClick={() => dispatch(hoverAway())}
+          style={{
+            textDecoration: 'none',
+          }}
+        >
           <Typography component="div" color={open ? 'secondary.main' : 'primary.main'}>
             <Box sx={{
               fontWeight: 'bold',
