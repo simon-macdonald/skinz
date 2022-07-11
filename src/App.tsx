@@ -11,6 +11,7 @@ import {
 } from './champions/champions';
 import SkinLinePage from './SkinLinePage';
 import HomePage from './HomePage';
+import AboutPage from './AboutPage';
 
 const App = () => {
   const champions = useGetChampionSummaryQuery('');
@@ -48,6 +49,7 @@ const App = () => {
       <BrowserRouter>
         <Routes>
           <Route path="/" element={<HomePage />} />
+          <Route path="/about" element={<AboutPage />} />
           <Route path="/skinLines/:id" element={<SkinLinePage />} />
         </Routes>
       </BrowserRouter>
