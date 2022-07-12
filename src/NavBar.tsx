@@ -16,6 +16,17 @@ const NavBar = () => (
           Home
         </Typography>
       </Link>
+      <Link
+        to="/about"
+        className="button muted-button"
+        style={{
+          textDecoration: 'none',
+        }}
+      >
+        <Typography variant="h6" color="inherit" component="div">
+          About
+        </Typography>
+      </Link>
     </Toolbar>
   </AppBar>
 );
