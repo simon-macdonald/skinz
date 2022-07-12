@@ -15,6 +15,7 @@ import SkinLinePage from './SkinLinePage';
 import HomePage from './HomePage';
 import AboutPage from './AboutPage';
 import NavBar from './NavBar';
+import ChromaPage from './ChromaPage';
 
 const App = () => {
   const champions = useGetChampionSummaryQuery('');
@@ -55,6 +56,7 @@ const App = () => {
           <Route path="/" element={<HomePage />} />
           <Route path="/about" element={<AboutPage />} />
           <Route path="/skinLines/:id" element={<SkinLinePage />} />
+          <Route path="/skins/:id" element={<ChromaPage />} />
         </Routes>
       </BrowserRouter>
     </ThemeProvider>
