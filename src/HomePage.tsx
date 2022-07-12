@@ -1,7 +1,7 @@
 import React from 'react';
 import './App.css';
 import {
-  Container, Divider, Drawer, Grid, Paper, Typography,
+  Container, Divider, Drawer, Grid, Paper, Toolbar, Typography,
 } from '@mui/material';
 import SkinThemeSet from './SkinThemeSet';
 import {
@@ -63,6 +63,9 @@ const HomePage = () => {
 
   return (
     <Container>
+      <Toolbar>
+        {}
+      </Toolbar>
       <Grid container spacing={2} columns={60}>
         {champions.data!.ids
           .filter((id) => id > 0)
@@ -93,6 +96,9 @@ const HomePage = () => {
         variant="permanent"
         anchor="left"
       >
+        <Toolbar>
+          {}
+        </Toolbar>
         <Typography variant="h4">
           Skin Lines
         </Typography>

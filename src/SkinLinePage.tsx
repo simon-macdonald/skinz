@@ -1,4 +1,4 @@
-import { Container, Grid } from '@mui/material';
+import { Container, Grid, Toolbar } from '@mui/material';
 import React from 'react';
 import { useParams } from 'react-router-dom';
 import { championApi } from './champions/champions';
@@ -12,6 +12,9 @@ const SkinLinePage = () => {
 
   return (
     <Container>
+      <Toolbar>
+        {}
+      </Toolbar>
       <Grid container spacing={2} columns={12}>
         {skinLines.data!.entities[+id!]!.skins
           .map((skinId) => (

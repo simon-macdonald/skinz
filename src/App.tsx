@@ -3,7 +3,9 @@ import './App.css';
 import {
   createTheme, GlobalStyles, ThemeProvider, Typography, useMediaQuery,
 } from '@mui/material';
-import { BrowserRouter, Route, Routes } from 'react-router-dom';
+import {
+  BrowserRouter, Route, Routes,
+} from 'react-router-dom';
 import {
   useGetChampionSummaryQuery,
   useGetSkinLinesQuery,
@@ -12,6 +14,7 @@ import {
 import SkinLinePage from './SkinLinePage';
 import HomePage from './HomePage';
 import AboutPage from './AboutPage';
+import NavBar from './NavBar';
 
 const App = () => {
   const champions = useGetChampionSummaryQuery('');
@@ -47,6 +50,7 @@ const App = () => {
         />
       )}
       <BrowserRouter>
+        <NavBar />
         <Routes>
           <Route path="/" element={<HomePage />} />
           <Route path="/about" element={<AboutPage />} />
