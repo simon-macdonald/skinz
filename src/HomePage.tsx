@@ -73,7 +73,7 @@ const HomePage = () => {
                 skinLines,
               ))
           .map((id) => (
-            <PortraitCard id={id} />
+            <PortraitCard id={id} key={id} />
           ))}
         {champs.champions.length > 0 && <PortraitCard id={-1} />}
       </Grid>
@@ -97,7 +97,7 @@ const HomePage = () => {
           Skin Lines
         </Typography>
         <Divider />
-        {findThemes(champs.champions, skinLines).map((skinLine) => <SkinThemeSet theme={skinLine} />)}
+        {findThemes(champs.champions, skinLines).map((skinLine) => <SkinThemeSet theme={skinLine} key={skinLine} />)}
       </Drawer>
     </Container>
   );

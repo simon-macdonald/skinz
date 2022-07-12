@@ -15,7 +15,7 @@ const SkinLinePage = () => {
       <Grid container spacing={2} columns={12}>
         {skinLines.data!.entities[+id!]!.skins
           .map((skinId) => (
-            <SkinCard id={skinId} />
+            <SkinCard id={skinId} key={skinId} />
           ))}
       </Grid>
     </Container>

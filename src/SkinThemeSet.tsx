@@ -32,31 +32,31 @@ const SkinThemeSet = (props: { theme: number }) => {
 
   return (
     <>
-      <Typography
-        aria-owns={open ? 'mouse-over-popover' : undefined}
-        aria-haspopup="true"
-        onMouseEnter={handlePopoverOpen}
-        onMouseLeave={handlePopoverClose}
+      <Link
+        to={`/skinLines/${theme}`}
+        className="button muted-button"
+        onClick={() => dispatch(hoverAway())}
+        style={{
+          textDecoration: 'none',
+        }}
       >
-        <Link
-          to={`/skinLines/${theme}`}
-          className="button muted-button"
-          onClick={() => dispatch(hoverAway())}
-          style={{
-            textDecoration: 'none',
-          }}
+        <Typography
+          aria-owns={open ? 'mouse-over-popover' : undefined}
+          aria-haspopup="true"
+          onMouseEnter={handlePopoverOpen}
+          onMouseLeave={handlePopoverClose}
+          component="div"
+          color={open ? 'secondary.main' : 'primary.main'}
         >
-          <Typography component="div" color={open ? 'secondary.main' : 'primary.main'}>
-            <Box sx={{
-              fontWeight: 'bold',
-              textTransform: 'capitalize',
-            }}
-            >
-              {skinLines.data?.entities[theme]!.name}
-            </Box>
-          </Typography>
-        </Link>
-      </Typography>
+          <Box sx={{
+            fontWeight: 'bold',
+            textTransform: 'capitalize',
+          }}
+          >
+            {skinLines.data?.entities[theme]!.name}
+          </Box>
+        </Typography>
+      </Link>
       <Popover
         id="mouse-over-popover"
         sx={{
@@ -75,7 +75,7 @@ const SkinThemeSet = (props: { theme: number }) => {
         onClose={handlePopoverClose}
         disableRestoreFocus
       >
-        {skinLines.data?.entities[theme]?.skins.map((skin) => skins.data?.entities[skin]?.name).map((skinName) => <Typography sx={{ p: 1 }}>{skinName}</Typography>)}
+        {skinLines.data?.entities[theme]?.skins.map((skin) => skins.data?.entities[skin]?.name).map((skinName) => <Typography sx={{ p: 1 }} key={skinName}>{skinName}</Typography>)}
       </Popover>
     </>
   );
