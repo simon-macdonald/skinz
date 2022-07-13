@@ -76,9 +76,16 @@ export const championApi = createApi({
         Object.values(skins.data as SkinItem[]).forEach((entry) => {
           if (entry.skinLines) {
             entry.skinLines.forEach((skinLine) => {
-              const championId = Math.floor(entry.id / 1000);
-              otherwise[skinLine.id].champions.push(championId);
-              otherwise[skinLine.id].skins.push(entry.id);
+              try {
+                const championId = Math.floor(entry.id / 1000);
+                otherwise[skinLine.id].champions.push(championId);
+                otherwise[skinLine.id].skins.push(entry.id);
+              } catch (error) {
+                console.log('whoops');
+                console.log(entry.id);
+                console.log(skinLine.id);
+                console.log(otherwise);
+              }
             });
           }
         });
