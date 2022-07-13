@@ -16,6 +16,8 @@ import HomePage from './HomePage';
 import AboutPage from './AboutPage';
 import NavBar from './NavBar';
 import ChromaPage from './ChromaPage';
+import MatchingPage from './MatchingPage';
+import SelectChampionsPage from './SelectChampionsPage';
 
 const App = () => {
   const champions = useGetChampionSummaryQuery('');
@@ -55,8 +57,10 @@ const App = () => {
         <Routes>
           <Route path="/" element={<HomePage />} />
           <Route path="/about" element={<AboutPage />} />
+          <Route path="/select" element={<SelectChampionsPage />} />
           <Route path="/skinLines/:id" element={<SkinLinePage />} />
           <Route path="/skins/:id" element={<ChromaPage />} />
+          <Route path="/matching" element={<MatchingPage />} />
         </Routes>
       </BrowserRouter>
     </ThemeProvider>
