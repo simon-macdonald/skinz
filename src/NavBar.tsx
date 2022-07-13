@@ -3,8 +3,8 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 
 const NavBar = () => (
-  <AppBar position="fixed" sx={{ zIndex: (theme) => theme.zIndex.drawer + 1 }} color='primary'>
-    <Toolbar variant='dense'>
+  <AppBar position="fixed" sx={{ zIndex: (theme) => theme.zIndex.drawer + 1 }} color="primary">
+    <Toolbar variant="dense">
       <Link
         to="/"
         className="button muted-button"
@@ -12,7 +12,7 @@ const NavBar = () => (
           textDecoration: 'none',
         }}
       >
-        <Typography variant="h6" component="div" color='white'>
+        <Typography variant="h6" component="div" color="white">
           Home
         </Typography>
       </Link>
@@ -24,7 +24,7 @@ const NavBar = () => (
           textDecoration: 'none',
         }}
       >
-        <Typography variant="h6" component="div" color='white'>
+        <Typography variant="h6" component="div" color="white">
           About
         </Typography>
       </Link>

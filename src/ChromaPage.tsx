@@ -4,13 +4,13 @@ import {
 import React from 'react';
 import { useParams } from 'react-router-dom';
 import { championApi } from './champions/champions';
+import ChromaCard from './ChromaCard';
 import { useAppSelector } from './hooks';
-import SkinCard from './SkinCard';
 
-const SkinLinePage = () => {
+const ChromaPage = () => {
   const { id } = useParams();
 
-  const skinLines = useAppSelector(championApi.endpoints.getSkinLines.select(''));
+  const skins = useAppSelector(championApi.endpoints.getSkins.select(''));
 
   return (
     <Container>
@@ -19,17 +19,17 @@ const SkinLinePage = () => {
       </Toolbar>
       <Paper>
         <Typography variant="h2">
-          {skinLines.data!.entities[+id!]!.name}
+          {skins.data!.entities[+id!]!.name}
         </Typography>
       </Paper>
-      <Grid container spacing={5} columns={12}>
-        {skinLines.data!.entities[+id!]!.skins
-          .map((skinId) => (
-            <SkinCard id={skinId} key={skinId} />
+      <Grid container spacing={2} columns={12}>
+        {skins.data!.entities[+id!]!.chromas && skins.data!.entities[+id!]!.chromas
+          .map((chroma) => (
+            <ChromaCard name={chroma.name} chromaPath={chroma.chromaPath} key={chroma.id} />
           ))}
       </Grid>
     </Container>
   );
 };
 
-export default SkinLinePage;
+export default ChromaPage;
