@@ -25,7 +25,7 @@ const App = () => {
   const skinLines = useGetSkinLinesQuery('', { skip: !skins.isSuccess });
   const prefersDarkMode = useMediaQuery('(prefers-color-scheme: dark)');
 
-  if (skinLines.error
+  const isLoading = skinLines.error
     || skinLines.isLoading
     || !skinLines.data
     || skins.error
@@ -33,9 +33,7 @@ const App = () => {
     || !skins.data
     || champions.error
     || champions.isLoading
-    || !champions.data) {
-    return <Typography>Loading</Typography>;
-  }
+    || !champions.data;
 
   const theme = createTheme({
     palette: {
@@ -52,6 +50,7 @@ const App = () => {
           }}
         />
       )}
+      {isLoading ? null :
       <BrowserRouter>
         <NavBar />
         <Routes>
@@ -63,6 +62,7 @@ const App = () => {
           <Route path="/matching" element={<MatchingPage />} />
         </Routes>
       </BrowserRouter>
+}
     </ThemeProvider>
   );
 };
