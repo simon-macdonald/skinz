@@ -1,7 +1,7 @@
 import React from 'react';
 import './App.css';
 import {
-  createTheme, GlobalStyles, ThemeProvider, useMediaQuery,
+  createTheme, CssBaseline, ThemeProvider, useMediaQuery,
 } from '@mui/material';
 import {
   BrowserRouter, Route, Routes,
@@ -43,26 +43,20 @@ const App = () => {
 
   return (
     <ThemeProvider theme={theme}>
-      {prefersDarkMode && (
-        <GlobalStyles
-          styles={{
-            body: { backgroundColor: '#121212' },
-          }}
-        />
-      )}
+      <CssBaseline />
       {isLoading ? null :
-      <BrowserRouter>
-        <NavBar />
-        <Routes>
-          <Route path="/" element={<HomePage />} />
-          <Route path="/about" element={<AboutPage />} />
-          <Route path="/select" element={<SelectChampionsPage />} />
-          <Route path="/skinLines/:id" element={<SkinLinePage />} />
-          <Route path="/skins/:id" element={<ChromaPage />} />
-          <Route path="/matching" element={<MatchingPage />} />
-        </Routes>
-      </BrowserRouter>
-}
+        <BrowserRouter>
+          <NavBar />
+          <Routes>
+            <Route path="/" element={<HomePage />} />
+            <Route path="/about" element={<AboutPage />} />
+            <Route path="/select" element={<SelectChampionsPage />} />
+            <Route path="/skinLines/:id" element={<SkinLinePage />} />
+            <Route path="/skins/:id" element={<ChromaPage />} />
+            <Route path="/matching" element={<MatchingPage />} />
+          </Routes>
+        </BrowserRouter>
+      }
     </ThemeProvider>
   );
 };

@@ -1,7 +1,7 @@
 import React from 'react';
 import './App.css';
 import {
-  Container, Divider, Drawer, Grid, Paper, Toolbar, Typography,
+  Container, Divider, Drawer, Grid, Toolbar, Typography,
 } from '@mui/material';
 import SkinThemeSet from './SkinThemeSet';
 import {
@@ -80,11 +80,9 @@ const HomePage = () => {
           ))}
         {champs.champions.length > 0 && <PortraitCard id={-1} />}
       </Grid>
-      <Paper>
-        <Typography variant="h5">
-          skinz.lol isn&apos;t endorsed by Riot Games and doesn&apos;t reflect the views or opinions of Riot Games or anyone officially involved in producing or managing Riot Games properties. Riot Games, and all associated properties are trademarks or registered trademarks of Riot Games, Inc.
-        </Typography>
-      </Paper>
+      <Typography variant="h5">
+        skinz.lol isn&apos;t endorsed by Riot Games and doesn&apos;t reflect the views or opinions of Riot Games or anyone officially involved in producing or managing Riot Games properties. Riot Games, and all associated properties are trademarks or registered trademarks of Riot Games, Inc.
+      </Typography>
       {false && `Latest Pick: ${title}`}
       <Drawer
         sx={{
