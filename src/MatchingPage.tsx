@@ -9,6 +9,13 @@ import ChromaCard from './ChromaCard';
 import { useAppSelector } from './hooks';
 
 const findSkinIds = (championIds: number[], skins: any, colors: string[]) => {
+  if (championIds.length === 0) {
+    const result = skins.data.ids
+      .filter((id: number) => skins.data.entities[id].chromas)
+      .flatMap((id: number) => skins.data.entities[id].chromas)
+      .filter((chroma: any) => chroma.colors.filter((color: string) => colors.includes(color)).length > 0);
+    return result;
+  }
   const result = skins.data.ids
     .filter((id: number) => championIds.includes(Math.floor(id / 1000)))
     .filter((id: number) => skins.data.entities[id].chromas)
@@ -29,11 +36,6 @@ const allColors = (skins: any) => {
       }
       result[color] += 1;
     });
-  Object.keys(result).forEach((color) => {
-    if (result[color] < 10) {
-      delete result[color];
-    }
-  });
   return Object.entries(result).sort((hex1, hex2) => hex2[1] - hex1[1]).map(((entry) => entry[0]));
 };
 

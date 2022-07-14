@@ -47,11 +47,6 @@ export const championApi = createApi({
   reducerPath: 'championApi',
   baseQuery: fetchBaseQuery({
     baseUrl: 'https://raw.communitydragon.org/latest/plugins/rcp-be-lol-game-data/global/default/v1/',
-    headers: {
-      'Access-Control-Allow-Origin': '*',
-      'Content-Type': 'application/json',
-      mode: 'no-cors',
-    },
   }),
   endpoints: (builder) => ({
     getChampionById: builder.query({

@@ -1,7 +1,7 @@
 import React from 'react';
 import './App.css';
 import {
-  createTheme, GlobalStyles, ThemeProvider, Typography, useMediaQuery,
+  createTheme, GlobalStyles, ThemeProvider, useMediaQuery,
 } from '@mui/material';
 import {
   BrowserRouter, Route, Routes,
