@@ -1,30 +1,43 @@
 import React from 'react';
 import './App.css';
 import {
-  Container, Toolbar, Typography,
+  Container, Divider, Toolbar, Typography,
 } from '@mui/material';
+import { championApi } from './champions/champions';
+import { useAppSelector } from './hooks';
 
-const AboutPage = () => (
-  <Container>
-    <Toolbar>
-      {}
-    </Toolbar>
-    <Typography variant="h4" paragraph>
-      skinz.lol helps players look good.
-    </Typography>
-    <Typography variant="h4" paragraph>
-      Before a game starts, it&apos;s important for players to coordinate their skins, chromas, and borders, to ensure they spark fear in their opponents.
-    </Typography>
-    <Typography variant="h4" paragraph>
-      Who wouldn&apos;t be terrified of an all Trick-or-Treat lineup?
-    </Typography>
-    <Typography variant="h4" paragraph>
-      With skinz.lol, players select champions, and matching skin lines display on the page.
-    </Typography>
-    <Typography variant="h4" paragraph>
-      Maybe friends lose—with skinz.lol, they&apos;ll do it in style.
-    </Typography>
-  </Container>
-);
+const AboutPage = () => {
+  const skins = useAppSelector(championApi.endpoints.getSkins.select(''));
+
+  return (
+    <Container>
+      <Toolbar>
+        {}
+      </Toolbar>
+      <Typography variant="h4" paragraph>
+        My friends and I started playing League of Legends during its beta mode.
+      </Typography>
+      <Typography variant="h4" paragraph>
+        It's been on and off over the years, and we picked it up again a little more regularly during the Covid lockdowns.
+      </Typography>
+      <Typography variant="h4" paragraph>
+        Over that time, we realized we had a <i>lot</i> of skins.
+      </Typography>
+      <Typography variant="h4" paragraph>
+        The challenge, though, with {skins.data!.ids.length} skins, is that it's hard to keep track of them all.
+      </Typography>
+      <Typography variant="h4" paragraph>
+        It's nice to have matching skins when you're playing with friends, so I made this site, with their input, to help us find matching skins.
+      </Typography>
+      <Typography variant="h4" paragraph>
+        So pick some champions on the Home page, and see what matching skin lines they have!
+      </Typography>
+      <Divider />
+      <Typography variant="h4" paragraph>
+        This site was built with loads of support from <a href='https://www.communitydragon.org/'>Community Dragon</a>.
+      </Typography>
+    </Container>
+  );
+}
 
 export default AboutPage;
