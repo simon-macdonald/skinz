@@ -3,6 +3,7 @@ import { championApi } from './champions/champions';
 import championReducer from './champions/championSlice';
 import chosenChampionsReducer from './champions/chosenChampionsSlice';
 import selectSkinLineHoverReducer from './champions/skinLineHoverSlice';
+import championsReducer from './championSlice'
 
 export const store = configureStore({
   reducer: {
@@ -10,6 +11,7 @@ export const store = configureStore({
     champion: championReducer,
     chosenChampions: chosenChampionsReducer,
     skinLineHover: selectSkinLineHoverReducer,
+    champions: championsReducer,
   },
   middleware: (getDefaultMiddleware) => getDefaultMiddleware().concat(championApi.middleware),
 });

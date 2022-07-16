@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import './App.css';
 import {
   createTheme, CssBaseline, ThemeProvider, useMediaQuery,
@@ -18,12 +18,20 @@ import NavBar from './NavBar';
 import ChromaPage from './ChromaPage';
 import MatchingPage from './MatchingPage';
 import SelectChampionsPage from './SelectChampionsPage';
+import { useAppDispatch } from './hooks';
+import { fetchChampionSummary } from './championSlice';
 
 const App = () => {
   const champions = useGetChampionSummaryQuery('');
   const skins = useGetSkinsQuery('');
   const skinLines = useGetSkinLinesQuery('', { skip: !skins.isSuccess });
   const prefersDarkMode = useMediaQuery('(prefers-color-scheme: dark)');
+
+  const dispatch = useAppDispatch();
+
+  useEffect(() => {
+    dispatch(fetchChampionSummary(0));
+  }, [dispatch]);
 
   const isLoading = skinLines.error
     || skinLines.isLoading
