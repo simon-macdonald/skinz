@@ -1,5 +1,5 @@
 import { createAsyncThunk } from "@reduxjs/toolkit";
-import { AppDispatch, RootState } from "../store";
+import { AppDispatch, RootState } from "./store";
 import { ChampionItem } from "./championSlice";
 import { SkinLineItem } from "./skinLineSlice";
 import { SkinItem } from "./skinSlice";

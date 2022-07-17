@@ -6,7 +6,7 @@ import {
 } from '@mui/material';
 import { useNavigate } from 'react-router-dom';
 import { championApi } from './champions/champions';
-import { useAppSelector } from './hooks';
+import { useAppSelector } from './store/hooks';
 
 const SkinCard = (props: any) => {
   const skins = useAppSelector(championApi.endpoints.getSkins.select(''));

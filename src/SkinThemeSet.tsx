@@ -6,7 +6,7 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 import { championApi } from './champions/champions';
 import { hoverAway, hoverOver } from './champions/skinLineHoverSlice';
-import { useAppDispatch, useAppSelector } from './hooks';
+import { useAppDispatch, useAppSelector } from './store/hooks';
 
 const SkinThemeSet = (props: { theme: number }) => {
   const { theme } = props;

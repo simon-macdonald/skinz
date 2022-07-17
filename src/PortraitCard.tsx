@@ -5,7 +5,7 @@ import {
 import { championApi } from './champions/champions';
 import { clickChampion, selectChosenChampions } from './champions/chosenChampionsSlice';
 import { selectSkinLineHover } from './champions/skinLineHoverSlice';
-import { useAppDispatch, useAppSelector } from './hooks';
+import { useAppDispatch, useAppSelector } from './store/hooks';
 
 const PortraitCard = (props: any) => {
   const champions = useAppSelector(championApi.endpoints.getChampionSummary.select(''));

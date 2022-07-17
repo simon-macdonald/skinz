@@ -4,7 +4,7 @@ import {
 import React from 'react';
 import { useParams } from 'react-router-dom';
 import { championApi } from './champions/champions';
-import { useAppSelector } from './hooks';
+import { useAppSelector } from './store/hooks';
 import SkinCard from './SkinCard';
 
 const SkinLinePage = () => {

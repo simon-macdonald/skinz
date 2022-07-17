@@ -5,7 +5,7 @@ import React from 'react';
 import { useParams } from 'react-router-dom';
 import { championApi } from './champions/champions';
 import ChromaCard from './ChromaCard';
-import { useAppSelector } from './hooks';
+import { useAppSelector } from './store/hooks';
 
 const ChromaPage = () => {
   const { id } = useParams();

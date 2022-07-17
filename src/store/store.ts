@@ -1,11 +1,11 @@
 import { configureStore } from '@reduxjs/toolkit';
-import { championApi } from './champions/champions';
-import championReducer from './champions/championSlice';
-import chosenChampionsReducer from './champions/chosenChampionsSlice';
-import selectSkinLineHoverReducer from './champions/skinLineHoverSlice';
-import championsReducer from './store/championSlice'
-import skinLinesReducer from './store/skinLineSlice'
-import skinsReducer from './store/skinSlice'
+import { championApi } from '../champions/champions';
+import championReducer from '../champions/championSlice';
+import chosenChampionsReducer from '../champions/chosenChampionsSlice';
+import selectSkinLineHoverReducer from '../champions/skinLineHoverSlice';
+import championsReducer from './championSlice'
+import skinLinesReducer from './skinLineSlice'
+import skinsReducer from './skinSlice'
 
 export const store = configureStore({
   reducer: {

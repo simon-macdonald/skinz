@@ -6,7 +6,7 @@ import React, { useState } from 'react';
 import { championApi } from './champions/champions';
 import { selectChosenChampions } from './champions/chosenChampionsSlice';
 import ChromaCard from './ChromaCard';
-import { useAppSelector } from './hooks';
+import { useAppSelector } from './store/hooks';
 
 const findSkinIds = (championIds: number[], skins: any, colors: string[]) => {
   if (championIds.length === 0) {

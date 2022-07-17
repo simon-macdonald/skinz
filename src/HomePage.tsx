@@ -7,7 +7,7 @@ import SkinThemeSet from './SkinThemeSet';
 import {
   championApi,
 } from './champions/champions';
-import { useAppSelector } from './hooks';
+import { useAppSelector } from './store/hooks';
 import { selectTitle } from './champions/championSlice';
 import {
   selectChosenChampions,

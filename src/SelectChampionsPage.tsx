@@ -6,7 +6,7 @@ import {
 import {
   championApi,
 } from './champions/champions';
-import { useAppSelector } from './hooks';
+import { useAppSelector } from './store/hooks';
 import {
   selectChosenChampions,
 } from './champions/chosenChampionsSlice';

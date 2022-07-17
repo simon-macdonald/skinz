@@ -4,7 +4,7 @@ import {
   Container, Divider, Toolbar, Typography,
 } from '@mui/material';
 import { championApi } from './champions/champions';
-import { useAppSelector } from './hooks';
+import { useAppSelector } from './store/hooks';
 
 const AboutPage = () => {
   const skins = useAppSelector(championApi.endpoints.getSkins.select(''));

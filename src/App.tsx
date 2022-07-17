@@ -18,7 +18,7 @@ import NavBar from './NavBar';
 import ChromaPage from './ChromaPage';
 import MatchingPage from './MatchingPage';
 import SelectChampionsPage from './SelectChampionsPage';
-import { useAppDispatch } from './hooks';
+import { useAppDispatch } from './store/hooks';
 import { fetchEverything } from './store/fetchEverything';
 
 const App = () => {
