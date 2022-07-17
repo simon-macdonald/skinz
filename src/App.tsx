@@ -19,7 +19,7 @@ import ChromaPage from './ChromaPage';
 import MatchingPage from './MatchingPage';
 import SelectChampionsPage from './SelectChampionsPage';
 import { useAppDispatch } from './hooks';
-import { fetchChampionSummary } from './store/championSlice';
+import { fetchEverything } from './store/fetchEverything';
 
 const App = () => {
   const champions = useGetChampionSummaryQuery('');
@@ -30,7 +30,7 @@ const App = () => {
   const dispatch = useAppDispatch();
 
   useEffect(() => {
-    dispatch(fetchChampionSummary(0));
+    dispatch(fetchEverything(0));
   }, [dispatch]);
 
   const isLoading = skinLines.error

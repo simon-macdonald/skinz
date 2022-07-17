@@ -1,22 +1,30 @@
 import { createEntityAdapter, createSlice } from '@reduxjs/toolkit';
 import { fetchEverything } from './fetchEverything';
 
-export interface ChampionItem {
+export interface SkinItem {
   id: number,
   name: string,
-  alias: string,
-  squarePortraitPath: string,
-  roles: string[],
+  tilePath: string,
+  splashPath: string,
+  uncenteredSplashPath: string,
+  chromas: {
+    id: number,
+    name: string,
+    chromaPath: string,
+  }[],
+  skinLines: {
+    id: number;
+  }[];
 }
 
-const championAdapter = createEntityAdapter<ChampionItem>({
+const skinAdapter = createEntityAdapter<SkinItem>({
   sortComparer: (a, b) => a.name.localeCompare(b.name),
 });
 
-const initialState = championAdapter.getInitialState({loading: 'idle'});
+const initialState = skinAdapter.getInitialState({loading: 'idle'});
 
-const championsSlice = createSlice({
-    name: 'champions',
+const skinsSlice = createSlice({
+    name: 'skins',
     initialState,
     reducers: {},
     extraReducers: (builder) => {
@@ -26,9 +34,9 @@ const championsSlice = createSlice({
       })
       .addCase(fetchEverything.fulfilled, (state, action) => {
           state.loading = 'fulfilled';
-          championAdapter.upsertMany(state, action.payload.champions);
+          skinAdapter.upsertMany(state, action.payload.skins);
       });
     },
   });
 
-export default championsSlice.reducer;
+export default skinsSlice.reducer;
