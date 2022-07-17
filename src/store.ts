@@ -3,7 +3,7 @@ import { championApi } from './champions/champions';
 import championReducer from './champions/championSlice';
 import chosenChampionsReducer from './champions/chosenChampionsSlice';
 import selectSkinLineHoverReducer from './champions/skinLineHoverSlice';
-import championsReducer from './championSlice'
+import championsReducer from './store/championSlice'
 
 export const store = configureStore({
   reducer: {

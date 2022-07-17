@@ -19,7 +19,7 @@ import ChromaPage from './ChromaPage';
 import MatchingPage from './MatchingPage';
 import SelectChampionsPage from './SelectChampionsPage';
 import { useAppDispatch } from './hooks';
-import { fetchChampionSummary } from './championSlice';
+import { fetchChampionSummary } from './store/championSlice';
 
 const App = () => {
   const champions = useGetChampionSummaryQuery('');

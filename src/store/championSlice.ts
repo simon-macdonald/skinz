@@ -1,5 +1,5 @@
 import { createAsyncThunk, createEntityAdapter, createSlice } from '@reduxjs/toolkit';
-import { AppDispatch, RootState } from './store';
+import { AppDispatch, RootState } from '../store';
 
 export interface ChampionItem {
   id: number,
