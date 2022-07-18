@@ -1,29 +1,28 @@
 import {
-  Container, Grid, Paper, Toolbar, Typography,
+  Container, Grid, Toolbar, Typography,
 } from '@mui/material';
 import React from 'react';
 import { useParams } from 'react-router-dom';
-import { championApi } from './champions/champions';
 import { useAppSelector } from './store/hooks';
 import SkinCard from './SkinCard';
+import { selectSkinLines } from './store/skinLineSlice';
 
 const SkinLinePage = () => {
   const { id } = useParams();
 
-  const skinLines = useAppSelector(championApi.endpoints.getSkinLines.select(''));
+  const skinLines = useAppSelector(selectSkinLines);
+  const skinLine = skinLines.entities[+id!]!;
 
   return (
     <Container>
       <Toolbar>
         {}
       </Toolbar>
-      <Paper>
-        <Typography variant="h2">
-          {skinLines.data!.entities[+id!]!.name}
-        </Typography>
-      </Paper>
+      <Typography variant="h2">
+        {skinLine.name}
+      </Typography>
       <Grid container spacing={5} columns={3}>
-        {skinLines.data!.entities[+id!]!.skins
+        {skinLine.skins
           .map((skinId) => (
             <SkinCard id={skinId} key={skinId} />
           ))}
