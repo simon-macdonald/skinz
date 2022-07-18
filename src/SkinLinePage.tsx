@@ -22,7 +22,7 @@ const SkinLinePage = () => {
           {skinLines.data!.entities[+id!]!.name}
         </Typography>
       </Paper>
-      <Grid container spacing={5} columns={12}>
+      <Grid container spacing={5} columns={3}>
         {skinLines.data!.entities[+id!]!.skins
           .map((skinId) => (
             <SkinCard id={skinId} key={skinId} />

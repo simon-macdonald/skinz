@@ -7,7 +7,7 @@ const ChromaCard = (props: { name: string, chromaPath: string, }) => {
   const { name, chromaPath } = props;
 
   return (
-    <Grid item xs={6} sm={6} md={4} lg={3} xl={4}>
+    <Grid item xs={1}>
       <Card>
         <CardMedia
           component="img"

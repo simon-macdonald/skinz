@@ -16,7 +16,7 @@ const SkinCard = (props: any) => {
   const { id } = props;
 
   return (
-    <Grid item xs={6} sm={6} md={4} lg={3} xl={4}>
+    <Grid item xs={1}>
       <Badge
         anchorOrigin={{
           vertical: 'bottom',

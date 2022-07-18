@@ -3,9 +3,9 @@ import { championApi } from '../champions/champions';
 import championReducer from '../champions/championSlice';
 import chosenChampionsReducer from '../champions/chosenChampionsSlice';
 import selectSkinLineHoverReducer from '../champions/skinLineHoverSlice';
-import championsReducer from './championSlice'
-import skinLinesReducer from './skinLineSlice'
-import skinsReducer from './skinSlice'
+import championsReducer from './championSlice';
+import skinLinesReducer from './skinLineSlice';
+import skinsReducer from './skinSlice';
 
 export const store = configureStore({
   reducer: {

@@ -18,16 +18,16 @@ const AboutPage = () => {
         My friends and I started playing League of Legends during its beta mode.
       </Typography>
       <Typography variant="h4" paragraph>
-        It's been on and off over the years, and we picked it up again a little more regularly during the Covid lockdowns.
+        It&apos;s been on and off over the years, and we picked it up again a little more regularly during the Covid lockdowns.
       </Typography>
       <Typography variant="h4" paragraph>
-        Over that time, we realized we had a <i>lot</i> of skins.
+        Over that time, we realized we had a lot of skins.
       </Typography>
       <Typography variant="h4" paragraph>
-        The challenge, though, with {skins.data!.ids.length} skins, is that it's hard to keep track of them all.
+        The challenge, though, with {skins.data!.ids.length} skins, is that it&apos;s hard to keep track of them all.
       </Typography>
       <Typography variant="h4" paragraph>
-        It's nice to have matching skins when you're playing with friends, so I made this site, with their input, to help us find matching skins.
+        It&apos;s nice to have matching skins when you&apos;re playing with friends, so I made this site, with their input, to help us find matching skins.
       </Typography>
       <Typography variant="h4" paragraph>
         So pick some champions on the Home page, and see what matching skin lines they have!

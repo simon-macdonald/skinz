@@ -1,8 +1,4 @@
 import {
-  Box,
-  Card,
-  CardContent,
-  CardMedia,
   Container, Grid, Paper, Toolbar, Typography,
 } from '@mui/material';
 import React from 'react';
@@ -15,7 +11,6 @@ import { selectSkins } from '../store/skinSlice';
 const ChampionPage = () => {
   const { id } = useParams();
 
-  const champions = useAppSelector(selectChampions);
   const skins = useAppSelector(selectSkins);
 
   return (
@@ -28,7 +23,7 @@ const ChampionPage = () => {
           {skins.entities[+id!]!.name}
         </Typography>
       </Paper>
-      <Grid container spacing={5} columns={12}>
+      <Grid container spacing={5} columns={3}>
         {skins.entities[+id!]!.skins
           .map((skinId) => (
             <SkinCard id={skinId} key={skinId} />

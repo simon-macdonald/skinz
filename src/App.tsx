@@ -19,7 +19,7 @@ import ChromaPage from './ChromaPage';
 import MatchingPage from './MatchingPage';
 import SelectChampionsPage from './SelectChampionsPage';
 import { useAppDispatch } from './store/hooks';
-import { fetchEverything } from './store/fetchEverything';
+import fetchEverything from './store/fetchEverything';
 import ChampionPage from './champion/ChampionPage';
 
 const App = () => {
@@ -53,20 +53,21 @@ const App = () => {
   return (
     <ThemeProvider theme={theme}>
       <CssBaseline />
-      {isLoading ? null :
-        <BrowserRouter>
-          <NavBar />
-          <Routes>
-            <Route path="/" element={<HomePage />} />
-            <Route path="/about" element={<AboutPage />} />
-            <Route path="/champions/:id" element={<ChampionPage />} />
-            <Route path="/select" element={<SelectChampionsPage />} />
-            <Route path="/skinLines/:id" element={<SkinLinePage />} />
-            <Route path="/skins/:id" element={<ChromaPage />} />
-            <Route path="/matching" element={<MatchingPage />} />
-          </Routes>
-        </BrowserRouter>
-      }
+      {isLoading ? null
+        : (
+          <BrowserRouter>
+            <NavBar />
+            <Routes>
+              <Route path="/" element={<HomePage />} />
+              <Route path="/about" element={<AboutPage />} />
+              <Route path="/champions/:id" element={<ChampionPage />} />
+              <Route path="/select" element={<SelectChampionsPage />} />
+              <Route path="/skinLines/:id" element={<SkinLinePage />} />
+              <Route path="/skins/:id" element={<ChromaPage />} />
+              <Route path="/matching" element={<MatchingPage />} />
+            </Routes>
+          </BrowserRouter>
+        )}
     </ThemeProvider>
   );
 };
