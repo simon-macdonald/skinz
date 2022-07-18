@@ -3,7 +3,7 @@ import {
   Box, Card, CardContent, CardMedia, Grid, Typography,
 } from '@mui/material';
 
-const SkinCard = (props: { name: string, chromaPath: string, }) => {
+const ChromaCard = (props: { name: string, chromaPath: string, }) => {
   const { name, chromaPath } = props;
 
   return (
@@ -29,4 +29,4 @@ const SkinCard = (props: { name: string, chromaPath: string, }) => {
   );
 };
 
-export default SkinCard;
+export default ChromaCard;

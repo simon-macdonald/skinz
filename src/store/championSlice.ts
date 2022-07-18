@@ -8,6 +8,7 @@ export interface ChampionItem {
   alias: string,
   squarePortraitPath: string,
   roles: string[],
+  skins: number[],
 }
 
 const championAdapter = createEntityAdapter<ChampionItem>({
@@ -27,7 +28,17 @@ const championsSlice = createSlice({
       })
       .addCase(fetchEverything.fulfilled, (state, action) => {
           state.loading = 'fulfilled';
-          championAdapter.upsertMany(state, action.payload.champions);
+          const champions = action.payload.champions;
+          const championIndices = new Map<number, number>();
+          for (let i = 0; i < champions.length; i++) {
+            championIndices.set(champions[i].id, i);
+          }
+          champions.forEach(champion => champion.skins = []);
+          Object.values(action.payload.skins).forEach(skin => {
+            const championIndex = championIndices.get(Math.floor(skin.id / 1000))!;
+            champions[championIndex].skins.push(skin.id);
+          });
+          championAdapter.upsertMany(state, champions);
       });
     },
   });

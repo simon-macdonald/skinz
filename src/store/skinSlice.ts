@@ -1,5 +1,6 @@
 import { createEntityAdapter, createSlice } from '@reduxjs/toolkit';
 import { fetchEverything } from './fetchEverything';
+import { RootState } from './store';
 
 export interface SkinItem {
   id: number,
@@ -38,5 +39,7 @@ const skinsSlice = createSlice({
       });
     },
   });
+
+export const selectSkins = (state: RootState) => state.champions;
 
 export default skinsSlice.reducer;
