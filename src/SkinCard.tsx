@@ -5,15 +5,16 @@ import {
   Box, Card, CardActionArea, CardContent, CardMedia, Grid, Typography,
 } from '@mui/material';
 import { useNavigate } from 'react-router-dom';
-import { championApi } from './champions/champions';
 import { useAppSelector } from './store/hooks';
+import { selectSkins } from './store/skinSlice';
 
 const SkinCard = (props: any) => {
-  const skins = useAppSelector(championApi.endpoints.getSkins.select(''));
+  const { id } = props;
+
+  const skins = useAppSelector(selectSkins);
+  const skin = skins.entities[+id!]!;
 
   const navigate = useNavigate();
-
-  const { id } = props;
 
   return (
     <Grid item xs={1}>
@@ -23,7 +24,7 @@ const SkinCard = (props: any) => {
           horizontal: 'right',
         }}
         badgeContent={
-          skins.data!.entities[+id!]!.chromas
+          skin.chromas
             ? <Avatar sx={{ width: 24, height: 24 }} src="https://raw.communitydragon.org/latest/plugins/rcp-fe-lol-champ-select/global/default/images/config/button-chroma.png" />
             : null
         }
@@ -32,7 +33,7 @@ const SkinCard = (props: any) => {
           <CardActionArea onClick={() => navigate(`/skins/${id}`)}>
             <CardMedia
               component="img"
-              image={`https://raw.communitydragon.org/latest/plugins/rcp-be-lol-game-data/global/default/${skins.data!.entities[id]!.splashPath.replace('/lol-game-data/assets/', '')}`}
+              image={`https://raw.communitydragon.org/latest/plugins/rcp-be-lol-game-data/global/default/${skin.splashPath.replace('/lol-game-data/assets/', '')}`}
             />
             <CardContent>
               <Typography component="div" noWrap align="center">
@@ -41,7 +42,7 @@ const SkinCard = (props: any) => {
                   textTransform: 'capitalize',
                 }}
                 >
-                  {skins.data!.entities[id]!.name}
+                  {skin.name}
                 </Box>
               </Typography>
             </CardContent>

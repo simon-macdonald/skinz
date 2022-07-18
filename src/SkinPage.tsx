@@ -1,19 +1,21 @@
 import {
   Avatar,
-  Container, Grid, List, ListItem, ListItemAvatar, ListItemButton, ListItemIcon, ListItemText, Paper, Toolbar, Typography,
+  Container, Grid, List, ListItem, ListItemAvatar, ListItemButton, ListItemText, Toolbar, Typography,
 } from '@mui/material';
 import React from 'react';
 import { Link, useParams } from 'react-router-dom';
-import { championApi } from './champions/champions';
 import ChromaCard from './ChromaCard';
 import SkinCard from './SkinCard';
 import { useAppSelector } from './store/hooks';
 import { selectChampions } from './store/championSlice';
+import { selectSkins } from './store/skinSlice';
 
-const ChromaPage = () => {
+const SkinPage = () => {
   const { id } = useParams();
 
-  const skins = useAppSelector(championApi.endpoints.getSkins.select(''));
+  const skins = useAppSelector(selectSkins);
+  const skin = skins.entities[+id!]!;
+
   const champions = useAppSelector(selectChampions);
   const champion = champions.entities[Math.floor(+id! / 1000)]!;
 
@@ -23,10 +25,10 @@ const ChromaPage = () => {
         {}
       </Toolbar>
       <Typography variant="h2">
-        {skins.data!.entities[+id!]!.name}
+        {skin.name}
       </Typography>
       <Grid container spacing={5} columns={3}>
-        <SkinCard id={skins.data!.entities[+id!]!.id} />
+        <SkinCard id={skin.id} />
         <Grid item xs={2}>
           <List>
             <ListItem disablePadding button component={Link} to={`/champions/${champion.id}`}>
@@ -39,7 +41,7 @@ const ChromaPage = () => {
             </ListItem>
           </List>
         </Grid>
-        {skins.data!.entities[+id!]!.chromas && skins.data!.entities[+id!]!.chromas
+        {skin.chromas && skin.chromas
           .map((chroma) => (
             <ChromaCard name={chroma.name} chromaPath={chroma.chromaPath} key={chroma.id} />
           ))}
@@ -48,4 +50,4 @@ const ChromaPage = () => {
   );
 };
 
-export default ChromaPage;
+export default SkinPage;

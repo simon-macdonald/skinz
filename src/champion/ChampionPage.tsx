@@ -6,12 +6,11 @@ import { useParams } from 'react-router-dom';
 import SkinCard from '../SkinCard';
 import { selectChampions } from '../store/championSlice';
 import { useAppSelector } from '../store/hooks';
-import { selectSkins } from '../store/skinSlice';
 
 const ChampionPage = () => {
   const { id } = useParams();
 
-  const skins = useAppSelector(selectSkins);
+  const champions = useAppSelector(selectChampions);
 
   return (
     <Container>
@@ -20,11 +19,11 @@ const ChampionPage = () => {
       </Toolbar>
       <Paper>
         <Typography variant="h2">
-          {skins.entities[+id!]!.name}
+          {champions.entities[+id!]!.name}
         </Typography>
       </Paper>
       <Grid container spacing={5} columns={3}>
-        {skins.entities[+id!]!.skins
+        {champions.entities[+id!]!.skins
           .map((skinId) => (
             <SkinCard id={skinId} key={skinId} />
           ))}

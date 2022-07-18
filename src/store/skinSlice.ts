@@ -40,6 +40,6 @@ const skinsSlice = createSlice({
   },
 });
 
-export const selectSkins = (state: RootState) => state.champions;
+export const selectSkins = (state: RootState) => state.skins;
 
 export default skinsSlice.reducer;

@@ -15,7 +15,7 @@ import SkinLinePage from './SkinLinePage';
 import HomePage from './HomePage';
 import AboutPage from './AboutPage';
 import NavBar from './NavBar';
-import ChromaPage from './ChromaPage';
+import SkinPage from './SkinPage';
 import MatchingPage from './MatchingPage';
 import SelectChampionsPage from './SelectChampionsPage';
 import { useAppDispatch } from './store/hooks';
@@ -63,7 +63,7 @@ const App = () => {
               <Route path="/champions/:id" element={<ChampionPage />} />
               <Route path="/select" element={<SelectChampionsPage />} />
               <Route path="/skinLines/:id" element={<SkinLinePage />} />
-              <Route path="/skins/:id" element={<ChromaPage />} />
+              <Route path="/skins/:id" element={<SkinPage />} />
               <Route path="/matching" element={<MatchingPage />} />
             </Routes>
           </BrowserRouter>
