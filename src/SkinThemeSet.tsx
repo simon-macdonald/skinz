@@ -12,8 +12,6 @@ import { selectSkins } from './store/skinSlice';
 const SkinThemeSet = (props: { theme: number }) => {
   const { theme } = props;
 
-  // const skins = useAppSelector(championApi.endpoints.getSkins.select(''));
-  // const skinLines = useAppSelector(championApi.endpoints.getSkinLines.select(''));
   const skins = useAppSelector(selectSkins);
   const skinLines = useAppSelector(selectSkinLines);
   const skinLine = skinLines.entities[theme]!;
