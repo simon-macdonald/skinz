@@ -4,15 +4,19 @@ import {
 } from '@mui/material';
 import React from 'react';
 import { Link } from 'react-router-dom';
-import { championApi } from './champions/champions';
 import { hoverAway, hoverOver } from './champions/skinLineHoverSlice';
 import { useAppDispatch, useAppSelector } from './store/hooks';
+import { selectSkinLines } from './store/skinLineSlice';
+import { selectSkins } from './store/skinSlice';
 
 const SkinThemeSet = (props: { theme: number }) => {
   const { theme } = props;
 
-  const skins = useAppSelector(championApi.endpoints.getSkins.select(''));
-  const skinLines = useAppSelector(championApi.endpoints.getSkinLines.select(''));
+  // const skins = useAppSelector(championApi.endpoints.getSkins.select(''));
+  // const skinLines = useAppSelector(championApi.endpoints.getSkinLines.select(''));
+  const skins = useAppSelector(selectSkins);
+  const skinLines = useAppSelector(selectSkinLines);
+  const skinLine = skinLines.entities[theme]!;
 
   const dispatch = useAppDispatch();
 
@@ -53,7 +57,7 @@ const SkinThemeSet = (props: { theme: number }) => {
             textTransform: 'capitalize',
           }}
           >
-            {skinLines.data?.entities[theme]!.name}
+            {skinLine.name}
           </Box>
         </Typography>
       </Link>
@@ -75,7 +79,7 @@ const SkinThemeSet = (props: { theme: number }) => {
         onClose={handlePopoverClose}
         disableRestoreFocus
       >
-        {skinLines.data?.entities[theme]?.skins.map((skin) => skins.data?.entities[skin]?.name).map((skinName) => <Typography sx={{ p: 1 }} key={skinName}>{skinName}</Typography>)}
+        {skinLine.skins.map((skin) => skins.entities[skin]?.name).map((skinName) => <Typography sx={{ p: 1 }} key={skinName}>{skinName}</Typography>)}
       </Popover>
     </>
   );

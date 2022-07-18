@@ -32,7 +32,9 @@
             "ignorePropertyModificationsFor": [
                 "state"
             ]
-        }]
+        }],
+        "no-plusplus": "off",
+        "no-return-assign": "off",
         // "linebreak-style": ["error", "windows"]
     }
 }
