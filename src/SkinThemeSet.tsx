@@ -2,6 +2,7 @@ import {
   Box,
   Popover, Typography,
 } from '@mui/material';
+import { EntityId } from '@reduxjs/toolkit';
 import React from 'react';
 import { Link } from 'react-router-dom';
 import { hoverAway, hoverOver } from './champions/skinLineHoverSlice';
@@ -9,7 +10,7 @@ import { useAppDispatch, useAppSelector } from './store/hooks';
 import { selectSkinLines } from './store/skinLineSlice';
 import { selectSkins } from './store/skinSlice';
 
-const SkinThemeSet = (props: { theme: number }) => {
+const SkinThemeSet = (props: { theme: EntityId }) => {
   const { theme } = props;
 
   const skins = useAppSelector(selectSkins);
@@ -22,7 +23,7 @@ const SkinThemeSet = (props: { theme: number }) => {
 
   const handlePopoverOpen = (event: React.MouseEvent<HTMLElement>) => {
     setAnchorEl(event.currentTarget);
-    dispatch(hoverOver(theme));
+    dispatch(hoverOver(+theme));
   };
 
   const handlePopoverClose = () => {

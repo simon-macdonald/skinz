@@ -31,13 +31,20 @@ const skinLinesSlice = createSlice({
         for (let i = 0; i < skinLines.length; i++) {
           skinLineIndices.set(skinLines[i].id, i);
         }
-        skinLines.forEach((skinLine) => skinLine.skins = []);
+        skinLines.forEach((skinLine) => {
+          skinLine.skins = [];
+          skinLine.champions = [];
+        });
         Object
           .values(action.payload.skins)
           .filter((skin) => skin.skinLines)
           .forEach((skin) => {
             skin.skinLines.forEach((skinLine) => {
               skinLines[skinLine.id].skins.push(skin.id);
+              const championId = Math.floor(skin.id / 1000);
+              if (!skinLines[skinLine.id].champions.includes(championId)) {
+                skinLines[skinLine.id].champions.push(championId);
+              }
             });
           });
         skinLineAdapter.upsertMany(state, skinLines);

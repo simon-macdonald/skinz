@@ -4,24 +4,24 @@ import {
   Container, Divider, Drawer, Grid, Toolbar, Typography,
 } from '@mui/material';
 import SkinThemeSet from './SkinThemeSet';
-import {
-  championApi,
-} from './champions/champions';
 import { useAppSelector } from './store/hooks';
 import { selectTitle } from './champions/championSlice';
 import {
   selectChosenChampions,
 } from './champions/chosenChampionsSlice';
 import PortraitCard from './PortraitCard';
+import { selectChampions } from './store/championSlice';
+import { selectSkinLines, SkinLineItem } from './store/skinLineSlice';
+import { EntityId, EntityState } from '@reduxjs/toolkit';
 
-function findThemes(champions: number[], skinLines: any): number[] {
+function findThemes(champions: number[], skinLines: EntityState<SkinLineItem>): EntityId[] {
   if (champions.length === 0) {
-    return skinLines.data.ids;
+    return skinLines.ids;
   }
 
   const answers1: number[] = [];
-  skinLines.data.ids.forEach((k: number) => {
-    const champs = skinLines.data.entities[k].champions;
+  skinLines.ids.forEach(k => {
+    const champs = skinLines.entities[k]!.champions;
     let allIn = true;
     champions.forEach((c) => {
       if (!champs || !champs.includes(c)) {
@@ -29,7 +29,7 @@ function findThemes(champions: number[], skinLines: any): number[] {
       }
     });
     if (allIn) {
-      answers1.push(skinLines.data.entities[k].id);
+      answers1.push(skinLines.entities[k]!.id);
     }
   });
   return answers1;
@@ -37,15 +37,15 @@ function findThemes(champions: number[], skinLines: any): number[] {
 
 const buttonEnabled = (
   championId: number,
-  themes: number[],
-  skinLines: any,
+  themes: EntityId[],
+  skinLines: EntityState<SkinLineItem>,
 ) => {
   if (themes.length === 0) {
     return true;
   }
   let found = false;
   themes.forEach((theme) => {
-    skinLines.data.entities[theme].champions.forEach((c: number) => {
+    skinLines.entities[theme]!.champions.forEach(c => {
       if (championId === c) {
         found = true;
       }
@@ -55,8 +55,8 @@ const buttonEnabled = (
 };
 
 const HomePage = () => {
-  const skinLines = useAppSelector(championApi.endpoints.getSkinLines.select(''));
-  const champions = useAppSelector(championApi.endpoints.getChampionSummary.select(''));
+  const champions = useAppSelector(selectChampions);
+  const skinLines = useAppSelector(selectSkinLines);
 
   const title = useAppSelector(selectTitle);
   const champs = useAppSelector(selectChosenChampions);
@@ -67,7 +67,7 @@ const HomePage = () => {
         {}
       </Toolbar>
       <Grid container spacing={2} columns={60}>
-        {champions.data!.ids
+        {champions.ids
           .filter((id) => id > 0)
           .filter((id) => champs.champions.includes(id as number)
               || buttonEnabled(
