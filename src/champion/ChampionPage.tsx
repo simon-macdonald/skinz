@@ -1,5 +1,5 @@
 import {
-  Container, Grid, Paper, Toolbar, Typography,
+  Container, Grid, Toolbar, Typography,
 } from '@mui/material';
 import React from 'react';
 import { useParams } from 'react-router-dom';
@@ -17,11 +17,9 @@ const ChampionPage = () => {
       <Toolbar>
         {}
       </Toolbar>
-      <Paper>
-        <Typography variant="h2">
-          {champions.entities[+id!]!.name}
-        </Typography>
-      </Paper>
+      <Typography variant="h2">
+        {champions.entities[+id!]!.name}
+      </Typography>
       <Grid container spacing={5} columns={3}>
         {champions.entities[+id!]!.skins
           .map((skinId) => (

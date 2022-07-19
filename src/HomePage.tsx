@@ -9,29 +9,22 @@ import {
   selectChosenChampions,
 } from './champions/chosenChampionsSlice';
 import PortraitCard from './PortraitCard';
-import { selectChampions } from './store/championSlice';
+import { ChampionItem, selectChampions } from './store/championSlice';
 import { selectSkinLines, SkinLineItem } from './store/skinLineSlice';
 import { EntityId, EntityState } from '@reduxjs/toolkit';
+import _ from 'lodash';
 
-function findThemes(champions: number[], skinLines: EntityState<SkinLineItem>): EntityId[] {
-  if (champions.length === 0) {
+function findThemes(
+  chosen: number[],
+  champions: EntityState<ChampionItem>,
+  skinLines: EntityState<SkinLineItem>
+): EntityId[] {
+  if (chosen.length === 0) {
     return skinLines.ids;
   }
 
-  const answers1: number[] = [];
-  skinLines.ids.forEach(k => {
-    const champs = skinLines.entities[k]!.champions;
-    let allIn = true;
-    champions.forEach((c) => {
-      if (!champs || !champs.includes(c)) {
-        allIn = false;
-      }
-    });
-    if (allIn) {
-      answers1.push(skinLines.entities[k]!.id);
-    }
-  });
-  return answers1;
+  const hmm = chosen.map(id => champions.entities[id]!.skinLines);
+  return _.intersection(...hmm);
 }
 
 const buttonEnabled = (
@@ -70,7 +63,7 @@ const HomePage = () => {
           .filter((id) => champs.champions.includes(id as number)
               || buttonEnabled(
                 id as number,
-                findThemes(champs.champions, skinLines),
+                findThemes(champs.champions, champions, skinLines),
                 skinLines,
               ))
           .map((id) => (
@@ -98,7 +91,7 @@ const HomePage = () => {
           Skin Lines
         </Typography>
         <Divider />
-        {findThemes(champs.champions, skinLines).map((skinLine) => <SkinThemeSet theme={skinLine} key={skinLine} />)}
+        {findThemes(champs.champions, champions, skinLines).map((skinLine) => <SkinThemeSet theme={skinLine} key={skinLine} />)}
       </Drawer>
     </Container>
   );
