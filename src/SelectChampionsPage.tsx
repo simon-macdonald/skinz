@@ -6,7 +6,7 @@ import {
 import { useAppSelector } from './store/hooks';
 import {
   selectChosenChampions,
-} from './champions/chosenChampionsSlice';
+} from './store/chosenChampionsSlice';
 import PortraitCard from './PortraitCard';
 import { selectChampions } from './store/championSlice';
 

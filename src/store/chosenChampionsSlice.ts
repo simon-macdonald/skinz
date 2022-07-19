@@ -1,6 +1,6 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
-import fetchEverything from '../store/fetchEverything';
-import type { RootState } from '../store/store';
+import fetchEverything from './fetchEverything';
+import type { RootState } from './store';
 
 export type filterBy = 'skins' | 'chromas' | 'both';
 export type displayState = 'visible' | 'chosen' | 'skinned' | 'hidden';

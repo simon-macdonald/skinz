@@ -4,7 +4,7 @@ import {
 } from '@mui/material';
 import { EntityState } from '@reduxjs/toolkit';
 import React, { useState } from 'react';
-import { selectChosenChampions } from './champions/chosenChampionsSlice';
+import { selectChosenChampions } from './store/chosenChampionsSlice';
 import ChromaCard from './ChromaCard';
 import { useAppSelector } from './store/hooks';
 import { selectSkins, SkinItem } from './store/skinSlice';

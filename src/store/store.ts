@@ -1,5 +1,5 @@
 import { configureStore } from '@reduxjs/toolkit';
-import chosenChampionsReducer from '../champions/chosenChampionsSlice';
+import chosenChampionsReducer from './chosenChampionsSlice';
 import championsReducer from './championSlice';
 import skinLinesReducer from './skinLineSlice';
 import skinsReducer from './skinSlice';

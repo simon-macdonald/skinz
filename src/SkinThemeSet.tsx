@@ -5,7 +5,7 @@ import {
 import { EntityId } from '@reduxjs/toolkit';
 import React from 'react';
 import { Link } from 'react-router-dom';
-import { hoverAway, hoverOver } from './champions/chosenChampionsSlice';
+import { hoverAway, hoverOver } from './store/chosenChampionsSlice';
 import { useAppDispatch, useAppSelector } from './store/hooks';
 import { selectSkinLines } from './store/skinLineSlice';
 import { selectSkins } from './store/skinSlice';

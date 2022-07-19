@@ -2,7 +2,7 @@ import React from 'react';
 import {
   Box, Card, CardActionArea, CardContent, CardMedia, Grid, Typography,
 } from '@mui/material';
-import { clickChampion, selectChosenChampions } from './champions/chosenChampionsSlice';
+import { clickChampion, selectChosenChampions } from './store/chosenChampionsSlice';
 import { useAppDispatch, useAppSelector } from './store/hooks';
 import { selectSkinLines, SkinLineItem } from './store/skinLineSlice';
 import { selectChampions } from './store/championSlice';

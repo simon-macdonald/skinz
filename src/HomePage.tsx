@@ -7,7 +7,7 @@ import SkinThemeSet from './SkinThemeSet';
 import { useAppSelector } from './store/hooks';
 import {
   selectChosenChampions,
-} from './champions/chosenChampionsSlice';
+} from './store/chosenChampionsSlice';
 import PortraitCard from './PortraitCard';
 import { ChampionItem, selectChampions } from './store/championSlice';
 import { selectSkinLines, SkinLineItem } from './store/skinLineSlice';
