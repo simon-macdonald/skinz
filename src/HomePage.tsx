@@ -5,7 +5,6 @@ import {
 } from '@mui/material';
 import SkinThemeSet from './SkinThemeSet';
 import { useAppSelector } from './store/hooks';
-import { selectTitle } from './champions/championSlice';
 import {
   selectChosenChampions,
 } from './champions/chosenChampionsSlice';
@@ -58,7 +57,6 @@ const HomePage = () => {
   const champions = useAppSelector(selectChampions);
   const skinLines = useAppSelector(selectSkinLines);
 
-  const title = useAppSelector(selectTitle);
   const champs = useAppSelector(selectChosenChampions);
 
   return (
@@ -83,7 +81,6 @@ const HomePage = () => {
       <Typography variant="h5">
         skinz.lol isn&apos;t endorsed by Riot Games and doesn&apos;t reflect the views or opinions of Riot Games or anyone officially involved in producing or managing Riot Games properties. Riot Games, and all associated properties are trademarks or registered trademarks of Riot Games, Inc.
       </Typography>
-      {false && `Latest Pick: ${title}`}
       <Drawer
         sx={{
           flexShrink: 0,

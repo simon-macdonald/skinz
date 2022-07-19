@@ -6,11 +6,6 @@ import {
 import {
   BrowserRouter, Route, Routes,
 } from 'react-router-dom';
-import {
-  useGetChampionSummaryQuery,
-  useGetSkinLinesQuery,
-  useGetSkinsQuery,
-} from './champions/champions';
 import SkinLinePage from './SkinLinePage';
 import HomePage from './HomePage';
 import AboutPage from './AboutPage';
@@ -18,14 +13,12 @@ import NavBar from './NavBar';
 import SkinPage from './SkinPage';
 import MatchingPage from './MatchingPage';
 import SelectChampionsPage from './SelectChampionsPage';
-import { useAppDispatch } from './store/hooks';
+import { useAppDispatch, useAppSelector } from './store/hooks';
 import fetchEverything from './store/fetchEverything';
 import ChampionPage from './champion/ChampionPage';
+import { selectChampions } from './store/championSlice';
 
 const App = () => {
-  const champions = useGetChampionSummaryQuery('');
-  const skins = useGetSkinsQuery('');
-  const skinLines = useGetSkinLinesQuery('', { skip: !skins.isSuccess });
   const prefersDarkMode = useMediaQuery('(prefers-color-scheme: dark)');
 
   const dispatch = useAppDispatch();
@@ -34,15 +27,9 @@ const App = () => {
     dispatch(fetchEverything(0));
   }, [dispatch]);
 
-  const isLoading = skinLines.error
-    || skinLines.isLoading
-    || !skinLines.data
-    || skins.error
-    || skins.isLoading
-    || !skins.data
-    || champions.error
-    || champions.isLoading
-    || !champions.data;
+  const champions = useAppSelector(selectChampions);
+
+  const isLoading = champions.loading !== 'fulfilled';
 
   const theme = createTheme({
     palette: {
