@@ -3,17 +3,15 @@ import './App.css';
 import {
   Container, Grid, Toolbar,
 } from '@mui/material';
-import {
-  championApi,
-} from './champions/champions';
 import { useAppSelector } from './store/hooks';
 import {
   selectChosenChampions,
 } from './champions/chosenChampionsSlice';
 import PortraitCard from './PortraitCard';
+import { selectChampions } from './store/championSlice';
 
 const SelectChampionsPage = () => {
-  const champions = useAppSelector(championApi.endpoints.getChampionSummary.select(''));
+  const champions = useAppSelector(selectChampions);
 
   const champs = useAppSelector(selectChosenChampions);
 
@@ -23,7 +21,7 @@ const SelectChampionsPage = () => {
         {}
       </Toolbar>
       <Grid container spacing={2} columns={60}>
-        {champions.data!.ids
+        {champions.ids
           .filter((id) => id > 0)
           .map((id) => (
             <PortraitCard id={id} key={id} />

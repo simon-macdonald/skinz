@@ -3,11 +3,11 @@ import './App.css';
 import {
   Container, Divider, Toolbar, Typography,
 } from '@mui/material';
-import { championApi } from './champions/champions';
 import { useAppSelector } from './store/hooks';
+import { selectSkins } from './store/skinSlice';
 
 const AboutPage = () => {
-  const skins = useAppSelector(championApi.endpoints.getSkins.select(''));
+  const skins = useAppSelector(selectSkins);
 
   return (
     <Container>
@@ -24,7 +24,7 @@ const AboutPage = () => {
         Over that time, we realized we had a lot of skins.
       </Typography>
       <Typography variant="h4" paragraph>
-        The challenge, though, with {skins.data!.ids.length} skins, is that it&apos;s hard to keep track of them all.
+        The challenge, though, with {skins.ids.length} skins, is that it&apos;s hard to keep track of them all.
       </Typography>
       <Typography variant="h4" paragraph>
         It&apos;s nice to have matching skins when you&apos;re playing with friends, so I made this site, with their input, to help us find matching skins.
@@ -34,7 +34,7 @@ const AboutPage = () => {
       </Typography>
       <Divider />
       <Typography variant="h4" paragraph>
-        This site was built with loads of support from <a href='https://www.communitydragon.org/'>Community Dragon</a>.
+        This site was built with loads of support from <a href="https://www.communitydragon.org/">Community Dragon</a>.
       </Typography>
     </Container>
   );
