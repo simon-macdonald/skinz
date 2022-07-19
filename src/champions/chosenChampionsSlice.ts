@@ -1,12 +1,24 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
+import fetchEverything from '../store/fetchEverything';
 import type { RootState } from '../store/store';
+
+export type filterBy = 'skins' | 'chromas' | 'both';
+export type displayState = 'visible' | 'chosen' | 'skinned' | 'hidden';
 
 export interface ChosenChampionsState {
   champions: number[];
+  displays: displayState[];
+  filterBy: filterBy;
+  hoverSkinLine: number;
+  loading: 'idle' | 'pending' | 'fulfilled';
 }
 
 const initialState: ChosenChampionsState = {
   champions: [],
+  displays: [],
+  filterBy: 'both',
+  hoverSkinLine: 0,
+  loading: 'idle',
 };
 
 export const chosenChampionsSlice = createSlice({
@@ -23,10 +35,29 @@ export const chosenChampionsSlice = createSlice({
         ? state.champions.filter((c) => c !== action.payload)
         : [...state.champions, action.payload];
     },
+    hoverOver: (state, action: PayloadAction<number>) => {
+      state.hoverSkinLine = action.payload;
+    },
+    hoverAway: (state) => {
+      state.hoverSkinLine = 0;
+    },
+  },
+  extraReducers: (builder) => {
+    builder
+      .addCase(fetchEverything.pending, (state) => {
+        state.loading = 'pending';
+      })
+      .addCase(fetchEverything.fulfilled, (state, action) => {
+        const { champions } = action.payload;
+        const max = Math.max(...champions.map(c => c.id));
+        state.displays = new Array(max + 1);
+        champions.forEach(c => state.displays[c.id] = 'visible');
+        state.loading = 'fulfilled';
+      });
   },
 });
 
-export const { clickChampion } = chosenChampionsSlice.actions;
+export const { clickChampion, hoverOver, hoverAway } = chosenChampionsSlice.actions;
 
 export const selectChosenChampions = (state: RootState) => state.chosenChampions;
 

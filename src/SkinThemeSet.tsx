@@ -5,7 +5,7 @@ import {
 import { EntityId } from '@reduxjs/toolkit';
 import React from 'react';
 import { Link } from 'react-router-dom';
-import { hoverAway, hoverOver } from './champions/skinLineHoverSlice';
+import { hoverAway, hoverOver } from './champions/chosenChampionsSlice';
 import { useAppDispatch, useAppSelector } from './store/hooks';
 import { selectSkinLines } from './store/skinLineSlice';
 import { selectSkins } from './store/skinSlice';
@@ -38,7 +38,9 @@ const SkinThemeSet = (props: { theme: EntityId }) => {
       <Link
         to={`/skinLines/${theme}`}
         className="button muted-button"
-        onClick={() => dispatch(hoverAway())}
+        onClick={() => {
+          dispatch(hoverAway());
+        }}
         style={{
           textDecoration: 'none',
         }}

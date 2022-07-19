@@ -2,6 +2,7 @@ import React from 'react';
 import {
   Box, Card, CardContent, CardMedia, Grid, Typography,
 } from '@mui/material';
+import { getAssetUrl } from './urls';
 
 const ChromaCard = (props: { name: string, chromaPath: string, }) => {
   const { name, chromaPath } = props;
@@ -11,7 +12,7 @@ const ChromaCard = (props: { name: string, chromaPath: string, }) => {
       <Card>
         <CardMedia
           component="img"
-          image={`https://raw.communitydragon.org/latest/plugins/rcp-be-lol-game-data/global/default/${chromaPath.replace('/lol-game-data/assets/', '')}`}
+          image={getAssetUrl(chromaPath)}
         />
         <CardContent>
           <Typography component="div" noWrap align="center">
