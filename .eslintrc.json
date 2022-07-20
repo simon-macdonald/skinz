@@ -25,6 +25,7 @@
             }
         ],
         "react/jsx-one-expression-per-line": "off",
+        "import/no-cycle": "off",
         "max-len": "off",
         "no-nested-ternary": "off",
         "no-param-reassign": ["error", {
@@ -34,7 +35,8 @@
             ]
         }],
         "no-plusplus": "off",
-        "no-return-assign": "off"
+        "no-return-assign": "off",
+        "operator-linebreak": "off"
         // "linebreak-style": ["error", "windows"]
     }
 }

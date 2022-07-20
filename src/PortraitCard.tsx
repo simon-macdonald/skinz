@@ -2,7 +2,7 @@ import React from 'react';
 import {
   Box, Card, CardActionArea, CardContent, CardMedia, Grid, Typography,
 } from '@mui/material';
-import { clickChampion, selectChosenChampions } from './store/chosenChampionsSlice';
+import { clickChamp, selectChosenChampions } from './store/chosenChampionsSlice';
 import { useAppDispatch, useAppSelector } from './store/hooks';
 import { selectSkinLines, SkinLineItem } from './store/skinLineSlice';
 import { selectChampions } from './store/championSlice';
@@ -27,7 +27,9 @@ const PortraitCard = (props: any) => {
   return (
     <Grid item xs={30} sm={20} md={12} lg={10} xl={6}>
       <Card>
-        <CardActionArea onClick={() => { dispatch(clickChampion(id)); }}>
+        <CardActionArea onClick={() => {
+            dispatch(clickChamp(id));
+          }}>
           <CardMedia
             component="img"
             image={skinLine === null ? getAssetUrl(champion.squarePortraitPath)

@@ -1,14 +1,14 @@
-import { createSlice, PayloadAction } from '@reduxjs/toolkit';
+import { createAsyncThunk, createSlice, PayloadAction } from '@reduxjs/toolkit';
 import fetchEverything from './fetchEverything';
-import type { RootState } from './store';
+import type { AppDispatch, RootState } from './store';
 
-export type filterBy = 'skins' | 'chromas' | 'both';
-export type displayState = 'visible' | 'chosen' | 'skinned' | 'hidden';
+export type FilterBy = 'skins' | 'chromas' | 'both';
+export type DisplayState = 'visible' | 'chosen' | 'skinned' | 'hidden';
 
 export interface ChosenChampionsState {
   champions: number[];
-  displays: displayState[];
-  filterBy: filterBy;
+  displays: DisplayState[];
+  filterBy: FilterBy;
   hoverSkinLine: number;
   loading: 'idle' | 'pending' | 'fulfilled';
 }
@@ -21,20 +21,22 @@ const initialState: ChosenChampionsState = {
   loading: 'idle',
 };
 
+export const clickChamp = createAsyncThunk<
+// Return type of the payload creator
+[RootState, number],
+number,
+// First argument to the payload creator
+{
+  // Optional fields for defining thunkApi field types
+  dispatch: AppDispatch
+  state: RootState
+}
+>('clickChamp', async (championId: number, { getState }) => [getState(), championId]);
+
 export const chosenChampionsSlice = createSlice({
   name: 'chosenChampions',
   initialState,
   reducers: {
-    clickChampion: (state, action: PayloadAction<number>) => {
-      if (action.payload === -1) {
-        state.champions = [];
-        return;
-      }
-
-      state.champions = state.champions.includes(action.payload)
-        ? state.champions.filter((c) => c !== action.payload)
-        : [...state.champions, action.payload];
-    },
     hoverOver: (state, action: PayloadAction<number>) => {
       state.hoverSkinLine = action.payload;
     },
@@ -49,15 +51,26 @@ export const chosenChampionsSlice = createSlice({
       })
       .addCase(fetchEverything.fulfilled, (state, action) => {
         const { champions } = action.payload;
-        const max = Math.max(...champions.map(c => c.id));
+        const max = Math.max(...champions.map((c) => c.id));
         state.displays = new Array(max + 1);
-        champions.forEach(c => state.displays[c.id] = 'visible');
+        champions.forEach((c) => state.displays[c.id] = 'visible');
         state.loading = 'fulfilled';
+      })
+      .addCase(clickChamp.fulfilled, (state, action) => {
+        if (action.payload[1] === -1) {
+          state.champions = [];
+          return;
+        }
+
+        state.champions
+          = state.champions.includes(action.payload[1])
+            ? state.champions.filter((c) => c !== action.payload[1])
+            : [...state.champions, action.payload[1]];
       });
   },
 });
 
-export const { clickChampion, hoverOver, hoverAway } = chosenChampionsSlice.actions;
+export const { hoverOver, hoverAway } = chosenChampionsSlice.actions;
 
 export const selectChosenChampions = (state: RootState) => state.chosenChampions;
 
