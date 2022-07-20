@@ -9,48 +9,16 @@ import {
   selectChosenChampions,
 } from './store/chosenChampionsSlice';
 import PortraitCard from './PortraitCard';
-import { ChampionItem, selectChampions } from './store/championSlice';
-import { selectSkinLines, SkinLineItem } from './store/skinLineSlice';
-import { EntityId, EntityState } from '@reduxjs/toolkit';
+import { selectChampions } from './store/championSlice';
+import { selectSkinLines } from './store/skinLineSlice';
 import _ from 'lodash';
-
-function findThemes(
-  chosen: number[],
-  champions: EntityState<ChampionItem>,
-  skinLines: EntityState<SkinLineItem>
-): EntityId[] {
-  if (chosen.length === 0) {
-    return skinLines.ids;
-  }
-
-  const hmm = chosen.map(id => champions.entities[id]!.skinLines);
-  return _.intersection(...hmm);
-}
-
-const buttonEnabled = (
-  championId: number,
-  themes: EntityId[],
-  skinLines: EntityState<SkinLineItem>,
-) => {
-  if (themes.length === 0) {
-    return true;
-  }
-  let found = false;
-  themes.forEach((theme) => {
-    skinLines.entities[theme]!.champions.forEach(c => {
-      if (championId === c) {
-        found = true;
-      }
-    });
-  });
-  return found;
-};
 
 const HomePage = () => {
   const champions = useAppSelector(selectChampions);
   const skinLines = useAppSelector(selectSkinLines);
-
   const champs = useAppSelector(selectChosenChampions);
+
+  const themes = champs.themes.length === 0 ? skinLines.ids : champs.themes;
 
   return (
     <Container>
@@ -60,12 +28,7 @@ const HomePage = () => {
       <Grid container spacing={2} columns={60}>
         {champions.ids
           .filter((id) => id > 0)
-          .filter((id) => champs.champions.includes(id as number)
-              || buttonEnabled(
-                id as number,
-                findThemes(champs.champions, champions, skinLines),
-                skinLines,
-              ))
+          .filter((id) => champs.displays[+id] !== 'hidden')
           .map((id) => (
             <PortraitCard id={id} key={id} />
           ))}
@@ -91,7 +54,7 @@ const HomePage = () => {
           Skin Lines
         </Typography>
         <Divider />
-        {findThemes(champs.champions, champions, skinLines).map((skinLine) => <SkinThemeSet theme={skinLine} key={skinLine} />)}
+        {themes.map((skinLine) => <SkinThemeSet theme={skinLine} key={skinLine} />)}
       </Drawer>
     </Container>
   );
