@@ -3,6 +3,7 @@ import chosenChampionsReducer from './chosenChampionsSlice';
 import championsReducer from './championSlice';
 import skinLinesReducer from './skinLineSlice';
 import skinsReducer from './skinSlice';
+import colorsReducer from './colorSlice';
 
 export const store = configureStore({
   reducer: {
@@ -10,6 +11,7 @@ export const store = configureStore({
     champions: championsReducer,
     skinLines: skinLinesReducer,
     skins: skinsReducer,
+    colors: colorsReducer,
   },
 });
 

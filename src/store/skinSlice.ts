@@ -12,6 +12,7 @@ export interface SkinItem {
     id: number,
     name: string,
     chromaPath: string,
+    colors: string[],
   }[],
   skinLines: {
     id: number;
