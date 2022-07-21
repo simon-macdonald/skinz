@@ -11,14 +11,13 @@ import {
 import PortraitCard from './PortraitCard';
 import { selectChampions } from './store/championSlice';
 import { selectSkinLines } from './store/skinLineSlice';
-import _ from 'lodash';
 
 const HomePage = () => {
   const champions = useAppSelector(selectChampions);
   const skinLines = useAppSelector(selectSkinLines);
-  const champs = useAppSelector(selectChosenChampions);
+  const chosenChampions = useAppSelector(selectChosenChampions);
 
-  const themes = champs.themes.length === 0 ? skinLines.ids : champs.themes;
+  const themes = chosenChampions.skinLines.length === 0 ? skinLines.ids : chosenChampions.skinLines;
 
   return (
     <Container>
@@ -28,11 +27,11 @@ const HomePage = () => {
       <Grid container spacing={2} columns={60}>
         {champions.ids
           .filter((id) => id > 0)
-          .filter((id) => champs.displays[+id] !== 'hidden')
+          .filter((id) => chosenChampions.displays[+id] !== 'hidden')
           .map((id) => (
             <PortraitCard id={+id} key={id} />
           ))}
-        {champs.champions.length > 0 && <PortraitCard id={-1} />}
+        {chosenChampions.champions.length > 0 && <PortraitCard id={-1} />}
       </Grid>
       <Typography variant="h5">
         skinz.lol isn&apos;t endorsed by Riot Games and doesn&apos;t reflect the views or opinions of Riot Games or anyone officially involved in producing or managing Riot Games properties. Riot Games, and all associated properties are trademarks or registered trademarks of Riot Games, Inc.

@@ -8,9 +8,9 @@ export interface ChampionItem {
   alias: string,
   squarePortraitPath: string,
   roles: string[],
-  // should be {skinLine: skin}
   skinLines: number[],
   skins: number[],
+  colors: string[], // should be {color: chroma}
 }
 
 const championAdapter = createEntityAdapter<ChampionItem>({
@@ -38,6 +38,7 @@ const championsSlice = createSlice({
         champions.forEach((champion) => {
           champion.skins = [];
           champion.skinLines = [];
+          champion.colors = [];
         });
         Object.values(action.payload.skins).forEach((skin) => {
           const championIndex = championIndices.get(Math.floor(skin.id / 1000))!;

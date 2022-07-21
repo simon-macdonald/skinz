@@ -8,7 +8,8 @@ export type DisplayState = 'visible' | 'chosen' | 'hidden';
 
 export interface ChosenChampionsState {
   champions: number[];
-  themes: number[];
+  skinLines: number[];
+  colors: string[];
   displays: DisplayState[];
   filterBy: FilterBy;
   hoverSkinLine: number;
@@ -17,9 +18,10 @@ export interface ChosenChampionsState {
 
 const initialState: ChosenChampionsState = {
   champions: [],
-  themes: [],
+  skinLines: [],
+  colors: [],
   displays: [],
-  filterBy: 'both',
+  filterBy: 'skins',
   hoverSkinLine: 0,
   loading: 'idle',
 };
@@ -60,38 +62,53 @@ export const chosenChampionsSlice = createSlice({
         state.loading = 'fulfilled';
       })
       .addCase(clickChamp.fulfilled, (state, action) => {
-        if (action.payload[1] === -1) {
+        const rootState = action.payload[0];
+        const champClicked = action.payload[1];
+        const unclickedOnlyChosenChampion
+            = state.champions.length === 1
+              && champClicked === state.champions[0];
+        if (champClicked === -1 || unclickedOnlyChosenChampion) {
           state.champions = [];
           state.displays = new Array(state.displays.length);
-          action.payload[0].champions.ids.forEach((c) => state.displays[+c] = 'visible');
-          state.themes = [];
+          rootState.champions.ids.forEach((c) => state.displays[+c] = 'visible');
+          state.skinLines = [];
+          state.colors = []
           return;
         }
 
         state.champions
-          = state.champions.includes(action.payload[1])
-            ? state.champions.filter((c) => c !== action.payload[1])
-            : [...state.champions, action.payload[1]];
-
-        if (state.champions.length === 0) {
-          state.displays = new Array(state.displays.length);
-          action.payload[0].champions.ids.forEach((c) => state.displays[+c] = 'visible');
-          state.themes = [];
-          return;
-        }
+          = state.champions.includes(champClicked)
+            ? state.champions.filter((c) => c !== champClicked)
+            : [...state.champions, champClicked];
 
         state.displays = new Array(state.displays.length);
         state.champions.forEach((c) => state.displays[c] = 'chosen');
 
-        const skinLinesPerChamp = state.champions.map((id) => action.payload[0].champions.entities[id]!.skinLines);
-        state.themes = _.intersection(...skinLinesPerChamp);
-        const commonSkinLines = state.themes.map((skinLineId) => action.payload[0].skinLines.entities[skinLineId]!);
-        const visibleChampions = commonSkinLines.flatMap((skinLine) => Object.keys(skinLine.skins)).map((id) => +id);
-        action.payload[0].champions.ids.forEach((c) => {
-          if (state.displays[+c] !== 'chosen') {
-            state.displays[+c] = visibleChampions.includes(+c) ? 'visible' : 'hidden';
-          }
-        });
+        if (state.filterBy === 'skins') {
+          const skinLinesPerChamp = state.champions.map((id) => rootState.champions.entities[id]!.skinLines);
+          state.skinLines = _.intersection(...skinLinesPerChamp);
+          const commonSkinLines = state.skinLines.map((skinLineId) => rootState.skinLines.entities[skinLineId]!);
+          const visibleChampions = commonSkinLines.flatMap((skinLine) => Object.keys(skinLine.skins)).map((id) => +id);
+          rootState.champions.ids.forEach((c) => {
+            if (state.displays[+c] !== 'chosen') {
+              state.displays[+c] = visibleChampions.includes(+c) ? 'visible' : 'hidden';
+            }
+          });
+        }
+
+
+        // need to hydrate the ColorItem stuff and the ChampionItem stuff
+        if (state.filterBy === 'chromas') {
+          const colorsPerChamp = state.champions.map((id) => rootState.champions.entities[id]!.colors);
+          state.colors = _.intersection(...colorsPerChamp);
+          const commoncolors = state.colors.map((colorId) => rootState.colors.entities[colorId]!);
+          const visibleChampions = commoncolors.flatMap((color) => Object.keys(color.chromas)).map((id) => +id);
+          rootState.champions.ids.forEach((c) => {
+            if (state.displays[+c] !== 'chosen') {
+              state.displays[+c] = visibleChampions.includes(+c) ? 'visible' : 'hidden';
+            }
+          });
+        }
       });
   },
 });
