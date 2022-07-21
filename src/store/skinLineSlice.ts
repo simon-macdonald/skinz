@@ -5,8 +5,9 @@ import { RootState } from './store';
 export interface SkinLineItem {
   id: number,
   name: string,
-  champions: number[],
-  skins: number[],
+  skins: {
+    [championId: number]: number,
+  },
 }
 
 const skinLineAdapter = createEntityAdapter<SkinLineItem>({
@@ -27,24 +28,15 @@ const skinLinesSlice = createSlice({
       .addCase(fetchEverything.fulfilled, (state, action) => {
         state.loading = 'fulfilled';
         const { skinLines } = action.payload;
-        const skinLineIndices = new Map<number, number>();
-        for (let i = 0; i < skinLines.length; i++) {
-          skinLineIndices.set(skinLines[i].id, i);
-        }
         skinLines.forEach((skinLine) => {
-          skinLine.skins = [];
-          skinLine.champions = [];
+          skinLine.skins = {};
         });
         Object
           .values(action.payload.skins)
           .filter((skin) => skin.skinLines)
           .forEach((skin) => {
             skin.skinLines.forEach((skinLine) => {
-              skinLines[skinLine.id].skins.push(skin.id);
-              const championId = Math.floor(skin.id / 1000);
-              if (!skinLines[skinLine.id].champions.includes(championId)) {
-                skinLines[skinLine.id].champions.push(championId);
-              }
+              skinLines[skinLine.id].skins[Math.floor(skin.id / 1000)] = skin.id;
             });
           });
         skinLineAdapter.upsertMany(state, skinLines);

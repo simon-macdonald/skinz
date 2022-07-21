@@ -8,6 +8,7 @@ export interface ChampionItem {
   alias: string,
   squarePortraitPath: string,
   roles: string[],
+  // should be {skinLine: skin}
   skinLines: number[],
   skins: number[],
 }

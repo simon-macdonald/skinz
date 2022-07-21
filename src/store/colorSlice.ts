@@ -2,11 +2,21 @@ import { createEntityAdapter, createSlice } from '@reduxjs/toolkit';
 import fetchEverything from './fetchEverything';
 import { RootState } from './store';
 
+// build this out but maybe don't use the create adapter thing, that has a pretty rigid
+// view of what it should be. what we really need is a tri map for like
+// data[skinLine][champion][color] =?> chromas
+// maybe even a method would be better like
+// const x = (skinLine?, champion?, color?) => return what's missing
 export interface ColorItem {
   id: string,
-  // chromas: {
-  //   [championId: number]: number,
-  // },
+  chromasByChampion: {
+    [championId: number]: number,
+  },
+  chromasBySkinLine: {
+    [skinLine: number]: {
+      [championId: number]: number,
+    },
+  },
 }
 
 const colorAdapter = createEntityAdapter<ColorItem>({
@@ -29,12 +39,9 @@ const colorSlice = createSlice({
         const colors = Object.values(action.payload.skins)
           .filter((skin) => skin.chromas)
           .flatMap((skin) => skin.chromas)
-          .map((chroma) => chroma.colors[0] + '_' + chroma.colors[1])
-          .map((color) => {
-            const colorItem: ColorItem = {id: color};
-            return colorItem;
-          });
-        colorAdapter.upsertMany(state, colors);
+          .map((chroma) => (chroma.colors[0] + '_' + chroma.colors[1]).replaceAll('#', ''))
+          .map((color) => { return {id: color} });
+        colorAdapter.upsertMany(state, colors as ColorItem[]);
       });
   },
 });

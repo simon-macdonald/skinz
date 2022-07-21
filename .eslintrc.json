@@ -28,12 +28,7 @@
         "import/no-cycle": "off",
         "max-len": "off",
         "no-nested-ternary": "off",
-        "no-param-reassign": ["error", {
-            "props": true,
-            "ignorePropertyModificationsFor": [
-                "state"
-            ]
-        }],
+        "no-param-reassign": "off",
         "no-plusplus": "off",
         "no-return-assign": "off",
         "operator-linebreak": "off"

@@ -24,7 +24,7 @@ const SelectChampionsPage = () => {
         {champions.ids
           .filter((id) => id > 0)
           .map((id) => (
-            <PortraitCard id={id} key={id} />
+            <PortraitCard id={+id} key={id} />
           ))}
         {champs.champions.length > 0 && <PortraitCard id={-1} />}
       </Grid>

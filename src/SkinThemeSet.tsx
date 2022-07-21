@@ -80,7 +80,7 @@ const SkinThemeSet = (props: { theme: EntityId }) => {
         onClose={handlePopoverClose}
         disableRestoreFocus
       >
-        {skinLine.skins.map((skin) => skins.entities[skin]?.name).map((skinName) => <Typography sx={{ p: 1 }} key={skinName}>{skinName}</Typography>)}
+        {Object.values(skinLine.skins).map((skin) => skins.entities[skin]?.name).map((skinName) => <Typography sx={{ p: 1 }} key={skinName}>{skinName}</Typography>)}
       </Popover>
     </>
   );

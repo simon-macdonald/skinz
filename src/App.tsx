@@ -17,6 +17,7 @@ import { useAppDispatch, useAppSelector } from './store/hooks';
 import fetchEverything from './store/fetchEverything';
 import ChampionPage from './champion/ChampionPage';
 import { selectChampions } from './store/championSlice';
+import SkinLineColorPage from './SkinLineColorPage';
 
 const App = () => {
   const prefersDarkMode = useMediaQuery('(prefers-color-scheme: dark)');
@@ -50,6 +51,7 @@ const App = () => {
               <Route path="/champions/:id" element={<ChampionPage />} />
               <Route path="/select" element={<SelectChampionsPage />} />
               <Route path="/skinLines/:id" element={<SkinLinePage />} />
+              <Route path="/skinLines/:id/colors/:color" element={<SkinLineColorPage />} />
               <Route path="/skins/:id" element={<SkinPage />} />
               <Route path="/matching" element={<MatchingPage />} />
             </Routes>

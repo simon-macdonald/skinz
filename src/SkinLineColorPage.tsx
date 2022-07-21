@@ -4,13 +4,15 @@ import {
 import React from 'react';
 import { useParams } from 'react-router-dom';
 import { useAppSelector } from './store/hooks';
-import SkinCard from './SkinCard';
 import { selectSkinLines } from './store/skinLineSlice';
+import { selectSkins } from './store/skinSlice';
+import ChromaCard from './ChromaCard';
 
-const SkinLinePage = () => {
-  const { id } = useParams();
+const SkinLineColorPage = () => {
+  const { id, color } = useParams();
 
   const skinLines = useAppSelector(selectSkinLines);
+  const skins = useAppSelector(selectSkins);
   const skinLine = skinLines.entities[+id!]!;
 
   return (
@@ -23,12 +25,16 @@ const SkinLinePage = () => {
       </Typography>
       <Grid container spacing={5} columns={3}>
         {Object.values(skinLine.skins)
-          .map((skinId) => (
-            <SkinCard id={skinId} key={skinId} />
-          ))}
+          .filter((skinId) => skins.entities[skinId]!.chromas)
+          .flatMap((skinId) => skins.entities[skinId]!.chromas)
+          .filter((chroma) => (chroma.colors[0] + '_' + chroma.colors[1]).replaceAll('#', '') === color)
+          .map((chroma) => (
+            <ChromaCard name={chroma.name} chromaPath={chroma.chromaPath} key={chroma.id} />
+          ))
+        }
       </Grid>
     </Container>
   );
 };
 
-export default SkinLinePage;
+export default SkinLineColorPage;

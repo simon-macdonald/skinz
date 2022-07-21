@@ -9,7 +9,7 @@ import { selectChampions } from './store/championSlice';
 import { selectSkins } from './store/skinSlice';
 import { getAssetUrl } from './urls';
 
-const PortraitCard = (props: any) => {
+const PortraitCard = (props: { id: number }) => {
   const champions = useAppSelector(selectChampions);
   const skinLines = useAppSelector(selectSkinLines);
   const skins = useAppSelector(selectSkins);
@@ -33,12 +33,12 @@ const PortraitCard = (props: any) => {
           <CardMedia
             component="img"
             image={skinLine === null ? getAssetUrl(champion.squarePortraitPath)
-              : skinLine.champions.includes(id) ? getAssetUrl(skins.entities[skinLine.skins[skinLine.champions.indexOf(id)]]!.tilePath)
+              : Object.keys(skinLine.skins).includes(id.toString()) ? getAssetUrl(skins.entities[skinLine.skins[id]]!.tilePath)
                 : getAssetUrl(champion.squarePortraitPath)}
             alt={champion.name}
           />
           <CardContent sx={{
-            bgcolor: skinLines.entities[champs.hoverSkinLine]?.champions.includes(id) ? 'secondary.main' : champs.champions.includes(id) || skinLines.entities[champs.hoverSkinLine]?.champions.includes(id) ? 'primary.main' : 'transparent',
+            bgcolor: Object.keys(skinLines.entities[champs.hoverSkinLine]!.skins).includes(id.toString()) ? 'secondary.main' : champs.champions.includes(id) ? 'primary.main' : 'transparent',
           }}
           >
             <Typography component="div" noWrap align="center">

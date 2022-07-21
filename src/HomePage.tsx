@@ -30,7 +30,7 @@ const HomePage = () => {
           .filter((id) => id > 0)
           .filter((id) => champs.displays[+id] !== 'hidden')
           .map((id) => (
-            <PortraitCard id={id} key={id} />
+            <PortraitCard id={+id} key={id} />
           ))}
         {champs.champions.length > 0 && <PortraitCard id={-1} />}
       </Grid>
