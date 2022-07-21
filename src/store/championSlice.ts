@@ -10,7 +10,9 @@ export interface ChampionItem {
   roles: string[],
   skinLines: number[],
   skins: number[],
-  colors: string[], // should be {color: chroma}
+  colors: {
+    [color: string]: number,
+  },
 }
 
 const championAdapter = createEntityAdapter<ChampionItem>({
@@ -38,7 +40,7 @@ const championsSlice = createSlice({
         champions.forEach((champion) => {
           champion.skins = [];
           champion.skinLines = [];
-          champion.colors = [];
+          champion.colors = {};
         });
         Object.values(action.payload.skins).forEach((skin) => {
           const championIndex = championIndices.get(Math.floor(skin.id / 1000))!;
@@ -48,6 +50,10 @@ const championsSlice = createSlice({
             if (!skinLines.includes(skinLine.id)) {
               skinLines.push(skinLine.id);
             }
+          });
+          skin.chromas?.forEach((chroma) => {
+            const chromas = champions[championIndex].colors;
+            chromas[(chroma.colors[0] + '_' + chroma.colors[1]).replaceAll('#', '')] = chroma.id;
           });
         });
         championAdapter.upsertMany(state, champions);

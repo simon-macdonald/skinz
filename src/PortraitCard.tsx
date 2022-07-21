@@ -33,7 +33,7 @@ const PortraitCard = (props: { id: number }) => {
           <CardMedia
             component="img"
             image={skinLine === null ? getAssetUrl(champion.squarePortraitPath)
-              : Object.keys(skinLine.skins).includes(id.toString()) ? getAssetUrl(skins.entities[skinLine.skins[id]]!.tilePath)
+              : (Object.keys(skinLine.skins).includes(id.toString()) || champs.skinLines.length === 1) ? getAssetUrl(skins.entities[skinLine.skins[id]]!.tilePath)
                 : getAssetUrl(champion.squarePortraitPath)}
             alt={champion.name}
           />

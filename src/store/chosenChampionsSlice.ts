@@ -99,7 +99,7 @@ export const chosenChampionsSlice = createSlice({
 
         // need to hydrate the ColorItem stuff and the ChampionItem stuff
         if (state.filterBy === 'chromas') {
-          const colorsPerChamp = state.champions.map((id) => rootState.champions.entities[id]!.colors);
+          const colorsPerChamp = state.champions.map((id) => Object.keys(rootState.champions.entities[id]!.colors));
           state.colors = _.intersection(...colorsPerChamp);
           const commoncolors = state.colors.map((colorId) => rootState.colors.entities[colorId]!);
           const visibleChampions = commoncolors.flatMap((color) => Object.keys(color.chromas)).map((id) => +id);
