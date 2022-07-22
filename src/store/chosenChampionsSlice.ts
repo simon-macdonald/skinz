@@ -21,7 +21,7 @@ const initialState: ChosenChampionsState = {
   skinLines: [],
   colors: [],
   displays: [],
-  filterBy: 'skins',
+  filterBy: 'chromas',
   hoverSkinLine: 0,
   loading: 'idle',
 };
@@ -96,13 +96,13 @@ export const chosenChampionsSlice = createSlice({
           });
         }
 
-
-        // need to hydrate the ColorItem stuff and the ChampionItem stuff
+        // next steps are add support to all the components for this or that
+        // then maybe refactor everything to make it generic for chroma vs skin
         if (state.filterBy === 'chromas') {
           const colorsPerChamp = state.champions.map((id) => Object.keys(rootState.champions.entities[id]!.colors));
           state.colors = _.intersection(...colorsPerChamp);
-          const commoncolors = state.colors.map((colorId) => rootState.colors.entities[colorId]!);
-          const visibleChampions = commoncolors.flatMap((color) => Object.keys(color.chromas)).map((id) => +id);
+          const commonColors = state.colors.map((colorId) => rootState.colors.entities[colorId]!);
+          const visibleChampions = commonColors.flatMap((color) => Object.keys(color.chromas)).map((id) => +id);
           rootState.champions.ids.forEach((c) => {
             if (state.displays[+c] !== 'chosen') {
               state.displays[+c] = visibleChampions.includes(+c) ? 'visible' : 'hidden';
