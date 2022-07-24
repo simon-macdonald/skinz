@@ -5,37 +5,35 @@ import {
 } from '@mui/material';
 import { useAppSelector } from '../glue/hooks';
 import { selectSkins } from '../skins/skinSlice';
+import { selectColors } from '../chromas/colorSlice';
 
 const AboutPage = () => {
   const skins = useAppSelector(selectSkins);
+  const colors = useAppSelector(selectColors);
 
   return (
     <Container>
-      <Toolbar>
-        {}
-      </Toolbar>
-      <Typography variant="h4" paragraph>
-        My friends and I started playing League of Legends at the beginning.
-      </Typography>
-      <Typography variant="h4" paragraph>
-        It&apos;s been on and off over the years, and we picked it up again a little more regularly during the Covid lockdowns.
-      </Typography>
-      <Typography variant="h4" paragraph>
-        Over that time, we realized we had a lot of skins.
-      </Typography>
-      <Typography variant="h4" paragraph>
-        The challenge, though, with {skins.ids.length} skins, is that it&apos;s hard to keep track of them all.
-      </Typography>
-      <Typography variant="h4" paragraph>
-        It&apos;s nice to have matching skins when you&apos;re playing with friends, so I made this site, with their input, to help us find matching skins.
-      </Typography>
-      <Typography variant="h4" paragraph>
-        So pick some champions on the Home page, and see what matching skin lines they have!
-      </Typography>
-      <Divider />
-      <Typography variant="h4" paragraph>
-        This site was built with loads of support from <a href="https://www.communitydragon.org/">Community Dragon</a>.
-      </Typography>
+      <>
+        <Toolbar>
+          {}
+        </Toolbar>
+        {[
+          'My friends and I started playing League of Legends at the beginning.',
+          'It\'s been on and off over the years, and we picked it up again a little more regularly during the Covid lockdowns.',
+          'Over that time, we realized we had a lot of skins.',
+          `The challenge, though, with ${skins.ids.length} skins, and ${colors.ids.length} chroma colors, is that it's hard to keep track of them all.`,
+          'It\'s nice to have matching skins when you\'re playing with friends, so I made this site, with their input, to help us find matching skins.',
+          'So pick some champions on the Home page, and see what matching skin lines they have!',
+        ].map((line) => (
+          <Typography variant="h4" paragraph>
+            {line}
+          </Typography>
+        ))}
+        <Divider />
+        <Typography variant="h4" paragraph>
+          This site was built with loads of support from <a href="https://www.communitydragon.org/">Community Dragon</a>.
+        </Typography>
+      </>
     </Container>
   );
 };
