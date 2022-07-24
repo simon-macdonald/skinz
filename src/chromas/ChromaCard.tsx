@@ -2,7 +2,7 @@ import React from 'react';
 import {
   Box, Card, CardContent, CardMedia, Grid, Typography,
 } from '@mui/material';
-import { getAssetUrl } from '../urls';
+import getAssetUrl from '../urls';
 
 const ChromaCard = (props: { name: string, chromaPath: string, }) => {
   const { name, chromaPath } = props;

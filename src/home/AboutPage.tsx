@@ -15,7 +15,7 @@ const AboutPage = () => {
         {}
       </Toolbar>
       <Typography variant="h4" paragraph>
-        My friends and I started playing League of Legends during its beta mode.
+        My friends and I started playing League of Legends at the beginning.
       </Typography>
       <Typography variant="h4" paragraph>
         It&apos;s been on and off over the years, and we picked it up again a little more regularly during the Covid lockdowns.

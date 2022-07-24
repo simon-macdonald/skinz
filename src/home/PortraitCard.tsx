@@ -7,7 +7,7 @@ import { useAppDispatch, useAppSelector } from '../glue/hooks';
 import { selectSkinLines, SkinLineItem } from '../skins/skinLineSlice';
 import { selectChampions } from '../champions/championSlice';
 import { selectSkins } from '../skins/skinSlice';
-import { getAssetUrl } from '../urls';
+import getAssetUrl from '../urls';
 
 const PortraitCard = (props: { id: number }) => {
   const champions = useAppSelector(selectChampions);
