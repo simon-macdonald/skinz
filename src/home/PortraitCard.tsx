@@ -2,7 +2,7 @@ import React from 'react';
 import {
   Box, Card, CardActionArea, CardContent, CardMedia, Grid, Typography,
 } from '@mui/material';
-import { clickChamp, selectChosenChampions } from './chosenChampionsSlice';
+import { clickChamp, selectDisplay } from './displaySlice';
 import { useAppDispatch, useAppSelector } from '../glue/hooks';
 import { selectSkinLines, SkinLineItem } from '../skins/skinLineSlice';
 import { selectChampions } from '../champions/championSlice';
@@ -14,7 +14,7 @@ const PortraitCard = (props: { id: number }) => {
   const skinLines = useAppSelector(selectSkinLines);
   const skins = useAppSelector(selectSkins);
 
-  const champs = useAppSelector(selectChosenChampions);
+  const champs = useAppSelector(selectDisplay);
   const dispatch = useAppDispatch();
 
   const { id } = props;

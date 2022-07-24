@@ -38,8 +38,8 @@ number,
 }
 >('clickChamp', async (championId: number, { getState }) => [getState(), championId]);
 
-export const chosenChampionsSlice = createSlice({
-  name: 'chosenChampions',
+export const displaySlice = createSlice({
+  name: 'display',
   initialState,
   reducers: {
     hoverOver: (state, action: PayloadAction<number>) => {
@@ -117,8 +117,8 @@ export const chosenChampionsSlice = createSlice({
   },
 });
 
-export const { hoverOver, hoverAway, clickTab } = chosenChampionsSlice.actions;
+export const { hoverOver, hoverAway, clickTab } = displaySlice.actions;
 
-export const selectChosenChampions = (state: RootState) => state.chosenChampions;
+export const selectDisplay = (state: RootState) => state.display;
 
-export default chosenChampionsSlice.reducer;
+export default displaySlice.reducer;

@@ -5,7 +5,7 @@ import {
 import { EntityId } from '@reduxjs/toolkit';
 import React from 'react';
 import { Link } from 'react-router-dom';
-import { clickChamp, clickTab, selectChosenChampions } from '../home/chosenChampionsSlice';
+import { clickChamp, clickTab, selectDisplay } from '../home/displaySlice';
 import { selectColors } from './colorSlice';
 import { useAppDispatch, useAppSelector } from '../glue/hooks';
 
@@ -17,7 +17,7 @@ const ColorHoverLink = (props: { theme: EntityId }) => {
   const colors = useAppSelector(selectColors);
   const color = colors.entities[theme]!;
 
-  const champions = useAppSelector(selectChosenChampions);
+  const champions = useAppSelector(selectDisplay);
   const championsUrlArg
     = champions.champions.length === 0
       ? '_'

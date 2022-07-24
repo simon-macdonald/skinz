@@ -9,8 +9,8 @@ import { useAppDispatch, useAppSelector } from '../glue/hooks';
 import {
   clickChamp,
   clickTab,
-  selectChosenChampions,
-} from './chosenChampionsSlice';
+  selectDisplay,
+} from './displaySlice';
 import PortraitCard from './PortraitCard';
 import { selectChampions } from '../champions/championSlice';
 import { selectSkinLines } from '../skins/skinLineSlice';
@@ -50,10 +50,10 @@ const HomePage = () => {
   const champions = useAppSelector(selectChampions);
   const skinLines = useAppSelector(selectSkinLines);
   const colors = useAppSelector(selectColors);
-  const chosenChampions = useAppSelector(selectChosenChampions);
+  const display = useAppSelector(selectDisplay);
 
-  const skinLinesDisplayed = chosenChampions.skinLines.length === 0 ? skinLines.ids : chosenChampions.skinLines;
-  const colorsDisplayed = chosenChampions.colors.length === 0 ? colors.ids : chosenChampions.colors;
+  const skinLinesDisplayed = display.skinLines.length === 0 ? skinLines.ids : display.skinLines;
+  const colorsDisplayed = display.colors.length === 0 ? colors.ids : display.colors;
 
   const [value, setValue] = React.useState(0);
 
@@ -71,11 +71,11 @@ const HomePage = () => {
       <Grid container spacing={2} columns={60}>
         {champions.ids
           .filter((id) => id > 0)
-          .filter((id) => chosenChampions.displays[+id] !== 'hidden')
+          .filter((id) => display.displays[+id] !== 'hidden')
           .map((id) => (
             <PortraitCard id={+id} key={id} />
           ))}
-        {chosenChampions.champions.length > 0 && <PortraitCard id={-1} />}
+        {display.champions.length > 0 && <PortraitCard id={-1} />}
       </Grid>
       <Typography variant="h5">
         skinz.lol isn&apos;t endorsed by Riot Games and doesn&apos;t reflect the views or opinions of Riot Games or anyone officially involved in producing or managing Riot Games properties. Riot Games, and all associated properties are trademarks or registered trademarks of Riot Games, Inc.
