@@ -50,7 +50,7 @@ const championsSlice = createSlice({
           const championIndex = championIndices.get(Math.floor(skin.id / 1000))!;
           champions[championIndex].skins.push(skin.id);
           skin.skinLines?.forEach((skinLine) => {
-            const skinLines = champions[championIndex].skinLines;
+            const { skinLines } = champions[championIndex];
             if (!skinLines.includes(skinLine.id)) {
               skinLines.push(skinLine.id);
             }
@@ -58,7 +58,7 @@ const championsSlice = createSlice({
           });
           skin.chromas?.forEach((chroma) => {
             const chromas = champions[championIndex].colors;
-            chromas[(chroma.colors[0] + '_' + chroma.colors[1]).replaceAll('#', '')] = chroma.id;
+            chromas[(`${chroma.colors[0]}_${chroma.colors[1]}`).replaceAll('#', '')] = chroma.id;
           });
         });
         championAdapter.upsertMany(state, champions);

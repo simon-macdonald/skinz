@@ -38,6 +38,6 @@ const AboutPage = () => {
       </Typography>
     </Container>
   );
-}
+};
 
 export default AboutPage;

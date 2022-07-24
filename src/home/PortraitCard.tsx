@@ -21,15 +21,16 @@ const PortraitCard = (props: { id: number }) => {
   const champion = champions.entities[id]!;
   const skinLine: SkinLineItem | null
     = champs.hoverSkinLine === 0
-    ? null
-    : skinLines.entities[champs.hoverSkinLine]!;
+      ? null
+      : skinLines.entities[champs.hoverSkinLine]!;
 
   return (
     <Grid item xs={30} sm={20} md={12} lg={10} xl={6}>
       <Card>
         <CardActionArea onClick={() => {
-            dispatch(clickChamp(id));
-          }}>
+          dispatch(clickChamp(id));
+        }}
+        >
           <CardMedia
             component="img"
             image={skinLine === null ? getAssetUrl(champion.squarePortraitPath)

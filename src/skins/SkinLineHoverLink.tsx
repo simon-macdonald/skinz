@@ -10,7 +10,7 @@ import { useAppDispatch, useAppSelector } from '../glue/hooks';
 import { selectSkinLines } from './skinLineSlice';
 import { selectSkins } from './skinSlice';
 
-const SkinThemeSet = (props: { theme: EntityId }) => {
+const SkinLineHoverLink = (props: { theme: EntityId }) => {
   const { theme } = props;
 
   const skins = useAppSelector(selectSkins);
@@ -86,4 +86,4 @@ const SkinThemeSet = (props: { theme: EntityId }) => {
   );
 };
 
-export default SkinThemeSet;
+export default SkinLineHoverLink;

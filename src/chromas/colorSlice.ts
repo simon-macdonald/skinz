@@ -27,12 +27,12 @@ const colorSlice = createSlice({
       })
       .addCase(fetchEverything.fulfilled, (state, action) => {
         state.loading = 'fulfilled';
-        const getChromaId = (colors: string[]) => (colors[0] + '_' + colors[1]).replaceAll('#', '');
+        const getChromaId = (colors: string[]) => (`${colors[0]}_${colors[1]}`).replaceAll('#', '');
         const allColors = Object.values(action.payload.skins)
           .filter((skin) => skin.chromas)
           .flatMap((skin) => skin.chromas)
           .map((chroma) => getChromaId(chroma.colors))
-          .map((color): ColorItem => { return {id: color, chromas: {}} });
+          .map((color): ColorItem => ({ id: color, chromas: {} }));
         const colors = _.uniqBy(allColors, 'id');
         const colorIndices = new Map<string, number>();
         for (let i = 0; i < colors.length; i++) {

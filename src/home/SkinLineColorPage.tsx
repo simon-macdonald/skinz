@@ -27,11 +27,10 @@ const SkinLineColorPage = () => {
         {Object.values(skinLine.skins)
           .filter((skinId) => skins.entities[skinId]!.chromas)
           .flatMap((skinId) => skins.entities[skinId]!.chromas)
-          .filter((chroma) => (chroma.colors[0] + '_' + chroma.colors[1]).replaceAll('#', '') === color)
+          .filter((chroma) => (`${chroma.colors[0]}_${chroma.colors[1]}`).replaceAll('#', '') === color)
           .map((chroma) => (
             <ChromaCard name={chroma.name} chromaPath={chroma.chromaPath} key={chroma.id} />
-          ))
-        }
+          ))}
       </Grid>
     </Container>
   );

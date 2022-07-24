@@ -2,9 +2,9 @@ import React from 'react';
 import '../glue/App.css';
 import {
   Box,
-  Container, Divider, Drawer, Grid, Tab, Tabs, Toolbar, Typography,
+  Container, Drawer, Grid, Tab, Tabs, Toolbar, Typography,
 } from '@mui/material';
-import SkinThemeSet from '../skins/SkinLineHoverLink';
+import SkinLineHoverLink from '../skins/SkinLineHoverLink';
 import { useAppDispatch, useAppSelector } from '../glue/hooks';
 import {
   clickChamp,
@@ -18,13 +18,15 @@ import { selectColors } from '../chromas/colorSlice';
 import ColorHoverLink from '../chromas/ColorHoverLink';
 
 interface TabPanelProps {
-  children?: React.ReactNode;
+  children: React.ReactNode;
   index: number;
   value: number;
 }
 
-function TabPanel(props: TabPanelProps) {
-  const { children, value, index, ...other } = props;
+const TabPanel = (props: TabPanelProps) => {
+  const {
+    children, value, index,
+  } = props;
 
   return (
     <div
@@ -32,7 +34,6 @@ function TabPanel(props: TabPanelProps) {
       hidden={value !== index}
       id={`simple-tabpanel-${index}`}
       aria-labelledby={`simple-tab-${index}`}
-      {...other}
     >
       {value === index && (
         <Box sx={{ p: 3 }}>
@@ -41,7 +42,7 @@ function TabPanel(props: TabPanelProps) {
       )}
     </div>
   );
-}
+};
 
 const HomePage = () => {
   const dispatch = useAppDispatch();
@@ -93,19 +94,19 @@ const HomePage = () => {
           {}
         </Toolbar>
         <Box sx={{ width: '100%' }}>
-      <Box sx={{ borderBottom: 1, borderColor: 'divider' }}>
-        <Tabs value={value} onChange={handleChange} aria-label="basic tabs example">
-          <Tab label="Skin Lines"  />
-          <Tab label="Colors"  />
-        </Tabs>
-      </Box>
-      <TabPanel value={value} index={0}>
-        {skinLinesDisplayed.map((skinLine) => <SkinThemeSet theme={skinLine} key={skinLine} />)}
-      </TabPanel>
-      <TabPanel value={value} index={1}>
-        {colorsDisplayed.map((color) => <ColorHoverLink theme={color} key={color} />)}
-      </TabPanel>
-    </Box>
+          <Box sx={{ borderBottom: 1, borderColor: 'divider' }}>
+            <Tabs value={value} onChange={handleChange} aria-label="basic tabs example">
+              <Tab label="Skin Lines" />
+              <Tab label="Colors" />
+            </Tabs>
+          </Box>
+          <TabPanel value={value} index={0}>
+            {skinLinesDisplayed.map((skinLine) => <SkinLineHoverLink theme={skinLine} key={skinLine} />)}
+          </TabPanel>
+          <TabPanel value={value} index={1}>
+            {colorsDisplayed.map((color) => <ColorHoverLink theme={color} key={color} />)}
+          </TabPanel>
+        </Box>
       </Drawer>
     </Container>
   );

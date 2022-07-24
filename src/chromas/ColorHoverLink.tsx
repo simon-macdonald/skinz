@@ -1,6 +1,5 @@
 import {
   Box,
-  Checkbox,
   Typography,
 } from '@mui/material';
 import { EntityId } from '@reduxjs/toolkit';
@@ -21,36 +20,34 @@ const ColorHoverLink = (props: { theme: EntityId }) => {
   const champions = useAppSelector(selectChosenChampions);
   const championsUrlArg
     = champions.champions.length === 0
-    ? '_'
-    : champions.champions.join('_');
+      ? '_'
+      : champions.champions.join('_');
 
   return (
-    <>
-      <Link
-        to={`/colors/${theme}/champions/${championsUrlArg}`}
-        className="button muted-button"
-        onClick={() => {
-          dispatch(clickChamp(-1));
-          dispatch(clickTab(0))
-        }}
-        style={{
-          textDecoration: 'none',
-        }}
+    <Link
+      to={`/colors/${theme}/champions/${championsUrlArg}`}
+      className="button muted-button"
+      onClick={() => {
+        dispatch(clickChamp(-1));
+        dispatch(clickTab(0));
+      }}
+      style={{
+        textDecoration: 'none',
+      }}
+    >
+      <Typography
+        component="div"
       >
-        <Typography
-          component="div"
+        <Box sx={{
+          fontWeight: 'bold',
+          textTransform: 'capitalize',
+          backgroundColor: `#${color.id.split('_')[0]}`,
+        }}
         >
-          <Box sx={{
-            fontWeight: 'bold',
-            textTransform: 'capitalize',
-            backgroundColor: '#' + color.id.split('_')[0],
-          }}
-          >
-            {}
-          </Box>
-        </Typography>
-      </Link>
-      </>
+          {}
+        </Box>
+      </Typography>
+    </Link>
   );
 };
 

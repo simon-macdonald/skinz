@@ -4,7 +4,6 @@ import {
 import React from 'react';
 import { useParams } from 'react-router-dom';
 import { useAppSelector } from '../glue/hooks';
-import { selectSkinLines } from '../skins/skinLineSlice';
 import { selectSkins } from '../skins/skinSlice';
 import ChromaCard from './ChromaCard';
 
@@ -12,13 +11,13 @@ const SkinLineColorPage = () => {
   const { color, champions } = useParams();
 
   const skins = useAppSelector(selectSkins);
-  
+
   const chromas = skins.ids
-    .filter(id => champions!.split('_').map((c) => +c).includes(Math.floor(+id / 1000)))
-    .filter(id => skins.entities[id]!.chromas)
-    .flatMap(id => skins.entities[id]!.chromas)
-    .filter((chroma) => (chroma.colors[0] + '_' + chroma.colors[1]).replaceAll('#', '') === color);
-  
+    .filter((id) => champions!.split('_').map((c) => +c).includes(Math.floor(+id / 1000)))
+    .filter((id) => skins.entities[id]!.chromas)
+    .flatMap((id) => skins.entities[id]!.chromas)
+    .filter((chroma) => (`${chroma.colors[0]}_${chroma.colors[1]}`).replaceAll('#', '') === color);
+
   if (champions === '_') {
     return (
       <Container>
@@ -31,7 +30,7 @@ const SkinLineColorPage = () => {
       </Container>
     );
   }
-  
+
   return (
     <Container>
       <Toolbar>
