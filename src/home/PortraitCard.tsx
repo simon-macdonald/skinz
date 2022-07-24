@@ -2,12 +2,12 @@ import React from 'react';
 import {
   Box, Card, CardActionArea, CardContent, CardMedia, Grid, Typography,
 } from '@mui/material';
-import { clickChamp, selectChosenChampions } from './store/chosenChampionsSlice';
-import { useAppDispatch, useAppSelector } from './store/hooks';
-import { selectSkinLines, SkinLineItem } from './store/skinLineSlice';
-import { selectChampions } from './store/championSlice';
-import { selectSkins } from './store/skinSlice';
-import { getAssetUrl } from './urls';
+import { clickChamp, selectChosenChampions } from './chosenChampionsSlice';
+import { useAppDispatch, useAppSelector } from '../glue/hooks';
+import { selectSkinLines, SkinLineItem } from '../skins/skinLineSlice';
+import { selectChampions } from '../champions/championSlice';
+import { selectSkins } from '../skins/skinSlice';
+import { getAssetUrl } from '../urls';
 
 const PortraitCard = (props: { id: number }) => {
   const champions = useAppSelector(selectChampions);

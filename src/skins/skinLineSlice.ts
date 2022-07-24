@@ -1,6 +1,6 @@
 import { createEntityAdapter, createSlice } from '@reduxjs/toolkit';
-import fetchEverything from './fetchEverything';
-import { RootState } from './store';
+import fetchEverything from '../home/fetchEverything';
+import { RootState } from '../glue/store';
 
 export interface SkinLineItem {
   id: number,

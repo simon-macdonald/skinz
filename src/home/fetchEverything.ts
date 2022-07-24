@@ -1,6 +1,6 @@
 import { createAsyncThunk } from '@reduxjs/toolkit';
 import Everything from './everything';
-import { AppDispatch, RootState } from './store';
+import { AppDispatch, RootState } from '../glue/store';
 
 const fetchEverything = createAsyncThunk<
 // Return type of the payload creator

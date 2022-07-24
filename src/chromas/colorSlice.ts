@@ -1,7 +1,7 @@
 import { createEntityAdapter, createSlice } from '@reduxjs/toolkit';
 import _ from 'lodash';
-import fetchEverything from './fetchEverything';
-import { RootState } from './store';
+import fetchEverything from '../home/fetchEverything';
+import { RootState } from '../glue/store';
 
 export interface ColorItem {
   id: string,

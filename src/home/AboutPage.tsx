@@ -1,10 +1,10 @@
 import React from 'react';
-import './App.css';
+import '../glue/App.css';
 import {
   Container, Divider, Toolbar, Typography,
 } from '@mui/material';
-import { useAppSelector } from './store/hooks';
-import { selectSkins } from './store/skinSlice';
+import { useAppSelector } from '../glue/hooks';
+import { selectSkins } from '../skins/skinSlice';
 
 const AboutPage = () => {
   const skins = useAppSelector(selectSkins);

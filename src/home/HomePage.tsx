@@ -1,21 +1,21 @@
 import React from 'react';
-import './App.css';
+import '../glue/App.css';
 import {
   Box,
   Container, Divider, Drawer, Grid, Tab, Tabs, Toolbar, Typography,
 } from '@mui/material';
-import SkinThemeSet from './SkinLineHoverLink';
-import { useAppDispatch, useAppSelector } from './store/hooks';
+import SkinThemeSet from '../skins/SkinLineHoverLink';
+import { useAppDispatch, useAppSelector } from '../glue/hooks';
 import {
   clickChamp,
   clickTab,
   selectChosenChampions,
-} from './store/chosenChampionsSlice';
+} from './chosenChampionsSlice';
 import PortraitCard from './PortraitCard';
-import { selectChampions } from './store/championSlice';
-import { selectSkinLines } from './store/skinLineSlice';
-import { selectColors } from './store/colorSlice';
-import ColorHoverLink from './ColorHoverLink';
+import { selectChampions } from '../champions/championSlice';
+import { selectSkinLines } from '../skins/skinLineSlice';
+import { selectColors } from '../chromas/colorSlice';
+import ColorHoverLink from '../chromas/ColorHoverLink';
 
 interface TabPanelProps {
   children?: React.ReactNode;

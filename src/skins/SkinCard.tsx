@@ -5,8 +5,8 @@ import {
   Box, Card, CardActionArea, CardContent, CardMedia, Grid, Typography,
 } from '@mui/material';
 import { useNavigate } from 'react-router-dom';
-import { useAppSelector } from './store/hooks';
-import { selectSkins } from './store/skinSlice';
+import { useAppSelector } from '../glue/hooks';
+import { selectSkins } from './skinSlice';
 
 const SkinCard = (props: any) => {
   const { id } = props;

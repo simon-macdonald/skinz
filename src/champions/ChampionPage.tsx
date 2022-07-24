@@ -3,9 +3,9 @@ import {
 } from '@mui/material';
 import React from 'react';
 import { useParams } from 'react-router-dom';
-import SkinCard from '../SkinCard';
-import { selectChampions } from '../store/championSlice';
-import { useAppSelector } from '../store/hooks';
+import SkinCard from '../skins/SkinCard';
+import { selectChampions } from './championSlice';
+import { useAppSelector } from '../glue/hooks';
 
 const ChampionPage = () => {
   const { id } = useParams();

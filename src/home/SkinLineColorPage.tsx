@@ -3,10 +3,10 @@ import {
 } from '@mui/material';
 import React from 'react';
 import { useParams } from 'react-router-dom';
-import { useAppSelector } from './store/hooks';
-import { selectSkinLines } from './store/skinLineSlice';
-import { selectSkins } from './store/skinSlice';
-import ChromaCard from './ChromaCard';
+import { useAppSelector } from '../glue/hooks';
+import { selectSkinLines } from '../skins/skinLineSlice';
+import { selectSkins } from '../skins/skinSlice';
+import ChromaCard from '../chromas/ChromaCard';
 
 const SkinLineColorPage = () => {
   const { id, color } = useParams();

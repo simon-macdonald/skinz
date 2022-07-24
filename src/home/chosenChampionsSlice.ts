@@ -1,7 +1,7 @@
 import { createAsyncThunk, createSlice, PayloadAction } from '@reduxjs/toolkit';
 import _ from 'lodash';
 import fetchEverything from './fetchEverything';
-import type { AppDispatch, RootState } from './store';
+import type { AppDispatch, RootState } from '../glue/store';
 
 export type FilterBy = 'skins' | 'chromas' | 'both';
 export type DisplayState = 'visible' | 'chosen' | 'hidden';

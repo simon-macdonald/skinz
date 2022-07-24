@@ -6,9 +6,9 @@ import {
 import { EntityId } from '@reduxjs/toolkit';
 import React from 'react';
 import { Link } from 'react-router-dom';
-import { clickChamp, clickTab, selectChosenChampions } from './store/chosenChampionsSlice';
-import { selectColors } from './store/colorSlice';
-import { useAppDispatch, useAppSelector } from './store/hooks';
+import { clickChamp, clickTab, selectChosenChampions } from '../home/chosenChampionsSlice';
+import { selectColors } from './colorSlice';
+import { useAppDispatch, useAppSelector } from '../glue/hooks';
 
 const ColorHoverLink = (props: { theme: EntityId }) => {
   const { theme } = props;
@@ -46,7 +46,7 @@ const ColorHoverLink = (props: { theme: EntityId }) => {
             backgroundColor: '#' + color.id.split('_')[0],
           }}
           >
-            &nbsp;
+            {}
           </Box>
         </Typography>
       </Link>

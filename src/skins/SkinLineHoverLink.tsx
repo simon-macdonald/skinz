@@ -5,10 +5,10 @@ import {
 import { EntityId } from '@reduxjs/toolkit';
 import React from 'react';
 import { Link } from 'react-router-dom';
-import { hoverAway, hoverOver } from './store/chosenChampionsSlice';
-import { useAppDispatch, useAppSelector } from './store/hooks';
-import { selectSkinLines } from './store/skinLineSlice';
-import { selectSkins } from './store/skinSlice';
+import { hoverAway, hoverOver } from '../home/chosenChampionsSlice';
+import { useAppDispatch, useAppSelector } from '../glue/hooks';
+import { selectSkinLines } from './skinLineSlice';
+import { selectSkins } from './skinSlice';
 
 const SkinThemeSet = (props: { theme: EntityId }) => {
   const { theme } = props;

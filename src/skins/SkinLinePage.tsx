@@ -3,9 +3,9 @@ import {
 } from '@mui/material';
 import React from 'react';
 import { useParams } from 'react-router-dom';
-import { useAppSelector } from './store/hooks';
+import { useAppSelector } from '../glue/hooks';
 import SkinCard from './SkinCard';
-import { selectSkinLines } from './store/skinLineSlice';
+import { selectSkinLines } from './skinLineSlice';
 
 const SkinLinePage = () => {
   const { id } = useParams();

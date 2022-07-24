@@ -1,9 +1,9 @@
 import { configureStore } from '@reduxjs/toolkit';
-import chosenChampionsReducer from './chosenChampionsSlice';
-import championsReducer from './championSlice';
-import skinLinesReducer from './skinLineSlice';
-import skinsReducer from './skinSlice';
-import colorsReducer from './colorSlice';
+import chosenChampionsReducer from '../home/chosenChampionsSlice';
+import championsReducer from '../champions/championSlice';
+import skinLinesReducer from '../skins/skinLineSlice';
+import skinsReducer from '../skins/skinSlice';
+import colorsReducer from '../chromas/colorSlice';
 
 export const store = configureStore({
   reducer: {

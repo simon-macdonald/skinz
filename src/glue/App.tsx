@@ -6,19 +6,17 @@ import {
 import {
   BrowserRouter, Route, Routes,
 } from 'react-router-dom';
-import SkinLinePage from './SkinLinePage';
-import HomePage from './HomePage';
-import AboutPage from './AboutPage';
-import NavBar from './NavBar';
-import SkinPage from './SkinPage';
-import MatchingPage from './MatchingPage';
-import SelectChampionsPage from './SelectChampionsPage';
-import { useAppDispatch, useAppSelector } from './store/hooks';
-import fetchEverything from './store/fetchEverything';
-import ChampionPage from './champion/ChampionPage';
-import { selectChampions } from './store/championSlice';
-import SkinLineColorPage from './SkinLineColorPage';
-import ColorPage from './ColorPage';
+import SkinLinePage from '../skins/SkinLinePage';
+import HomePage from '../home/HomePage';
+import AboutPage from '../home/AboutPage';
+import NavBar from '../home/NavBar';
+import SkinPage from '../skins/SkinPage';
+import { useAppDispatch, useAppSelector } from './hooks';
+import fetchEverything from '../home/fetchEverything';
+import ChampionPage from '../champions/ChampionPage';
+import { selectChampions } from '../champions/championSlice';
+import SkinLineColorPage from '../home/SkinLineColorPage';
+import ColorPage from '../chromas/ColorPage';
 
 const App = () => {
   const prefersDarkMode = useMediaQuery('(prefers-color-scheme: dark)');
@@ -50,12 +48,10 @@ const App = () => {
               <Route path="/" element={<HomePage />} />
               <Route path="/about" element={<AboutPage />} />
               <Route path="/champions/:id" element={<ChampionPage />} />
-              <Route path="/select" element={<SelectChampionsPage />} />
               <Route path="/skinLines/:id" element={<SkinLinePage />} />
               <Route path="/colors/:color/champions/:champions" element={<ColorPage />} />
               <Route path="/skinLines/:id/colors/:color" element={<SkinLineColorPage />} />
               <Route path="/skins/:id" element={<SkinPage />} />
-              <Route path="/matching" element={<MatchingPage />} />
             </Routes>
           </BrowserRouter>
         )}

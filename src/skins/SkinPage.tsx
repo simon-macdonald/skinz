@@ -4,11 +4,11 @@ import {
 } from '@mui/material';
 import React from 'react';
 import { Link, useParams } from 'react-router-dom';
-import ChromaCard from './ChromaCard';
+import ChromaCard from '../chromas/ChromaCard';
 import SkinCard from './SkinCard';
-import { useAppSelector } from './store/hooks';
-import { selectChampions } from './store/championSlice';
-import { selectSkins } from './store/skinSlice';
+import { useAppSelector } from '../glue/hooks';
+import { selectChampions } from '../champions/championSlice';
+import { selectSkins } from './skinSlice';
 
 const SkinPage = () => {
   const { id } = useParams();
