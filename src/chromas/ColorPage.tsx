@@ -7,15 +7,20 @@ import { useAppSelector } from '../glue/hooks';
 import { selectSkins } from '../skins/skinSlice';
 import ChromaCard from './ChromaCard';
 
-const SkinLineColorPage = () => {
+const ColorPage = () => {
   const { color, champions } = useParams();
 
   const skins = useAppSelector(selectSkins);
 
+  const skinLineIds = new Map<number, number>();
+
   const chromas = skins.ids
     .filter((id) => champions!.split('_').map((c) => +c).includes(Math.floor(+id / 1000)))
     .filter((id) => skins.entities[id]!.chromas)
-    .flatMap((id) => skins.entities[id]!.chromas)
+    .flatMap((id) => {
+      skins.entities[id]!.chromas.forEach((chroma) => skinLineIds.set(chroma.id, +id));
+      return skins.entities[id]!.chromas;
+    })
     .filter((chroma) => (`${chroma.colors[0]}_${chroma.colors[1]}`).replaceAll('#', '') === color);
 
   if (champions === '_') {
@@ -41,11 +46,17 @@ const SkinLineColorPage = () => {
       </Typography>
       <Grid container spacing={5} columns={3}>
         {chromas.map((chroma) => (
-          <ChromaCard name={chroma.name} chromaPath={chroma.chromaPath} key={chroma.id} />
+          <ChromaCard
+            name={chroma.name}
+            chromaPath={chroma.chromaPath}
+            skinLineId={skinLineIds.get(chroma.id)!}
+            color={(`${chroma.colors[0]}_${chroma.colors[1]}`).replaceAll('#', '')}
+            key={chroma.id}
+          />
         ))}
       </Grid>
     </Container>
   );
 };
 
-export default SkinLineColorPage;
+export default ColorPage;

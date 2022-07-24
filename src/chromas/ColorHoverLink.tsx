@@ -44,7 +44,7 @@ const ColorHoverLink = (props: { theme: EntityId }) => {
           backgroundColor: `#${color.id.split('_')[0]}`,
         }}
         >
-          {}
+          &nbsp;
         </Box>
       </Typography>
     </Link>

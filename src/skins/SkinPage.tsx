@@ -43,7 +43,13 @@ const SkinPage = () => {
         </Grid>
         {skin.chromas && skin.chromas
           .map((chroma) => (
-            <ChromaCard name={chroma.name} chromaPath={chroma.chromaPath} key={chroma.id} />
+            <ChromaCard
+              name={chroma.name}
+              chromaPath={chroma.chromaPath}
+              skinLineId={skin.skinLines[0].id}
+              color={(`${chroma.colors[0]}_${chroma.colors[1]}`).replaceAll('#', '')}
+              key={chroma.id}
+            />
           ))}
       </Grid>
     </Container>
