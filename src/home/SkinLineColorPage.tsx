@@ -13,7 +13,20 @@ const SkinLineColorPage = () => {
 
   const skinLines = useAppSelector(selectSkinLines);
   const skins = useAppSelector(selectSkins);
-  const skinLine = skinLines.entities[+id!]!;
+  const skinLine = skinLines.entities[+id!];
+
+  if (skinLine === undefined) {
+    return (
+      <Container>
+        <Toolbar>
+          {}
+        </Toolbar>
+        <Typography variant="h2">
+          This is a base skin. Feature TBD.
+        </Typography>
+      </Container>
+    );
+  }
 
   return (
     <Container>
