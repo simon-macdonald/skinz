@@ -18,7 +18,11 @@ const ColorPage = () => {
     .filter((id) => champions!.split('_').map((c) => +c).includes(Math.floor(+id / 1000)))
     .filter((id) => skins.entities[id]!.chromas)
     .flatMap((id) => {
-      skins.entities[id]!.chromas.forEach((chroma) => skinLineIds.set(chroma.id, skins.entities[id]!.skinLines[0].id));
+      skins.entities[id]!.chromas.forEach((chroma) => {
+        if (skins.entities[id]!.skinLines) {
+          skinLineIds.set(chroma.id, skins.entities[id]!.skinLines[0].id);
+        }
+      });
       return skins.entities[id]!.chromas;
     })
     .filter((chroma) => (`${chroma.colors[0]}_${chroma.colors[1]}`).replaceAll('#', '') === color);
