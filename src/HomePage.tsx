@@ -1,23 +1,66 @@
 import React from 'react';
 import './App.css';
 import {
-  Container, Divider, Drawer, Grid, Toolbar, Typography,
+  Box,
+  Container, Divider, Drawer, Grid, Tab, Tabs, Toolbar, Typography,
 } from '@mui/material';
-import SkinThemeSet from './SkinThemeSet';
-import { useAppSelector } from './store/hooks';
+import SkinThemeSet from './SkinLineHoverLink';
+import { useAppDispatch, useAppSelector } from './store/hooks';
 import {
+  clickChamp,
+  clickTab,
   selectChosenChampions,
 } from './store/chosenChampionsSlice';
 import PortraitCard from './PortraitCard';
 import { selectChampions } from './store/championSlice';
 import { selectSkinLines } from './store/skinLineSlice';
+import { selectColors } from './store/colorSlice';
+import ColorHoverLink from './ColorHoverLink';
+
+interface TabPanelProps {
+  children?: React.ReactNode;
+  index: number;
+  value: number;
+}
+
+function TabPanel(props: TabPanelProps) {
+  const { children, value, index, ...other } = props;
+
+  return (
+    <div
+      role="tabpanel"
+      hidden={value !== index}
+      id={`simple-tabpanel-${index}`}
+      aria-labelledby={`simple-tab-${index}`}
+      {...other}
+    >
+      {value === index && (
+        <Box sx={{ p: 3 }}>
+          <Typography>{children}</Typography>
+        </Box>
+      )}
+    </div>
+  );
+}
 
 const HomePage = () => {
+  const dispatch = useAppDispatch();
+
   const champions = useAppSelector(selectChampions);
   const skinLines = useAppSelector(selectSkinLines);
+  const colors = useAppSelector(selectColors);
   const chosenChampions = useAppSelector(selectChosenChampions);
 
-  const themes = chosenChampions.skinLines.length === 0 ? skinLines.ids : chosenChampions.skinLines;
+  const skinLinesDisplayed = chosenChampions.skinLines.length === 0 ? skinLines.ids : chosenChampions.skinLines;
+  const colorsDisplayed = chosenChampions.colors.length === 0 ? colors.ids : chosenChampions.colors;
+
+  const [value, setValue] = React.useState(0);
+
+  const handleChange = (event: React.SyntheticEvent, newValue: number) => {
+    setValue(newValue);
+    dispatch(clickTab(newValue));
+    dispatch(clickChamp(-1));
+  };
 
   return (
     <Container>
@@ -49,11 +92,20 @@ const HomePage = () => {
         <Toolbar>
           {}
         </Toolbar>
-        <Typography variant="h4">
-          Skin Lines
-        </Typography>
-        <Divider />
-        {themes.map((skinLine) => <SkinThemeSet theme={skinLine} key={skinLine} />)}
+        <Box sx={{ width: '100%' }}>
+      <Box sx={{ borderBottom: 1, borderColor: 'divider' }}>
+        <Tabs value={value} onChange={handleChange} aria-label="basic tabs example">
+          <Tab label="Skin Lines"  />
+          <Tab label="Colors"  />
+        </Tabs>
+      </Box>
+      <TabPanel value={value} index={0}>
+        {skinLinesDisplayed.map((skinLine) => <SkinThemeSet theme={skinLine} key={skinLine} />)}
+      </TabPanel>
+      <TabPanel value={value} index={1}>
+        {colorsDisplayed.map((color) => <ColorHoverLink theme={color} key={color} />)}
+      </TabPanel>
+    </Box>
       </Drawer>
     </Container>
   );

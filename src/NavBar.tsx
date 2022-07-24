@@ -18,30 +18,6 @@ const NavBar = () => (
       </Link>
       &nbsp;&nbsp;&nbsp;&nbsp;
       <Link
-        to="/select"
-        className="button muted-button"
-        style={{
-          textDecoration: 'none',
-        }}
-      >
-        <Typography variant="h6" component="div" color="white">
-          Select
-        </Typography>
-      </Link>
-      &nbsp;&nbsp;&nbsp;&nbsp;
-      <Link
-        to="/matching"
-        className="button muted-button"
-        style={{
-          textDecoration: 'none',
-        }}
-      >
-        <Typography variant="h6" component="div" color="white">
-          Chromas
-        </Typography>
-      </Link>
-      &nbsp;&nbsp;&nbsp;&nbsp;
-      <Link
         to="/about"
         className="button muted-button"
         style={{

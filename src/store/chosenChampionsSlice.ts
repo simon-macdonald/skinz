@@ -48,6 +48,12 @@ export const chosenChampionsSlice = createSlice({
     hoverAway: (state) => {
       state.hoverSkinLine = 0;
     },
+    clickTab: (state, action: PayloadAction<number>) => {
+      state.filterBy
+        = action.payload === 0
+          ? 'skins'
+          : 'chromas';
+    },
   },
   extraReducers: (builder) => {
     builder
@@ -72,7 +78,7 @@ export const chosenChampionsSlice = createSlice({
           state.displays = new Array(state.displays.length);
           rootState.champions.ids.forEach((c) => state.displays[+c] = 'visible');
           state.skinLines = [];
-          state.colors = []
+          state.colors = [];
           return;
         }
 
@@ -96,13 +102,11 @@ export const chosenChampionsSlice = createSlice({
           });
         }
 
-
-        // need to hydrate the ColorItem stuff and the ChampionItem stuff
         if (state.filterBy === 'chromas') {
-          const colorsPerChamp = state.champions.map((id) => rootState.champions.entities[id]!.colors);
+          const colorsPerChamp = state.champions.map((id) => Object.keys(rootState.champions.entities[id]!.colors));
           state.colors = _.intersection(...colorsPerChamp);
-          const commoncolors = state.colors.map((colorId) => rootState.colors.entities[colorId]!);
-          const visibleChampions = commoncolors.flatMap((color) => Object.keys(color.chromas)).map((id) => +id);
+          const commonColors = state.colors.map((colorId) => rootState.colors.entities[colorId]!);
+          const visibleChampions = commonColors.flatMap((color) => Object.keys(color.chromas)).map((id) => +id);
           rootState.champions.ids.forEach((c) => {
             if (state.displays[+c] !== 'chosen') {
               state.displays[+c] = visibleChampions.includes(+c) ? 'visible' : 'hidden';
@@ -113,7 +117,7 @@ export const chosenChampionsSlice = createSlice({
   },
 });
 
-export const { hoverOver, hoverAway } = chosenChampionsSlice.actions;
+export const { hoverOver, hoverAway, clickTab } = chosenChampionsSlice.actions;
 
 export const selectChosenChampions = (state: RootState) => state.chosenChampions;
 
