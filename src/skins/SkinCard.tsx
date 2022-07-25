@@ -1,8 +1,6 @@
 import React from 'react';
 import {
-  Avatar,
-  Badge,
-  Box, Card, CardActionArea, CardContent, CardMedia, Grid, Typography,
+  Card, CardActionArea, CardContent, CardMedia, Grid, Typography,
 } from '@mui/material';
 import { useNavigate } from 'react-router-dom';
 import { useAppSelector } from '../glue/hooks';
@@ -18,37 +16,30 @@ const SkinCard = (props: any) => {
 
   return (
     <Grid item xs={1}>
-      <Badge
-        anchorOrigin={{
-          vertical: 'bottom',
-          horizontal: 'right',
-        }}
-        badgeContent={
-          skin.chromas
-            ? <Avatar sx={{ width: 24, height: 24 }} src="https://raw.communitydragon.org/latest/plugins/rcp-fe-lol-champ-select/global/default/images/config/button-chroma.png" />
-            : null
-        }
-      >
-        <Card>
-          <CardActionArea onClick={() => navigate(`/skins/${id}`)}>
-            <CardMedia
-              component="img"
-              image={`https://raw.communitydragon.org/latest/plugins/rcp-be-lol-game-data/global/default/${skin.splashPath.replace('/lol-game-data/assets/', '')}`}
-            />
-            <CardContent>
-              <Typography component="div" noWrap align="center">
-                <Box sx={{
-                  fontWeight: 'bold',
-                  textTransform: 'capitalize',
-                }}
-                >
-                  {skin.name}
-                </Box>
-              </Typography>
-            </CardContent>
-          </CardActionArea>
-        </Card>
-      </Badge>
+      <Card>
+        <CardActionArea onClick={() => navigate(`/skins/${id}`)}>
+          <CardMedia
+            component="img"
+            image={`https://raw.communitydragon.org/latest/plugins/rcp-be-lol-game-data/global/default/${skin.splashPath.replace('/lol-game-data/assets/', '')}`}
+          />
+          <CardContent>
+            <Typography
+              component="div"
+              noWrap
+              align="center"
+              sx={skin.chromas ? {
+                fontWeight: 'bold',
+                backgroundImage: 'linear-gradient(to left, violet, indigo, blue, green, yellow, orange, red)',
+                webkitBackgroundClip: 'text',
+                backgroundClip: 'text',
+                color: 'transparent',
+              } : { fontWeight: 'bold' }}
+            >
+              {skin.name}
+            </Typography>
+          </CardContent>
+        </CardActionArea>
+      </Card>
     </Grid>
   );
 };

@@ -77,9 +77,7 @@ const HomePage = () => {
           ))}
         {display.champions.length > 0 && <PortraitCard id={-1} />}
       </Grid>
-      <Typography variant="h5">
-        skinz.lol isn&apos;t endorsed by Riot Games and doesn&apos;t reflect the views or opinions of Riot Games or anyone officially involved in producing or managing Riot Games properties. Riot Games, and all associated properties are trademarks or registered trademarks of Riot Games, Inc.
-      </Typography>
+      {display.showDrawer && (
       <Drawer
         sx={{
           flexShrink: 0,
@@ -108,6 +106,7 @@ const HomePage = () => {
           </TabPanel>
         </Box>
       </Drawer>
+      )}
     </Container>
   );
 };

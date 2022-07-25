@@ -33,6 +33,10 @@ const AboutPage = () => {
         <Typography variant="h4" paragraph>
           This site was built with loads of support from <a href="https://www.communitydragon.org/">Community Dragon</a>.
         </Typography>
+        <Divider />
+        <Typography variant="h4">
+          skinz.lol isn&apos;t endorsed by Riot Games and doesn&apos;t reflect the views or opinions of Riot Games or anyone officially involved in producing or managing Riot Games properties. Riot Games, and all associated properties are trademarks or registered trademarks of Riot Games, Inc.
+        </Typography>
       </>
     </Container>
   );

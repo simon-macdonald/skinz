@@ -14,6 +14,7 @@ export interface ChosenChampionsState {
   filterBy: FilterBy;
   hoverSkinLine: number;
   loading: 'idle' | 'pending' | 'fulfilled';
+  showDrawer: boolean;
 }
 
 const initialState: ChosenChampionsState = {
@@ -24,6 +25,7 @@ const initialState: ChosenChampionsState = {
   filterBy: 'skins',
   hoverSkinLine: 0,
   loading: 'idle',
+  showDrawer: true,
 };
 
 export const clickChamp = createAsyncThunk<
@@ -53,6 +55,9 @@ export const displaySlice = createSlice({
         = action.payload === 0
           ? 'skins'
           : 'chromas';
+    },
+    showDrawer: (state) => {
+      state.showDrawer = !state.showDrawer;
     },
   },
   extraReducers: (builder) => {
@@ -117,7 +122,9 @@ export const displaySlice = createSlice({
   },
 });
 
-export const { hoverOver, hoverAway, clickTab } = displaySlice.actions;
+export const {
+  hoverOver, hoverAway, clickTab, showDrawer,
+} = displaySlice.actions;
 
 export const selectDisplay = (state: RootState) => state.display;
 
