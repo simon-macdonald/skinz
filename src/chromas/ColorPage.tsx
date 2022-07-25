@@ -15,7 +15,7 @@ const ColorPage = () => {
   const skinLineIds = new Map<number, number>();
 
   const chromas = skins.ids
-    .filter((id) => champions!.split('_').map((c) => +c).includes(Math.floor(+id / 1000)))
+    .filter((id) => champions === '_' || champions!.split('_').map((c) => +c).includes(Math.floor(+id / 1000)))
     .filter((id) => skins.entities[id]!.chromas)
     .flatMap((id) => {
       skins.entities[id]!.chromas.forEach((chroma) => {
@@ -27,19 +27,6 @@ const ColorPage = () => {
     })
     .filter((chroma) => (`${chroma.colors[0]}_${chroma.colors[1]}`).replaceAll('#', '') === color);
 
-  if (champions === '_') {
-    return (
-      <Container>
-        <Toolbar>
-          {}
-        </Toolbar>
-        <Typography variant="h2">
-          Select some champions before clicking that link.
-        </Typography>
-      </Container>
-    );
-  }
-
   return (
     <Container>
       <Toolbar>
@@ -49,7 +36,7 @@ const ColorPage = () => {
         {color}
       </Typography>
       <Grid container spacing={5} columns={3}>
-        {chromas.map((chroma) => (
+        {chromas.slice(0, 20).map((chroma) => (
           <ChromaCard
             name={chroma.name}
             chromaPath={chroma.chromaPath}
