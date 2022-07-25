@@ -41,7 +41,7 @@ const ColorHoverLink = (props: { theme: EntityId }) => {
         <Box sx={{
           fontWeight: 'bold',
           textTransform: 'capitalize',
-          backgroundColor: `#${color.id.split('_')[0]}`,
+          backgroundImage: `linear-gradient(to right, #${color.id.split('_')[0]}, #${color.id.split('_')[1]})`,
         }}
         >
           &nbsp;
