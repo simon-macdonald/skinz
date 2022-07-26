@@ -60,7 +60,7 @@ const BrowseDrawer = () => {
     dispatch(clickChamp(-1));
   };
 
-  if (!display) {
+  if (!display.showDrawer) {
     return null;
   }
 
