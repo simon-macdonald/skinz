@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useRef } from 'react';
 import '../glue/App.css';
 import {
   Box,
@@ -67,8 +67,10 @@ const BrowseDrawer = () => {
   return (
     <Drawer
       sx={{
+        width: 240,
         flexShrink: 0,
         '& .MuiDrawer-paper': {
+          width: 240,
           boxSizing: 'border-box',
         },
       }}
@@ -78,7 +80,7 @@ const BrowseDrawer = () => {
       <Toolbar>
         {}
       </Toolbar>
-      <Box sx={{ width: '100%' }}>
+      <Box sx={{ overflow: 'auto' }}>
         <Box sx={{ borderBottom: 1, borderColor: 'divider' }}>
           <Tabs value={value} onChange={handleChange} aria-label="basic tabs example">
             <Tab label="Skin Lines" />

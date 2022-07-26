@@ -51,6 +51,7 @@ const SkinLineHoverLink = (props: { theme: EntityId }) => {
           onMouseEnter={handlePopoverOpen}
           onMouseLeave={handlePopoverClose}
           component="div"
+          noWrap
           color={open ? 'secondary.main' : 'primary.main'}
         >
           <Box sx={{

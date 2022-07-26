@@ -1,6 +1,7 @@
 import React, { useEffect } from 'react';
 import './App.css';
 import {
+  Box,
   createTheme, CssBaseline, ThemeProvider, useMediaQuery,
 } from '@mui/material';
 import {
@@ -45,19 +46,21 @@ const App = () => {
   return (
     <ThemeProvider theme={theme}>
       <CssBaseline />
-      <BrowserRouter>
-        <NavBar />
-        <BrowseDrawer />
-        <Routes>
-          <Route path="/" element={<HomePage />} />
-          <Route path="/about" element={<AboutPage />} />
-          <Route path="/champions/:id" element={<ChampionPage />} />
-          <Route path="/skinLines/:id" element={<SkinLinePage />} />
-          <Route path="/colors/:color/champions/:champions" element={<ColorPage />} />
-          <Route path="/skinLines/:id/colors/:color" element={<SkinLineColorPage />} />
-          <Route path="/skins/:id" element={<SkinPage />} />
-        </Routes>
-      </BrowserRouter>
+      <Box sx={{ display: 'flex' }}>
+        <BrowserRouter>
+          <NavBar />
+          <BrowseDrawer />
+          <Routes>
+            <Route path="/" element={<HomePage />} />
+            <Route path="/about" element={<AboutPage />} />
+            <Route path="/champions/:id" element={<ChampionPage />} />
+            <Route path="/skinLines/:id" element={<SkinLinePage />} />
+            <Route path="/colors/:color/champions/:champions" element={<ColorPage />} />
+            <Route path="/skinLines/:id/colors/:color" element={<SkinLineColorPage />} />
+            <Route path="/skins/:id" element={<SkinPage />} />
+          </Routes>
+        </BrowserRouter>
+      </Box>
     </ThemeProvider>
   );
 };
