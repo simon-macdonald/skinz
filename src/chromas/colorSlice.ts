@@ -11,7 +11,7 @@ export interface ColorItem {
 }
 
 const colorAdapter = createEntityAdapter<ColorItem>({
-  sortComparer: (a, b) => Object.keys(a.chromas).length - Object.keys(b.chromas).length,
+  sortComparer: (a, b) => Object.keys(b.chromas).length - Object.keys(a.chromas).length,
 });
 
 const initialState = colorAdapter.getInitialState({ loading: 'idle' });
