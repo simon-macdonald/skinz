@@ -22,7 +22,7 @@ const SkinLineColorPage = () => {
           {}
         </Toolbar>
         <Typography variant="h2">
-          This is a base skin. Feature TBD.
+          This is a bug.
         </Typography>
       </Container>
     );
