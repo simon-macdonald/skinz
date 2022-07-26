@@ -3,6 +3,7 @@ import {
   Card, CardActionArea, CardContent, CardMedia, Grid, Typography,
 } from '@mui/material';
 import { useNavigate } from 'react-router-dom';
+import { blue, green, indigo, orange, purple, red, yellow } from '@mui/material/colors';
 import { useAppSelector } from '../glue/hooks';
 import { selectSkins } from './skinSlice';
 
@@ -29,7 +30,7 @@ const SkinCard = (props: any) => {
               align="center"
               sx={skin.chromas ? {
                 fontWeight: 'bold',
-                backgroundImage: 'linear-gradient(to left, violet, indigo, blue, green, yellow, orange, red)',
+                backgroundImage: `linear-gradient(to left, ${red[500]}, ${orange[500]}, ${yellow[500]}, ${green[500]}, ${blue[500]}, ${indigo[500]}, ${purple[500]})`,
                 webkitBackgroundClip: 'text',
                 backgroundClip: 'text',
                 color: 'transparent',

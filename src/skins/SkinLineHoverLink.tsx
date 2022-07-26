@@ -5,6 +5,7 @@ import {
 import { EntityId } from '@reduxjs/toolkit';
 import React from 'react';
 import { Link } from 'react-router-dom';
+import { blue, green, indigo, orange, purple, red, yellow } from '@mui/material/colors';
 import { hoverAway, hoverOver } from '../home/displaySlice';
 import { useAppDispatch, useAppSelector } from '../glue/hooks';
 import { selectSkinLines } from './skinLineSlice';
@@ -81,7 +82,27 @@ const SkinLineHoverLink = (props: { theme: EntityId }) => {
         onClose={handlePopoverClose}
         disableRestoreFocus
       >
-        {Object.values(skinLine.skins).map((skin) => skins.entities[skin]?.name).map((skinName) => <Typography sx={{ p: 1 }} key={skinName}>{skinName}</Typography>)}
+        {Object
+          .values(skinLine.skins)
+          .map((skin) => skins.entities[skin]!)
+          .map((skin) =>
+            <Typography
+              sx={skin.chromas ? {
+                p: 1,
+                fontWeight: 'bold',
+                backgroundImage: `linear-gradient(to left, ${red[500]}, ${orange[500]}, ${yellow[500]}, ${green[500]}, ${blue[500]}, ${indigo[500]}, ${purple[500]})`,
+                webkitBackgroundClip: 'text',
+                backgroundClip: 'text',
+                color: 'transparent',
+              } : {
+                p: 1,
+                fontWeight: 'bold'
+              }}
+              key={skin.name}
+            >
+              {skin.name}
+            </Typography>
+          )}
       </Popover>
     </>
   );
