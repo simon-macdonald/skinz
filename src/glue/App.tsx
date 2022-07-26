@@ -38,25 +38,26 @@ const App = () => {
     },
   });
 
+  if (isLoading) {
+    return null;
+  }
+
   return (
     <ThemeProvider theme={theme}>
       <CssBaseline />
-      {isLoading ? null
-        : (
-          <BrowserRouter>
-            <NavBar />
-            <BrowseDrawer />
-            <Routes>
-              <Route path="/" element={<HomePage />} />
-              <Route path="/about" element={<AboutPage />} />
-              <Route path="/champions/:id" element={<ChampionPage />} />
-              <Route path="/skinLines/:id" element={<SkinLinePage />} />
-              <Route path="/colors/:color/champions/:champions" element={<ColorPage />} />
-              <Route path="/skinLines/:id/colors/:color" element={<SkinLineColorPage />} />
-              <Route path="/skins/:id" element={<SkinPage />} />
-            </Routes>
-          </BrowserRouter>
-        )}
+      <BrowserRouter>
+        <NavBar />
+        <BrowseDrawer />
+        <Routes>
+          <Route path="/" element={<HomePage />} />
+          <Route path="/about" element={<AboutPage />} />
+          <Route path="/champions/:id" element={<ChampionPage />} />
+          <Route path="/skinLines/:id" element={<SkinLinePage />} />
+          <Route path="/colors/:color/champions/:champions" element={<ColorPage />} />
+          <Route path="/skinLines/:id/colors/:color" element={<SkinLineColorPage />} />
+          <Route path="/skins/:id" element={<SkinPage />} />
+        </Routes>
+      </BrowserRouter>
     </ThemeProvider>
   );
 };
