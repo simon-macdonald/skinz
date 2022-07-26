@@ -5,14 +5,12 @@ import {
 import { EntityId } from '@reduxjs/toolkit';
 import React from 'react';
 import { Link } from 'react-router-dom';
-import { clickChamp, clickTab, selectDisplay } from '../home/displaySlice';
+import { selectDisplay } from '../home/displaySlice';
 import { selectColors } from './colorSlice';
-import { useAppDispatch, useAppSelector } from '../glue/hooks';
+import { useAppSelector } from '../glue/hooks';
 
 const ColorHoverLink = (props: { theme: EntityId }) => {
   const { theme } = props;
-
-  const dispatch = useAppDispatch();
 
   const colors = useAppSelector(selectColors);
   const color = colors.entities[theme]!;
@@ -27,10 +25,6 @@ const ColorHoverLink = (props: { theme: EntityId }) => {
     <Link
       to={`/colors/${theme}/champions/${championsUrlArg}`}
       className="button muted-button"
-      onClick={() => {
-        dispatch(clickChamp(-1));
-        dispatch(clickTab(0));
-      }}
       style={{
         textDecoration: 'none',
       }}

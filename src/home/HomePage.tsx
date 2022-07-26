@@ -1,67 +1,18 @@
 import React from 'react';
 import '../glue/App.css';
 import {
-  Box,
-  Container, Drawer, Grid, Tab, Tabs, Toolbar, Typography,
+  Container, Grid, Toolbar,
 } from '@mui/material';
-import SkinLineHoverLink from '../skins/SkinLineHoverLink';
-import { useAppDispatch, useAppSelector } from '../glue/hooks';
+import { useAppSelector } from '../glue/hooks';
 import {
-  clickChamp,
-  clickTab,
   selectDisplay,
 } from './displaySlice';
 import PortraitCard from './PortraitCard';
 import { selectChampions } from '../champions/championSlice';
-import { selectSkinLines } from '../skins/skinLineSlice';
-import { selectColors } from '../chromas/colorSlice';
-import ColorHoverLink from '../chromas/ColorHoverLink';
-
-interface TabPanelProps {
-  children: React.ReactNode;
-  index: number;
-  value: number;
-}
-
-const TabPanel = (props: TabPanelProps) => {
-  const {
-    children, value, index,
-  } = props;
-
-  return (
-    <div
-      role="tabpanel"
-      hidden={value !== index}
-      id={`simple-tabpanel-${index}`}
-      aria-labelledby={`simple-tab-${index}`}
-    >
-      {value === index && (
-        <Box sx={{ p: 3 }}>
-          <Typography>{children}</Typography>
-        </Box>
-      )}
-    </div>
-  );
-};
 
 const HomePage = () => {
-  const dispatch = useAppDispatch();
-
   const champions = useAppSelector(selectChampions);
-  const skinLines = useAppSelector(selectSkinLines);
-  const colors = useAppSelector(selectColors);
   const display = useAppSelector(selectDisplay);
-
-  const skinLinesDisplayed = display.skinLines.length === 0 ? skinLines.ids : display.skinLines;
-  const colorsDisplayed = display.colors.length === 0 ? colors.ids : display.colors;
-
-  const [value, setValue] = React.useState(0);
-
-  const handleChange = (event: React.SyntheticEvent, newValue: number) => {
-    setValue(newValue);
-    dispatch(clickTab(newValue));
-    dispatch(clickChamp(-1));
-  };
 
   return (
     <Container>
@@ -77,36 +28,6 @@ const HomePage = () => {
           ))}
         {display.champions.length > 0 && <PortraitCard id={-1} />}
       </Grid>
-      {display.showDrawer && (
-      <Drawer
-        sx={{
-          flexShrink: 0,
-          '& .MuiDrawer-paper': {
-            boxSizing: 'border-box',
-          },
-        }}
-        variant="permanent"
-        anchor="left"
-      >
-        <Toolbar>
-          {}
-        </Toolbar>
-        <Box sx={{ width: '100%' }}>
-          <Box sx={{ borderBottom: 1, borderColor: 'divider' }}>
-            <Tabs value={value} onChange={handleChange} aria-label="basic tabs example">
-              <Tab label="Skin Lines" />
-              <Tab label="Colors" />
-            </Tabs>
-          </Box>
-          <TabPanel value={value} index={0}>
-            {skinLinesDisplayed.map((skinLine) => <SkinLineHoverLink theme={skinLine} key={skinLine} />)}
-          </TabPanel>
-          <TabPanel value={value} index={1}>
-            {colorsDisplayed.map((color) => <ColorHoverLink theme={color} key={color} />)}
-          </TabPanel>
-        </Box>
-      </Drawer>
-      )}
     </Container>
   );
 };

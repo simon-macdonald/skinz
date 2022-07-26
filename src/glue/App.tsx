@@ -17,6 +17,7 @@ import ChampionPage from '../champions/ChampionPage';
 import { selectChampions } from '../champions/championSlice';
 import SkinLineColorPage from '../home/SkinLineColorPage';
 import ColorPage from '../chromas/ColorPage';
+import BrowseDrawer from '../home/BrowseDrawer';
 
 const App = () => {
   const prefersDarkMode = useMediaQuery('(prefers-color-scheme: dark)');
@@ -44,6 +45,7 @@ const App = () => {
         : (
           <BrowserRouter>
             <NavBar />
+            <BrowseDrawer />
             <Routes>
               <Route path="/" element={<HomePage />} />
               <Route path="/about" element={<AboutPage />} />
