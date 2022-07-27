@@ -90,7 +90,7 @@ const SkinLineHoverLink = (props: { theme: EntityId }) => {
               sx={skin.chromas ? {
                 p: 1,
                 fontWeight: 'bold',
-                backgroundImage: `linear-gradient(to left, ${red[500]}, ${orange[500]}, ${yellow[500]}, ${green[500]}, ${blue[500]}, ${indigo[500]}, ${purple[500]})`,
+                backgroundImage: `linear-gradient(to left, ${[red, orange, yellow, green, blue, indigo, purple].map((color) => color[200]).join(', ')})`,
                 webkitBackgroundClip: 'text',
                 backgroundClip: 'text',
                 color: 'transparent',
