@@ -31,6 +31,10 @@ const AboutPage = () => {
         ))}
         <Divider />
         <Typography variant="h4" paragraph>
+          Join the <a href="https://discord.gg/psgphuFnhe">Discord</a> if you have ideas.
+        </Typography>
+        <Divider />
+        <Typography variant="h4" paragraph>
           This site was built with loads of support from <a href="https://www.communitydragon.org/">Community Dragon</a>.
         </Typography>
         <Divider />
