@@ -46,7 +46,7 @@ const SkinPage = () => {
             <ChromaCard
               name={chroma.name}
               chromaPath={chroma.chromaPath}
-              skinLineId={skin.skinLines[0].id}
+              skinLineId={skin.skinLines && skin.skinLines[0].id}
               color={(`${chroma.colors[0]}_${chroma.colors[1]}`).replaceAll('#', '')}
               key={chroma.id}
             />

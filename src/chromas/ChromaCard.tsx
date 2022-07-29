@@ -5,7 +5,7 @@ import {
 import { useNavigate } from 'react-router-dom';
 import getAssetUrl from '../urls';
 
-const ChromaCard = (props: { name: string, chromaPath: string, skinLineId: number, color: string, }) => {
+const ChromaCard = (props: { name: string, chromaPath: string, skinLineId?: number, color: string, }) => {
   const {
     name, chromaPath, skinLineId, color,
   } = props;
@@ -15,7 +15,11 @@ const ChromaCard = (props: { name: string, chromaPath: string, skinLineId: numbe
   return (
     <Grid item xs={1}>
       <Card>
-        <CardActionArea onClick={() => navigate(`/skinLines/${skinLineId}/colors/${color}`)}>
+        <CardActionArea onClick={() => {
+          if (skinLineId) {
+            navigate(`/skinLines/${skinLineId}/colors/${color}`);
+          }
+        }}>
           <CardMedia
             component="img"
             image={getAssetUrl(chromaPath)}

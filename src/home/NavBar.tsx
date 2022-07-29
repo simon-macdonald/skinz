@@ -23,7 +23,7 @@ const NavBar = () => {
           }}
         >
           <Typography variant="h6" component="div" color="white">
-            Home
+            Champions
           </Typography>
         </Link>
       &nbsp;&nbsp;&nbsp;&nbsp;
