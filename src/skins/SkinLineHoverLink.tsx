@@ -1,11 +1,13 @@
 import {
   Box,
-  Popover, Typography,
+  Popover, Typography, useMediaQuery,
 } from '@mui/material';
 import { EntityId } from '@reduxjs/toolkit';
 import React from 'react';
 import { Link } from 'react-router-dom';
-import { blue, green, indigo, orange, purple, red, yellow } from '@mui/material/colors';
+import {
+  blue, green, indigo, orange, purple, red, yellow,
+} from '@mui/material/colors';
 import { hoverAway, hoverOver } from '../home/displaySlice';
 import { useAppDispatch, useAppSelector } from '../glue/hooks';
 import { selectSkinLines } from './skinLineSlice';
@@ -19,6 +21,9 @@ const SkinLineHoverLink = (props: { theme: EntityId }) => {
   const skinLine = skinLines.entities[theme]!;
 
   const dispatch = useAppDispatch();
+
+  const prefersDarkMode = useMediaQuery('(prefers-color-scheme: dark)');
+  const rainbowShade = prefersDarkMode ? 200 : 900;
 
   const [anchorEl, setAnchorEl] = React.useState<HTMLElement | null>(null);
 
@@ -85,24 +90,24 @@ const SkinLineHoverLink = (props: { theme: EntityId }) => {
         {Object
           .values(skinLine.skins)
           .map((skin) => skins.entities[skin]!)
-          .map((skin) =>
+          .map((skin) => (
             <Typography
               sx={skin.chromas ? {
                 p: 1,
                 fontWeight: 'bold',
-                backgroundImage: `linear-gradient(to left, ${[red, orange, yellow, green, blue, indigo, purple].map((color) => color[200]).join(', ')})`,
+                backgroundImage: `linear-gradient(to left, ${[red, orange, yellow, green, blue, indigo, purple].map((color) => color[rainbowShade]).join(', ')})`,
                 webkitBackgroundClip: 'text',
                 backgroundClip: 'text',
                 color: 'transparent',
               } : {
                 p: 1,
-                fontWeight: 'bold'
+                fontWeight: 'bold',
               }}
               key={skin.name}
             >
               {skin.name}
             </Typography>
-          )}
+          ))}
       </Popover>
     </>
   );
