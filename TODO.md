@@ -1,3 +1,5 @@
+Make dark mode toggle.
+
 Hardcode some better grids for phone and desktop.
 
 Get rid of the container for xl screens.
