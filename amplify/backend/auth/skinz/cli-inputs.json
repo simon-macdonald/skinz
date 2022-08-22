@@ -1,0 +1,12 @@
+{
+  "version": "1",
+  "cognitoConfig": {
+    "identityPoolName": "skinz_identitypool_45ef6e2f",
+    "allowUnauthenticatedIdentities": true,
+    "authSelections": "identityPoolOnly",
+    "resourceName": "skinz",
+    "sharedId": "45ef6e2f",
+    "serviceName": "Cognito",
+    "useDefault": "manual"
+  }
+}
