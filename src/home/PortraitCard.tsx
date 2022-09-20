@@ -9,7 +9,15 @@ import { selectChampions } from '../champions/championSlice';
 import { selectSkins } from '../skins/skinSlice';
 import getAssetUrl from '../urls';
 
-const PortraitCard = (props: { id: number }) => {
+export interface GridItemSizes {
+  xs: number,
+  sm: number,
+  md: number,
+  lg: number,
+  xl: number,
+}
+
+const PortraitCard = (props: { id: number, sizes: GridItemSizes }) => {
   const champions = useAppSelector(selectChampions);
   const skinLines = useAppSelector(selectSkinLines);
   const skins = useAppSelector(selectSkins);
@@ -17,7 +25,7 @@ const PortraitCard = (props: { id: number }) => {
   const champs = useAppSelector(selectDisplay);
   const dispatch = useAppDispatch();
 
-  const { id } = props;
+  const { id, sizes } = props;
   const champion = champions.entities[id]!;
   const skinLine: SkinLineItem | null
     = champs.hoverSkinLine === 0
@@ -25,7 +33,7 @@ const PortraitCard = (props: { id: number }) => {
       : skinLines.entities[champs.hoverSkinLine]!;
 
   return (
-    <Grid item xs={30} sm={20} md={12} lg={10} xl={6}>
+    <Grid item xs={sizes.xs} sm={sizes.sm} md={sizes.md} lg={sizes.lg} xl={sizes.xl}>
       <Card>
         <CardActionArea onClick={() => {
           dispatch(clickChamp(id));

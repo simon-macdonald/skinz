@@ -92,6 +92,10 @@ export const displaySlice = createSlice({
             ? state.champions.filter((c) => c !== champClicked)
             : [...state.champions, champClicked];
 
+        if (state.champions.length === 6) {
+          state.champions = state.champions.slice(1);
+        }
+
         state.displays = new Array(state.displays.length);
         state.champions.forEach((c) => state.displays[c] = 'chosen');
 

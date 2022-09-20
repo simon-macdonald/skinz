@@ -1,0 +1,21 @@
+{
+    "appName": "skinz",
+    "roleName": "pinpointLambdaRole733163ed",
+    "cloudformationPolicyName": "cloudformationPolicy733163ed",
+    "cloudWatchPolicyName": "cloudWatchPolicy733163ed",
+    "pinpointPolicyName": "pinpointPolicy733163ed",
+    "authPolicyName": "pinpoint_amplify_733163ed",
+    "unauthPolicyName": "pinpoint_amplify_733163ed",
+    "authRoleName": {
+        "Ref": "AuthRoleName"
+    },
+    "unauthRoleName": {
+        "Ref": "UnauthRoleName"
+    },
+    "authRoleArn": {
+        "Fn::GetAtt": [
+            "AuthRole",
+            "Arn"
+        ]
+    }
+}
