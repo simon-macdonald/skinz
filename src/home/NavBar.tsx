@@ -2,7 +2,8 @@ import {
   AppBar, Button, Toolbar, Typography,
 } from '@mui/material';
 import React from 'react';
-import { Link } from 'react-router-dom';
+import { Link as LinkReactRouter } from 'react-router-dom';
+import Link from '@mui/material/Link';
 import ExpandLessIcon from '@mui/icons-material/ExpandLess';
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 import { useAppDispatch, useAppSelector } from '../glue/hooks';
@@ -15,7 +16,7 @@ const NavBar = () => {
   return (
     <AppBar position="fixed" sx={{ zIndex: (theme) => theme.zIndex.drawer + 1 }} color="primary">
       <Toolbar variant="dense">
-        <Link
+        <LinkReactRouter
           to="/"
           className="button muted-button"
           style={{
@@ -25,18 +26,32 @@ const NavBar = () => {
           <Typography variant="h6" component="div" color="white">
             Champions
           </Typography>
-        </Link>
+        </LinkReactRouter>
+      &nbsp;&nbsp;&nbsp;&nbsp;
+        <LinkReactRouter
+          to="/about"
+          className="button muted-button"
+          style={{
+            textDecoration: 'none',
+          }}
+        >
+          <Typography variant="h6" component="div" color="white">
+            About
+          </Typography>
+        </LinkReactRouter>
       &nbsp;&nbsp;&nbsp;&nbsp;
         <Link
-          to="/about"
+          href="https://discord.gg/PsE3Hjvx"
           className="button muted-button"
           style={{
             textDecoration: 'none',
             flexGrow: 1,
           }}
+          target="_blank"
+          rel="noopener noreferrer"
         >
           <Typography variant="h6" component="div" color="white">
-            About
+            Disco
           </Typography>
         </Link>
       &nbsp;&nbsp;&nbsp;&nbsp;
