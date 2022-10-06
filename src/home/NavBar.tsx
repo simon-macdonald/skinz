@@ -4,6 +4,7 @@ import {
 import React from 'react';
 import { Link as LinkReactRouter } from 'react-router-dom';
 import Link from '@mui/material/Link';
+import LinkIcon from '@mui/icons-material/Link';
 import ExpandLessIcon from '@mui/icons-material/ExpandLess';
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 import { useAppDispatch, useAppSelector } from '../glue/hooks';
@@ -51,7 +52,8 @@ const NavBar = () => {
           rel="noopener noreferrer"
         >
           <Typography variant="h6" component="div" color="white">
-            Disco
+            Discord
+            <LinkIcon />
           </Typography>
         </Link>
       &nbsp;&nbsp;&nbsp;&nbsp;
