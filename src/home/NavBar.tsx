@@ -1,5 +1,5 @@
 import {
-  AppBar, Button, Toolbar, Typography,
+  AppBar, Avatar, Button, Toolbar, Typography,
 } from '@mui/material';
 import React from 'react';
 import { Link as LinkReactRouter } from 'react-router-dom';
@@ -17,6 +17,8 @@ const NavBar = () => {
   return (
     <AppBar position="fixed" sx={{ zIndex: (theme) => theme.zIndex.drawer + 1 }} color="primary">
       <Toolbar variant="dense">
+        <Avatar alt="Example Alt" src="/logo.png" />
+      &nbsp;&nbsp;&nbsp;&nbsp;
         <LinkReactRouter
           to="/"
           className="button muted-button"
