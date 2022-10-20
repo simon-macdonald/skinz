@@ -1,25 +1,37 @@
 import React from 'react';
 import '../glue/App.css';
 import {
-  Container, Paper, Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Toolbar,
+  Avatar,
+  Button,
+  Checkbox,
+  Container, Paper, Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Toolbar, Tooltip,
 } from '@mui/material';
 import { useAppSelector } from '../glue/hooks';
 import { selectChallenges } from './challengeSlice';
+import { selectChampions } from '../champions/championSlice';
 
-// 210002 same penta
-// 202303 invincible
-// 210001 perfectionist
-// 101301 all random all champions
-// 120002 protean override
-// 401106 jack of all champs
-// 401104 master yourself
-// 401105 master the enemy
+const trackedChallenges = [
+  'All Random All Champions',
+  'Same Penta, Different Champ',
+  'Invincible',
+  'Perfectionist',
+  'Protean Override',
+  'Jack of All Champs',
+  'Master Yourself',
+  'Master the Enemy',
+];
+// we want https://raw.communitydragon.org/latest/game/assets/challenges/config/202303/tokens/challenger.png
+// we have                       /lol-game-data/assets/ASSETS/Challenges/Config/101105/Tokens/CHALLENGER.png
+
+const getChallengeIconPath = (path: string) => {
+  const x = `https://raw.communitydragon.org/latest/game/${path.toLowerCase().replace('/lol-game-data/assets/', '')}`;
+  console.log(x)
+  return x
+}
 
 const ChallengePage = () => {
   const challenges = useAppSelector(selectChallenges);
-  const rows22 = [
-    {name: challenges.entities['DPS Threat']!.levelToIconPath.GOLD, calories: 159, fat: 6.0, carbs: 24, protein: 4.0},
-  ];
+  const champions = useAppSelector(selectChampions);
 
   return (
     <Container>
@@ -27,29 +39,32 @@ const ChallengePage = () => {
         {}
       </Toolbar>
       <TableContainer component={Paper}>
-        <Table>
+        <Table stickyHeader>
         <TableHead>
           <TableRow>
-            <TableCell>Dessert (100g serving)</TableCell>
-            <TableCell align="right">Calories</TableCell>
-            <TableCell align="right">Fat&nbsp;(g)</TableCell>
-            <TableCell align="right">Carbs&nbsp;(g)</TableCell>
-            <TableCell align="right">Protein&nbsp;(g)</TableCell>
+            <TableCell>Challenge</TableCell>
+            {trackedChallenges.map((c) => (
+              <TableCell align="right">
+                <Tooltip title={c}>
+                  <Avatar src={getChallengeIconPath(challenges.entities[c]!.levelToIconPath.CHALLENGER)} />
+                </Tooltip>
+              </TableCell>
+            ))}
           </TableRow>
         </TableHead>
         <TableBody>
-          {rows22.map((row) => (
+          {champions.ids.map((id) => champions.entities[id]).map((c) => (
             <TableRow
-              key={row.name}
+              key={c!.name}
               sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
             >
-              <TableCell component="th" scope="row">
-                {row.name}
-              </TableCell>
-              <TableCell align="right">{row.calories}</TableCell>
-              <TableCell align="right">{row.fat}</TableCell>
-              <TableCell align="right">{row.carbs}</TableCell>
-              <TableCell align="right">{row.protein}</TableCell>
+              <TableCell>{c!.name}</TableCell>
+              {trackedChallenges.map((c) => (
+                <TableCell>
+                  {/* <Button variant="text">Text</Button> */}
+                  <Checkbox />
+                </TableCell>
+              ))}
             </TableRow>
           ))}
         </TableBody>

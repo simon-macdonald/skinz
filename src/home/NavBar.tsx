@@ -15,7 +15,7 @@ const NavBar = () => {
   return (
     <AppBar position="fixed" sx={{ zIndex: (theme) => theme.zIndex.drawer + 1 }} color="primary">
       <Toolbar variant="dense">
-        <Avatar alt="Example Alt" src="/logo.png" />
+        <Avatar alt="skinz.lol logo" src="/logo.png" />
       &nbsp;&nbsp;&nbsp;&nbsp;
         <LinkReactRouter
           to="/"

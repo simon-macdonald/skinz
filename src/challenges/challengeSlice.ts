@@ -49,7 +49,8 @@ export interface ChallengeItem {
 }
 
 const challengeAdapter = createEntityAdapter<ChallengeItem>({
-  selectId: (m) => m.name,
+  selectId: (c) => c.name,
+  sortComparer: (c1, c2) => c1.name.localeCompare(c2.name),
 });
 
 const initialState = challengeAdapter.getInitialState({ loading: 'idle' });
