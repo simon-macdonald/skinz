@@ -16,10 +16,12 @@ number,
   const champions = await fetch('https://raw.communitydragon.org/latest/plugins/rcp-be-lol-game-data/global/default/v1/champion-summary.json');
   const skinLines = await fetch('https://raw.communitydragon.org/latest/plugins/rcp-be-lol-game-data/global/default/v1/skinlines.json');
   const skins = await fetch('https://raw.communitydragon.org/latest/plugins/rcp-be-lol-game-data/global/default/v1/skins.json');
+  const challenges = await fetch('https://raw.communitydragon.org/latest/plugins/rcp-be-lol-game-data/global/default/v1/challenges.json');
   return {
     champions: await champions.json(),
     skinLines: await skinLines.json(),
     skins: await skins.json(),
+    challenges: await challenges.json(),
   };
 });
 
