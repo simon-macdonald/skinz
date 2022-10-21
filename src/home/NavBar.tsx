@@ -25,7 +25,7 @@ const NavBar = () => {
           }}
         >
           <Typography variant="h6" component="div" color="white">
-            Champions
+            Skins
           </Typography>
         </LinkReactRouter>
       &nbsp;&nbsp;&nbsp;&nbsp;
