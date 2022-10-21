@@ -4,7 +4,7 @@ import {
   Avatar,
   Button,
   Checkbox,
-  Container, Paper, Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Toolbar, Tooltip, Typography,
+  Container, Divider, Paper, Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Toolbar, Tooltip, Typography,
 } from '@mui/material';
 import { useAppDispatch, useAppSelector } from '../glue/hooks';
 import { selectChallenges } from './challengeSlice';
@@ -70,9 +70,15 @@ const ChallengePage = () => {
                 return (
                   <TableCell>
                     <Tooltip title={
+                      <>
                       <Typography variant="h4" gutterBottom>
-                        {challenge.name + ': ' + challenge.description}
+                        {challenge.name}
                       </Typography>
+                      <Divider />
+                      <Typography variant="h5" gutterBottom>
+                        {challenge.description}
+                      </Typography>
+                      </>
                     }>
                       <Avatar src={getChallengeIconPath(iconPath)} />
                     </Tooltip>
