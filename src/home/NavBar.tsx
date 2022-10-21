@@ -28,7 +28,7 @@ const NavBar = () => {
             Champions
           </Typography>
         </LinkReactRouter>
-      {/* &nbsp;&nbsp;&nbsp;&nbsp;
+      &nbsp;&nbsp;&nbsp;&nbsp;
         <LinkReactRouter
           to="/challenges"
           className="button muted-button"
@@ -39,7 +39,7 @@ const NavBar = () => {
           <Typography variant="h6" component="div" color="white">
             Challenges
           </Typography>
-        </LinkReactRouter> */}
+        </LinkReactRouter>
       &nbsp;&nbsp;&nbsp;&nbsp;
         <LinkReactRouter
           to="/about"

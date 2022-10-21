@@ -12,11 +12,6 @@ import { selectChampions } from '../champions/championSlice';
 import { clickWhoDidWhatCheckbox, selectWhoDidWhat, WhoDidWhatState } from './whoDidWhatSlice';
 import getAssetUrl from '../urls';
 
-// have the state to store be this array but pointing to champs who have got it
-// so like 'ARAM'->[1,2,121] which also makes calculating the bronze/silver/gold really easy
-// then maybe just try to get it working with redux, that might make everything easier
-// if not then try localstorage
-
 const trackedChallenges = [
   'All Random All Champions',
   'Same Penta, Different Champ',
