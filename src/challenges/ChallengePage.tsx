@@ -6,9 +6,15 @@ import {
   Checkbox,
   Container, Paper, Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Toolbar, Tooltip,
 } from '@mui/material';
-import { useAppSelector } from '../glue/hooks';
+import { useAppDispatch, useAppSelector } from '../glue/hooks';
 import { selectChallenges } from './challengeSlice';
 import { selectChampions } from '../champions/championSlice';
+import { clickWhoDidWhatCheckbox, selectWhoDidWhat, WhoDidWhatState } from './whoDidWhatSlice';
+
+// have the state to store be this array but pointing to champs who have got it
+// so like 'ARAM'->[1,2,121] which also makes calculating the bronze/silver/gold really easy
+// then maybe just try to get it working with redux, that might make everything easier
+// if not then try localstorage
 
 const trackedChallenges = [
   'All Random All Champions',
@@ -26,6 +32,8 @@ const getChallengeIconPath = (path: string) => `https://raw.communitydragon.org/
 const ChallengePage = () => {
   const challenges = useAppSelector(selectChallenges);
   const champions = useAppSelector(selectChampions);
+  const whoDidWhat = useAppSelector(selectWhoDidWhat);
+  const dispatch = useAppDispatch();
 
   return (
     <Container>
@@ -47,16 +55,19 @@ const ChallengePage = () => {
             </TableRow>
           </TableHead>
           <TableBody>
-            {champions.ids.map((id) => champions.entities[id]).map((c) => (
+            {champions.ids.map((id) => champions.entities[id]).map((champion) => (
               <TableRow
-                key={c!.name}
+                key={champion!.name}
                 sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
               >
-                <TableCell>{c!.name}</TableCell>
-                {trackedChallenges.map((c) => (
+                <TableCell>{champion!.name}</TableCell>
+                {trackedChallenges.map((challenge) => (
                   <TableCell>
-                    <Tooltip title={c}>
-                      <Checkbox />
+                    <Tooltip title={challenge}>
+                      <Checkbox
+                        checked={whoDidWhat[challenge as keyof WhoDidWhatState].includes(champion!.id)}
+                        onClick={() => {dispatch(clickWhoDidWhatCheckbox([challenge, champion!.id]));}}
+                      />
                     </Tooltip>
                   </TableCell>
                 ))}
