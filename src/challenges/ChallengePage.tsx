@@ -10,6 +10,7 @@ import { useAppDispatch, useAppSelector } from '../glue/hooks';
 import { selectChallenges } from './challengeSlice';
 import { selectChampions } from '../champions/championSlice';
 import { clickWhoDidWhatCheckbox, selectWhoDidWhat, WhoDidWhatState } from './whoDidWhatSlice';
+import HelpIcon from '@mui/icons-material/Help';
 import getAssetUrl from '../urls';
 
 const trackedChallenges = [
@@ -43,6 +44,13 @@ const ChallengePage = () => {
               <TableCell>
                 <Typography variant="h4" gutterBottom>
                   Challenges
+                  <Tooltip title={
+                    <Typography variant="h4" gutterBottom>
+                      Track the challenges you have progressed with each champion. It's hard to remember in the lobby!
+                    </Typography>
+                  }>
+                    <HelpIcon />
+                  </Tooltip>
                 </Typography>
               </TableCell>
               {trackedChallenges.map((challengeName) => {
