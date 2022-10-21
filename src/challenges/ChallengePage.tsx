@@ -66,7 +66,11 @@ const ChallengePage = () => {
                   levelToIconPath.IRON;
                 return (
                   <TableCell>
-                    <Tooltip title={challenge.name + ': ' + challenge.description}>
+                    <Tooltip title={
+                      <Typography variant="h4" gutterBottom>
+                        {challenge.name + ': ' + challenge.description}
+                      </Typography>
+                    }>
                       <Avatar src={getChallengeIconPath(iconPath)} />
                     </Tooltip>
                     <Typography variant="h5" gutterBottom>
@@ -88,7 +92,11 @@ const ChallengePage = () => {
                 </TableCell>
                 {trackedChallenges.map((challenge) => (
                   <TableCell>
-                    <Tooltip title={challenge}>
+                    <Tooltip title={
+                      <Typography variant="h4" gutterBottom>
+                        {challenge}
+                      </Typography>
+                    }>
                       <Checkbox
                         checked={whoDidWhat[challenge as keyof WhoDidWhatState].includes(champion!.id)}
                         onChange={() => {dispatch(clickWhoDidWhatCheckbox([challenge, champion!.id]));}}
