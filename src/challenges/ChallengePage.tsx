@@ -46,10 +46,11 @@ const ChallengePage = () => {
           <TableHead>
             <TableRow>
               <TableCell>Challenge</TableCell>
-              {trackedChallenges.map((challenge) => {
-                const levelToIconPath = challenges.entities[challenge]!.levelToIconPath;
-                const howManyChampsDoIHave = whoDidWhat[challenge as keyof WhoDidWhatState].length;
-                const thresholds = challenges.entities[challenge]!.thresholds;
+              {trackedChallenges.map((challengeName) => {
+                const challenge = challenges.entities[challengeName]!;
+                const levelToIconPath = challenge.levelToIconPath;
+                const howManyChampsDoIHave = whoDidWhat[challengeName as keyof WhoDidWhatState].length;
+                const thresholds = challenge.thresholds;
                 const iconPath =
                   howManyChampsDoIHave >= thresholds.MASTER.value ? levelToIconPath.MASTER :
                   howManyChampsDoIHave >= thresholds.DIAMOND.value ? levelToIconPath.DIAMOND :
@@ -61,7 +62,7 @@ const ChallengePage = () => {
                   levelToIconPath.IRON;
                 return (
                   <TableCell align="right">
-                    <Tooltip title={challenge}>
+                    <Tooltip title={challenge.name + ': ' + challenge.description}>
                       <Avatar src={getChallengeIconPath(iconPath)} />
                   </Tooltip>
                 </TableCell>

@@ -6,6 +6,7 @@ import { RootState } from '../glue/store';
 export interface ChallengeItem {
   id: number,
   name: string,
+  description: string,
   levelToIconPath: {
     IRON: string,
     BRONZE: string,
