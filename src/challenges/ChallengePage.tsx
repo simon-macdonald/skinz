@@ -4,7 +4,7 @@ import {
   Avatar,
   Button,
   Checkbox,
-  Container, Paper, Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Toolbar, Tooltip,
+  Container, Paper, Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Toolbar, Tooltip, Typography,
 } from '@mui/material';
 import { useAppDispatch, useAppSelector } from '../glue/hooks';
 import { selectChallenges } from './challengeSlice';
@@ -45,7 +45,11 @@ const ChallengePage = () => {
         <Table stickyHeader>
           <TableHead>
             <TableRow>
-              <TableCell>Challenge</TableCell>
+              <TableCell>
+                <Typography variant="h4" gutterBottom>
+                  Challenges
+                </Typography>
+              </TableCell>
               {trackedChallenges.map((challengeName) => {
                 const challenge = challenges.entities[challengeName]!;
                 const levelToIconPath = challenge.levelToIconPath;
@@ -61,11 +65,14 @@ const ChallengePage = () => {
                   howManyChampsDoIHave >= thresholds.IRON.value ? levelToIconPath.IRON :
                   levelToIconPath.IRON;
                 return (
-                  <TableCell align="right">
+                  <TableCell>
                     <Tooltip title={challenge.name + ': ' + challenge.description}>
                       <Avatar src={getChallengeIconPath(iconPath)} />
-                  </Tooltip>
-                </TableCell>
+                    </Tooltip>
+                    <Typography variant="h5" gutterBottom>
+                      {howManyChampsDoIHave + '/' + thresholds.MASTER.value}
+                    </Typography>
+                  </TableCell>
                 );
               })}
             </TableRow>
