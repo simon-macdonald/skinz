@@ -10,6 +10,7 @@ import { useAppDispatch, useAppSelector } from '../glue/hooks';
 import { selectChallenges } from './challengeSlice';
 import { selectChampions } from '../champions/championSlice';
 import { clickWhoDidWhatCheckbox, selectWhoDidWhat, WhoDidWhatState } from './whoDidWhatSlice';
+import getAssetUrl from '../urls';
 
 // have the state to store be this array but pointing to champs who have got it
 // so like 'ARAM'->[1,2,121] which also makes calculating the bronze/silver/gold really easy
@@ -45,13 +46,27 @@ const ChallengePage = () => {
           <TableHead>
             <TableRow>
               <TableCell>Challenge</TableCell>
-              {trackedChallenges.map((c) => (
-                <TableCell align="right">
-                  <Tooltip title={c}>
-                    <Avatar src={getChallengeIconPath(challenges.entities[c]!.levelToIconPath.CHALLENGER)} />
+              {trackedChallenges.map((challenge) => {
+                const levelToIconPath = challenges.entities[challenge]!.levelToIconPath;
+                const howManyChampsDoIHave = whoDidWhat[challenge as keyof WhoDidWhatState].length;
+                const thresholds = challenges.entities[challenge]!.thresholds;
+                const iconPath =
+                  howManyChampsDoIHave >= thresholds.MASTER.value ? levelToIconPath.MASTER :
+                  howManyChampsDoIHave >= thresholds.DIAMOND.value ? levelToIconPath.DIAMOND :
+                  howManyChampsDoIHave >= thresholds.PLATINUM.value ? levelToIconPath.PLATINUM :
+                  howManyChampsDoIHave >= thresholds.GOLD.value ? levelToIconPath.GOLD :
+                  howManyChampsDoIHave >= thresholds.SILVER.value ? levelToIconPath.SILVER :
+                  howManyChampsDoIHave >= thresholds.BRONZE.value ? levelToIconPath.BRONZE :
+                  howManyChampsDoIHave >= thresholds.IRON.value ? levelToIconPath.IRON :
+                  levelToIconPath.IRON;
+                return (
+                  <TableCell align="right">
+                    <Tooltip title={challenge}>
+                      <Avatar src={getChallengeIconPath(iconPath)} />
                   </Tooltip>
                 </TableCell>
-              ))}
+                );
+              })}
             </TableRow>
           </TableHead>
           <TableBody>
@@ -60,13 +75,15 @@ const ChallengePage = () => {
                 key={champion!.name}
                 sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
               >
-                <TableCell>{champion!.name}</TableCell>
+                <TableCell>
+                  <Avatar src={getAssetUrl(champion!.squarePortraitPath)} variant='square' />
+                </TableCell>
                 {trackedChallenges.map((challenge) => (
                   <TableCell>
                     <Tooltip title={challenge}>
                       <Checkbox
                         checked={whoDidWhat[challenge as keyof WhoDidWhatState].includes(champion!.id)}
-                        onClick={() => {dispatch(clickWhoDidWhatCheckbox([challenge, champion!.id]));}}
+                        onChange={() => {dispatch(clickWhoDidWhatCheckbox([challenge, champion!.id]));}}
                       />
                     </Tooltip>
                   </TableCell>
