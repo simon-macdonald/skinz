@@ -21,7 +21,7 @@ import ColorPage from '../chromas/ColorPage';
 import BrowseDrawer from '../home/BrowseDrawer';
 import ChallengePage from '../challenges/ChallengePage';
 
-const App = () => {
+const App = ({ signOut, user }: any) => {
   const prefersDarkMode = useMediaQuery('(prefers-color-scheme: dark)');
 
   const dispatch = useAppDispatch();
@@ -49,7 +49,7 @@ const App = () => {
       <CssBaseline />
       <Box sx={{ display: 'flex' }}>
         <BrowserRouter>
-          <NavBar />
+          <NavBar signOut={signOut} user={user} />
           <BrowseDrawer />
           <Routes>
             <Route path="/" element={<HomePage />} />

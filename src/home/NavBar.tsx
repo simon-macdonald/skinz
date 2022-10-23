@@ -8,7 +8,7 @@ import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 import { useAppDispatch, useAppSelector } from '../glue/hooks';
 import { selectDisplay, showDrawer } from './displaySlice';
 
-const NavBar = () => {
+const NavBar = ({ signOut, user }: any) => {
   const dispatch = useAppDispatch();
   const display = useAppSelector(selectDisplay);
 
@@ -58,6 +58,10 @@ const NavBar = () => {
           onClick={() => dispatch(showDrawer())}
         >
           {display.showDrawer ? <ExpandLessIcon /> : <ExpandMoreIcon />}
+        </Button>
+      &nbsp;&nbsp;&nbsp;&nbsp;
+        <Button onClick={signOut}>
+          Sign Out {user.username}
         </Button>
       </Toolbar>
     </AppBar>

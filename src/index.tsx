@@ -2,11 +2,18 @@ import React from 'react';
 import ReactDOM from 'react-dom/client';
 import './index.css';
 import { Provider } from 'react-redux';
-import App from './glue/App';
+import App from './glue/AuthenticatedApp';
 import reportWebVitals from './glue/reportWebVitals';
+import awsConfig from './aws-exports';
 import { store } from './glue/store';
 import { persistStore } from 'redux-persist';
 import { PersistGate } from 'redux-persist/integration/react';
+import { Amplify, Auth } from 'aws-amplify';
+
+Amplify.configure(awsConfig);
+
+const currentUser = Auth.currentAuthenticatedUser();
+console.log(currentUser);
 
 const persistor = persistStore(store);
 

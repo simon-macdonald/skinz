@@ -3,6 +3,7 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
+    "@aws-amplify/ui-react": "^3.5.9",
     "@emotion/react": "^11.9.0",
     "@emotion/styled": "^11.8.1",
     "@mui/icons-material": "^5.8.4",
@@ -15,6 +16,7 @@
     "@types/node": "^16.11.34",
     "@types/react": "^18.0.9",
     "@types/react-dom": "^18.0.4",
+    "aws-amplify": "^4.3.39",
     "lodash": "^4.17.21",
     "react": "^18.1.0",
     "react-dom": "^18.1.0",

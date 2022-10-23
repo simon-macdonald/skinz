@@ -42,3 +42,13 @@ Add Jest to your package.json in scripts:
 # Deploy
 
 Same as any other `git` repo. Push and it will automatically deploy to skinz.lol.
+
+# amplify-ZUjVi
+
+AKIATIQVMJJYQOTB345N
+X8mp5WJkkOLJSsc1ALeLjMaTGpvmNdAsCdjrgcaL
+
+# Backend setup
+
+1. Run `amplify pull --appId d2whjmsl9b7ar1 --envName staging`
+1. Run `amplify add auth`
