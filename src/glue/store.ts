@@ -1,4 +1,6 @@
 import { combineReducers, configureStore } from '@reduxjs/toolkit';
+import { persistReducer } from 'redux-persist';
+import storage from 'redux-persist/lib/storage';
 import displayReducer from '../home/displaySlice';
 import whoDidWhatReducer from '../challenges/whoDidWhatSlice';
 import championsReducer from '../champions/championSlice';
@@ -6,8 +8,6 @@ import skinLinesReducer from '../skins/skinLineSlice';
 import skinsReducer from '../skins/skinSlice';
 import colorsReducer from '../chromas/colorSlice';
 import challengesReducer from '../challenges/challengeSlice';
-import { persistReducer } from 'redux-persist';
-import storage from 'redux-persist/lib/storage';
 
 const reducers = combineReducers({
   display: displayReducer,

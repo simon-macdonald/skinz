@@ -1,5 +1,4 @@
 import { createAsyncThunk, createSlice, PayloadAction } from '@reduxjs/toolkit';
-import _ from 'lodash';
 import type { AppDispatch, RootState } from '../glue/store';
 
 export type FilterBy = 'skins' | 'chromas' | 'both';
@@ -19,8 +18,8 @@ export interface WhoDidWhatState {
 const initialState: WhoDidWhatState = {
   'All Random All Champions': [],
   'Same Penta, Different Champ': [],
-  'Invincible': [],
-  'Perfectionist': [],
+  Invincible: [],
+  Perfectionist: [],
   'Protean Override': [],
   'Jack of All Champs': [],
   'Master Yourself': [],
@@ -47,7 +46,7 @@ export const whoDidWhatSlice = createSlice({
       const challengeName = action.payload[0] as keyof WhoDidWhatState;
       const championId = action.payload[1];
       if (state[challengeName].includes(championId)) {
-        state[challengeName] = state[challengeName].filter(cid => cid !== championId);
+        state[challengeName] = state[challengeName].filter((cid) => cid !== championId);
       } else {
         state[challengeName] = state[challengeName].concat(championId);
       }

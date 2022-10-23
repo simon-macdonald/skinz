@@ -1,5 +1,4 @@
 import { createEntityAdapter, createSlice } from '@reduxjs/toolkit';
-import _ from 'lodash';
 import fetchEverything from '../home/fetchEverything';
 import { RootState } from '../glue/store';
 
@@ -67,7 +66,7 @@ const challengeSlice = createSlice({
       })
       .addCase(fetchEverything.fulfilled, (state, action) => {
         state.loading = 'fulfilled';
-        const challenges = Object.values(action.payload.challenges.challenges)
+        const challenges = Object.values(action.payload.challenges.challenges);
         challengeAdapter.upsertMany(state, challenges);
       });
   },

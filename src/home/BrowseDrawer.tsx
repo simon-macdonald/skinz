@@ -4,6 +4,7 @@ import {
   Box,
   Drawer, Tab, Tabs, Toolbar, Typography,
 } from '@mui/material';
+import { useLocation } from 'react-router-dom';
 import SkinLineHoverLink from '../skins/SkinLineHoverLink';
 import { useAppDispatch, useAppSelector } from '../glue/hooks';
 import {
@@ -14,7 +15,6 @@ import {
 import { selectSkinLines } from '../skins/skinLineSlice';
 import { selectColors } from '../chromas/colorSlice';
 import ColorHoverLink from '../chromas/ColorHoverLink';
-import { useLocation } from 'react-router-dom';
 
 interface TabPanelProps {
   children: React.ReactNode;

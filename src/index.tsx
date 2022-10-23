@@ -2,11 +2,11 @@ import React from 'react';
 import ReactDOM from 'react-dom/client';
 import './index.css';
 import { Provider } from 'react-redux';
+import { persistStore } from 'redux-persist';
+import { PersistGate } from 'redux-persist/integration/react';
 import App from './glue/App';
 import reportWebVitals from './glue/reportWebVitals';
 import { store } from './glue/store';
-import { persistStore } from 'redux-persist';
-import { PersistGate } from 'redux-persist/integration/react';
 
 const persistor = persistStore(store);
 
