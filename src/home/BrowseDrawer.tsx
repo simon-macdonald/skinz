@@ -14,6 +14,7 @@ import {
 import { selectSkinLines } from '../skins/skinLineSlice';
 import { selectColors } from '../chromas/colorSlice';
 import ColorHoverLink from '../chromas/ColorHoverLink';
+import { useLocation } from 'react-router-dom';
 
 interface TabPanelProps {
   children: React.ReactNode;
@@ -60,7 +61,9 @@ const BrowseDrawer = () => {
     dispatch(clickChamp(-1));
   };
 
-  if (!display.showDrawer) {
+  const location = useLocation();
+
+  if (!display.showDrawer || ['/about', '/challenges'].includes(location.pathname)) {
     return null;
   }
 
