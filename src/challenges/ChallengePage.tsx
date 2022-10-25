@@ -3,14 +3,16 @@ import '../glue/App.css';
 import {
   Avatar,
   Checkbox,
-  Container, Divider, Paper, Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Toolbar, Tooltip, Typography,
+  Container, Divider, IconButton, Paper, Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Toolbar, Tooltip, Typography,
 } from '@mui/material';
 import HelpIcon from '@mui/icons-material/Help';
+import SortIcon from '@mui/icons-material/Sort';
 import { useAppDispatch, useAppSelector } from '../glue/hooks';
 import { selectChallenges } from './challengeSlice';
 import { selectChampions } from '../champions/championSlice';
 import { clickWhoDidWhatCheckbox, selectWhoDidWhat, WhoDidWhatState } from './whoDidWhatSlice';
 import getAssetUrl from '../urls';
+import { CheckBox } from '@mui/icons-material';
 
 const trackedChallenges = [
   'All Random All Champions',
@@ -30,6 +32,8 @@ const ChallengePage = () => {
   const champions = useAppSelector(selectChampions);
   const whoDidWhat = useAppSelector(selectWhoDidWhat);
   const dispatch = useAppDispatch();
+
+  const [championIds, setChampionIds] = React.useState(champions.ids);
 
   return (
     <Container>
@@ -86,13 +90,21 @@ const ChallengePage = () => {
                     <Typography variant="h5" gutterBottom>
                       {`${howManyChampsDoIHave}/${thresholds.MASTER.value}`}
                     </Typography>
+                    <IconButton color="primary" onClick={() => {
+                      const completed = championIds.filter((id) => whoDidWhat[challenge.name as keyof WhoDidWhatState].includes(id as number));
+                      const uncompleted = championIds.filter((id) => !whoDidWhat[challenge.name as keyof WhoDidWhatState].includes(id as number));
+                      const all = completed.concat(uncompleted);
+                      setChampionIds(all);
+                    }} aria-label={`sort by ${challenge.name}`}>
+                      <CheckBox />
+                    </IconButton>
                   </TableCell>
                 );
               })}
             </TableRow>
           </TableHead>
           <TableBody>
-            {champions.ids.map((id) => champions.entities[id]).map((champion) => (
+            {championIds.map((id) => champions.entities[id]).map((champion) => (
               <TableRow
                 key={champion!.name}
                 sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
