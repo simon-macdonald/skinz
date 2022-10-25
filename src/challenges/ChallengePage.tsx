@@ -6,24 +6,14 @@ import {
   Container, Divider, IconButton, Paper, Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Toolbar, Tooltip, Typography,
 } from '@mui/material';
 import HelpIcon from '@mui/icons-material/Help';
-import SortIcon from '@mui/icons-material/Sort';
+import { CheckBox } from '@mui/icons-material';
 import { useAppDispatch, useAppSelector } from '../glue/hooks';
 import { selectChallenges } from './challengeSlice';
 import { selectChampions } from '../champions/championSlice';
-import { clickWhoDidWhatCheckbox, selectWhoDidWhat, WhoDidWhatState } from './whoDidWhatSlice';
+import {
+  clickWhoDidWhatCheckbox, selectWhoDidWhat, whoDidWhatState, WhoDidWhatState,
+} from './whoDidWhatSlice';
 import getAssetUrl from '../urls';
-import { CheckBox } from '@mui/icons-material';
-
-const trackedChallenges = [
-  'All Random All Champions',
-  'Same Penta, Different Champ',
-  'Invincible',
-  'Perfectionist',
-  'Protean Override',
-  'Jack of All Champs',
-  'Master Yourself',
-  'Master the Enemy',
-];
 
 const getChallengeIconPath = (path: string) => `https://raw.communitydragon.org/latest/game/${path.toLowerCase().replace('/lol-game-data/assets/', '')}`;
 
@@ -57,7 +47,7 @@ const ChallengePage = () => {
                   </Tooltip>
                 </Typography>
               </TableCell>
-              {trackedChallenges.map((challengeName) => {
+              {Object.keys(whoDidWhatState).map((challengeName) => {
                 const challenge = challenges.entities[challengeName]!;
                 const { levelToIconPath } = challenge;
                 const howManyChampsDoIHave = whoDidWhat[challengeName as keyof WhoDidWhatState].length;
@@ -90,12 +80,16 @@ const ChallengePage = () => {
                     <Typography variant="h5" gutterBottom>
                       {`${howManyChampsDoIHave}/${thresholds.MASTER.value}`}
                     </Typography>
-                    <IconButton color="primary" onClick={() => {
-                      const completed = championIds.filter((id) => whoDidWhat[challenge.name as keyof WhoDidWhatState].includes(id as number));
-                      const uncompleted = championIds.filter((id) => !whoDidWhat[challenge.name as keyof WhoDidWhatState].includes(id as number));
-                      const all = completed.concat(uncompleted);
-                      setChampionIds(all);
-                    }} aria-label={`sort by ${challenge.name}`}>
+                    <IconButton
+                      color="primary"
+                      onClick={() => {
+                        const completed = championIds.filter((id) => whoDidWhat[challenge.name as keyof WhoDidWhatState].includes(id as number));
+                        const uncompleted = championIds.filter((id) => !whoDidWhat[challenge.name as keyof WhoDidWhatState].includes(id as number));
+                        const all = completed.concat(uncompleted);
+                        setChampionIds(all);
+                      }}
+                      aria-label={`sort by ${challenge.name}`}
+                    >
                       <CheckBox />
                     </IconButton>
                   </TableCell>
@@ -112,7 +106,7 @@ const ChallengePage = () => {
                 <TableCell>
                   <Avatar src={getAssetUrl(champion!.squarePortraitPath)} variant="square" />
                 </TableCell>
-                {trackedChallenges.map((challenge) => (
+                {Object.keys(whoDidWhatState).map((challenge) => (
                   <TableCell>
                     <Tooltip title={(
                       <Typography variant="h4" gutterBottom>

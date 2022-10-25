@@ -1,21 +1,18 @@
 import { createAsyncThunk, createSlice, PayloadAction } from '@reduxjs/toolkit';
 import type { AppDispatch, RootState } from '../glue/store';
 
-export type FilterBy = 'skins' | 'chromas' | 'both';
-export type DisplayState = 'visible' | 'chosen' | 'hidden';
-
 export interface WhoDidWhatState {
   'All Random All Champions': number[];
   'Same Penta, Different Champ': number[];
-  'Invincible': number[];
-  'Perfectionist': number[];
+  Invincible: number[];
+  Perfectionist: number[];
   'Protean Override': number[];
   'Jack of All Champs': number[];
   'Master Yourself': number[];
   'Master the Enemy': number[];
 }
 
-const initialState: WhoDidWhatState = {
+export const whoDidWhatState: WhoDidWhatState = {
   'All Random All Champions': [],
   'Same Penta, Different Champ': [],
   Invincible: [],
@@ -40,7 +37,7 @@ number,
 
 export const whoDidWhatSlice = createSlice({
   name: 'display',
-  initialState,
+  initialState: whoDidWhatState,
   reducers: {
     clickWhoDidWhatCheckbox: (state, action: PayloadAction<[string, number]>) => {
       const challengeName = action.payload[0] as keyof WhoDidWhatState;
