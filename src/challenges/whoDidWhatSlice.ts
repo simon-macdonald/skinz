@@ -1,5 +1,5 @@
-import { createAsyncThunk, createSlice, PayloadAction } from '@reduxjs/toolkit';
-import type { AppDispatch, RootState } from '../glue/store';
+import { createSlice, PayloadAction } from '@reduxjs/toolkit';
+import type { RootState } from '../glue/store';
 
 export interface WhoDidWhatState {
   'All Random All Champions': number[];
@@ -10,6 +10,8 @@ export interface WhoDidWhatState {
   'Jack of All Champs': number[];
   'Master Yourself': number[];
   'Master the Enemy': number[];
+  'Well-Rounded Traveller': number[];
+  'Rekindle the Old Furnace': number[];
 }
 
 export const whoDidWhatState: WhoDidWhatState = {
@@ -21,19 +23,9 @@ export const whoDidWhatState: WhoDidWhatState = {
   'Jack of All Champs': [],
   'Master Yourself': [],
   'Master the Enemy': [],
+  'Well-Rounded Traveller': [],
+  'Rekindle the Old Furnace': [],
 };
-
-export const clickChamp = createAsyncThunk<
-// Return type of the payload creator
-[RootState, number],
-number,
-// First argument to the payload creator
-{
-  // Optional fields for defining thunkApi field types
-  dispatch: AppDispatch
-  state: RootState
-}
->('clickChamp', async (championId: number, { getState }) => [getState(), championId]);
 
 export const whoDidWhatSlice = createSlice({
   name: 'display',

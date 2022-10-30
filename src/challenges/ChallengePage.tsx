@@ -58,7 +58,7 @@ const ChallengePage = () => {
                       howManyChampsDoIHave >= thresholds.PLATINUM.value ? levelToIconPath.PLATINUM :
                         howManyChampsDoIHave >= thresholds.GOLD.value ? levelToIconPath.GOLD :
                           howManyChampsDoIHave >= thresholds.SILVER.value ? levelToIconPath.SILVER :
-                            howManyChampsDoIHave >= thresholds.BRONZE.value ? levelToIconPath.BRONZE :
+                            (howManyChampsDoIHave >= thresholds.BRONZE.value || !thresholds.IRON) ? levelToIconPath.BRONZE :
                               howManyChampsDoIHave >= thresholds.IRON.value ? levelToIconPath.IRON :
                                 levelToIconPath.IRON;
                 return (
