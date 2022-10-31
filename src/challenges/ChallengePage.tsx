@@ -6,7 +6,7 @@ import {
   Container, Divider, IconButton, InputAdornment, Paper, Table, TableBody, TableCell, TableContainer, TableHead, TableRow, TextField, Toolbar, Tooltip, Typography,
 } from '@mui/material';
 import HelpIcon from '@mui/icons-material/Help';
-import { CheckBox, Clear } from '@mui/icons-material';
+import { Clear, Sort } from '@mui/icons-material';
 import { useAppDispatch, useAppSelector } from '../glue/hooks';
 import { selectChallenges } from './challengeSlice';
 import { selectChampions } from '../champions/championSlice';
@@ -90,8 +90,6 @@ const ChallengePage = () => {
                 );
               })}
             </TableRow>
-          </TableHead>
-          <TableBody>
             <TableRow>
               <TableCell>
                 <TextField
@@ -123,11 +121,13 @@ const ChallengePage = () => {
                     }}
                     aria-label={`sort by ${challengeName}`}
                   >
-                    <CheckBox />
+                    <Sort />
                   </IconButton>
                 </TableCell>
               ))}
             </TableRow>
+          </TableHead>
+          <TableBody>
             {championIds.filter((id) => find === '' || champions.entities[id]!.name.toLowerCase().includes(find.toLowerCase())).map((id) => champions.entities[id]).map((champion) => (
               <TableRow
                 key={champion!.name}
