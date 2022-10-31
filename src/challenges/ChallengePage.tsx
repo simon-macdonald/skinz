@@ -24,13 +24,13 @@ const ChallengePage = () => {
   const dispatch = useAppDispatch();
 
   const [championIds, setChampionIds] = React.useState(champions.ids);
+  const [sortBy, setSortBy] = React.useState('');
 
   const [find, setFind] = React.useState('');
 
   const handleFindChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     setFind(event.target.value);
   };
-
   return (
     <Container>
       <Toolbar>
@@ -93,7 +93,7 @@ const ChallengePage = () => {
             <TableRow>
               <TableCell>
                 <TextField
-                  label="Find"
+                  label="Find Champion"
                   variant="outlined"
                   value={find}
                   onChange={handleFindChange}
@@ -114,14 +114,20 @@ const ChallengePage = () => {
                   <IconButton
                     color="primary"
                     onClick={() => {
-                      const completed = championIds.filter((id) => whoDidWhat[challengeName as keyof WhoDidWhatState].includes(id as number));
-                      const uncompleted = championIds.filter((id) => !whoDidWhat[challengeName as keyof WhoDidWhatState].includes(id as number));
+                      if (sortBy === challengeName) {
+                        setChampionIds(champions.ids);
+                        setSortBy('');
+                        return;
+                      }
+                      const completed = champions.ids.filter((id) => whoDidWhat[challengeName as keyof WhoDidWhatState].includes(id as number));
+                      const uncompleted = champions.ids.filter((id) => !whoDidWhat[challengeName as keyof WhoDidWhatState].includes(id as number));
                       const all = completed.concat(uncompleted);
                       setChampionIds(all);
+                      setSortBy(challengeName);
                     }}
                     aria-label={`sort by ${challengeName}`}
                   >
-                    <Sort />
+                    <Sort sx={{ transform: sortBy === challengeName ? 'rotate(0.5turn)' : 'rotate(0)' }} />
                   </IconButton>
                 </TableCell>
               ))}
