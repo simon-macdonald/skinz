@@ -3,7 +3,7 @@ import '../glue/App.css';
 import {
   Avatar,
   Checkbox,
-  Container, Divider, IconButton, Paper, Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Toolbar, Tooltip, Typography,
+  Container, Divider, IconButton, Paper, Table, TableBody, TableCell, TableContainer, TableHead, TableRow, TextField, Toolbar, Tooltip, Typography,
 } from '@mui/material';
 import HelpIcon from '@mui/icons-material/Help';
 import { CheckBox } from '@mui/icons-material';
@@ -24,6 +24,12 @@ const ChallengePage = () => {
   const dispatch = useAppDispatch();
 
   const [championIds, setChampionIds] = React.useState(champions.ids);
+
+  const [filter, setFilter] = React.useState('');
+
+  const handleFilterChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    setFilter(event.target.value);
+  };
 
   return (
     <Container>
@@ -80,25 +86,39 @@ const ChallengePage = () => {
                     <Typography variant="h5" gutterBottom>
                       {`${howManyChampsDoIHave}/${thresholds.MASTER.value}`}
                     </Typography>
-                    <IconButton
-                      color="primary"
-                      onClick={() => {
-                        const completed = championIds.filter((id) => whoDidWhat[challenge.name as keyof WhoDidWhatState].includes(id as number));
-                        const uncompleted = championIds.filter((id) => !whoDidWhat[challenge.name as keyof WhoDidWhatState].includes(id as number));
-                        const all = completed.concat(uncompleted);
-                        setChampionIds(all);
-                      }}
-                      aria-label={`sort by ${challenge.name}`}
-                    >
-                      <CheckBox />
-                    </IconButton>
                   </TableCell>
                 );
               })}
             </TableRow>
           </TableHead>
           <TableBody>
-            {championIds.map((id) => champions.entities[id]).map((champion) => (
+            <TableRow>
+              <TableCell>
+                <TextField
+                  label="Filter"
+                  variant="outlined"
+                  value={filter}
+                  onChange={handleFilterChange}
+                />
+              </TableCell>
+              {Object.keys(whoDidWhatState).map((challengeName) => (
+                <TableCell>
+                  <IconButton
+                    color="primary"
+                    onClick={() => {
+                      const completed = championIds.filter((id) => whoDidWhat[challengeName as keyof WhoDidWhatState].includes(id as number));
+                      const uncompleted = championIds.filter((id) => !whoDidWhat[challengeName as keyof WhoDidWhatState].includes(id as number));
+                      const all = completed.concat(uncompleted);
+                      setChampionIds(all);
+                    }}
+                    aria-label={`sort by ${challengeName}`}
+                  >
+                    <CheckBox />
+                  </IconButton>
+                </TableCell>
+              ))}
+            </TableRow>
+            {championIds.filter((id) => filter === '' || champions.entities[id]!.name.toLowerCase().includes(filter.toLowerCase())).map((id) => champions.entities[id]).map((champion) => (
               <TableRow
                 key={champion!.name}
                 sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
