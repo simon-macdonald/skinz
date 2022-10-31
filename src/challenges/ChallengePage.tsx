@@ -3,10 +3,10 @@ import '../glue/App.css';
 import {
   Avatar,
   Checkbox,
-  Container, Divider, IconButton, Paper, Table, TableBody, TableCell, TableContainer, TableHead, TableRow, TextField, Toolbar, Tooltip, Typography,
+  Container, Divider, IconButton, InputAdornment, Paper, Table, TableBody, TableCell, TableContainer, TableHead, TableRow, TextField, Toolbar, Tooltip, Typography,
 } from '@mui/material';
 import HelpIcon from '@mui/icons-material/Help';
-import { CheckBox } from '@mui/icons-material';
+import { CheckBox, Clear } from '@mui/icons-material';
 import { useAppDispatch, useAppSelector } from '../glue/hooks';
 import { selectChallenges } from './challengeSlice';
 import { selectChampions } from '../champions/championSlice';
@@ -25,10 +25,10 @@ const ChallengePage = () => {
 
   const [championIds, setChampionIds] = React.useState(champions.ids);
 
-  const [filter, setFilter] = React.useState('');
+  const [find, setFind] = React.useState('');
 
-  const handleFilterChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    setFilter(event.target.value);
+  const handleFindChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    setFind(event.target.value);
   };
 
   return (
@@ -95,10 +95,20 @@ const ChallengePage = () => {
             <TableRow>
               <TableCell>
                 <TextField
-                  label="Filter"
+                  label="Find"
                   variant="outlined"
-                  value={filter}
-                  onChange={handleFilterChange}
+                  value={find}
+                  onChange={handleFindChange}
+                  InputProps={{
+                    endAdornment:
+  <InputAdornment position="end">
+    {find !== '' && (
+    <IconButton onClick={() => setFind('')}>
+      <Clear />
+    </IconButton>
+    )}
+  </InputAdornment>,
+                  }}
                 />
               </TableCell>
               {Object.keys(whoDidWhatState).map((challengeName) => (
@@ -118,7 +128,7 @@ const ChallengePage = () => {
                 </TableCell>
               ))}
             </TableRow>
-            {championIds.filter((id) => filter === '' || champions.entities[id]!.name.toLowerCase().includes(filter.toLowerCase())).map((id) => champions.entities[id]).map((champion) => (
+            {championIds.filter((id) => find === '' || champions.entities[id]!.name.toLowerCase().includes(find.toLowerCase())).map((id) => champions.entities[id]).map((champion) => (
               <TableRow
                 key={champion!.name}
                 sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
