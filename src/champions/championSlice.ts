@@ -48,6 +48,9 @@ const championsSlice = createSlice({
         });
         Object.values(action.payload.skins).forEach((skin) => {
           const championIndex = championIndices.get(Math.floor(skin.id / 1000))!;
+          if (!(championIndex in champions)) {
+            return;
+          }
           champions[championIndex].skins.push(skin.id);
           skin.skinLines?.forEach((skinLine) => {
             const { skinLines } = champions[championIndex];

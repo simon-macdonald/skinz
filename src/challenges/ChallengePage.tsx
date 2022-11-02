@@ -127,7 +127,10 @@ const ChallengePage = () => {
                     }}
                     aria-label={`sort by ${challengeName}`}
                   >
-                    <Sort sx={{ transform: sortBy === challengeName ? 'rotate(0.5turn)' : 'rotate(0)' }} />
+                    <Sort
+                      sx={{ transform: sortBy === challengeName ? 'rotate(0.5turn)' : 'rotate(0)' }}
+                      color={sortBy === challengeName ? 'secondary' : 'primary'}
+                    />
                   </IconButton>
                 </TableCell>
               ))}
