@@ -56,7 +56,7 @@ const PortraitCard = (props: { id: number, sizes: GridItemSizes }) => {
                 textTransform: 'capitalize',
               }}
               >
-                {id === -1 ? 'Clear' : champions.entities[id]!.name}
+                {id === -1 ? 'Clear' : skinLine === null ? champions.entities[id]!.name : Object.keys(skinLine.skins).includes(id.toString()) ? skins.entities[skinLine.skins[id]]!.name : champions.entities[id]!.name}
               </Box>
             </Typography>
           </CardContent>

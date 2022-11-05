@@ -5,6 +5,8 @@ import { RootState } from '../glue/store';
 export interface SkinItem {
   id: number,
   name: string,
+  championId: number,
+  championName: string,
   tilePath: string,
   splashPath: string,
   uncenteredSplashPath: string,
@@ -36,6 +38,16 @@ const skinsSlice = createSlice({
       })
       .addCase(fetchEverything.fulfilled, (state, action) => {
         state.loading = 'fulfilled';
+        const { champions } = action.payload;
+        const championNames: { [key: number]: string } = {};
+        Object.values(champions).forEach((champion) => {
+          championNames[champion.id] = champion.name;
+        });
+        const { skins } = action.payload;
+        Object.values(skins).forEach((skin) => {
+          skin.championId = Math.floor(skin.id / 1000);
+          skin.championName = championNames[skin.championId];
+        });
         skinAdapter.upsertMany(state, action.payload.skins);
       });
   },
