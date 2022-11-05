@@ -15,11 +15,19 @@ const HomePage = () => {
   const display = useAppSelector(selectDisplay);
 
   const champGridItemSizes = {
-    xs: 30,
-    sm: 20,
-    md: 12,
-    lg: 10,
-    xl: 6,
+    xs: 60,
+    sm: 12,
+    md: 10,
+    lg: 6,
+    xl: 5,
+  };
+
+  const selectedChampsGridItemSizes = {
+    xs: 60,
+    sm: 1,
+    md: 1,
+    lg: 1,
+    xl: 1,
   };
 
   return (
@@ -28,9 +36,9 @@ const HomePage = () => {
         {}
       </Toolbar>
       {display.champions.length > 0 && (
-      <Grid container spacing={2} columns={60}>
+      <Grid container spacing={2} columns={5}>
         {display.champions.map((championId) => (
-          <PortraitCard id={championId} sizes={champGridItemSizes} />
+          <PortraitCard id={championId} sizes={selectedChampsGridItemSizes} display />
         ))}
       </Grid>
       )}

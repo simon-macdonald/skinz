@@ -25,6 +25,7 @@
             }
         ],
         "react/jsx-one-expression-per-line": "off",
+        "react/require-default-props": "off",
         "import/no-cycle": "off",
         "max-len": "off",
         "no-nested-ternary": "off",

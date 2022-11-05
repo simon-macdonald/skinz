@@ -5,9 +5,9 @@ import {
 import { clickChamp, selectDisplay } from './displaySlice';
 import { useAppDispatch, useAppSelector } from '../glue/hooks';
 import { selectSkinLines, SkinLineItem } from '../skins/skinLineSlice';
-import { selectChampions } from '../champions/championSlice';
+import { ChampionItem, selectChampions } from '../champions/championSlice';
 import { selectSkins } from '../skins/skinSlice';
-import getAssetUrl from '../urls';
+import getAssetUrl, { getChampionTileUrl } from '../urls';
 
 export interface GridItemSizes {
   xs: number,
@@ -17,7 +17,9 @@ export interface GridItemSizes {
   xl: number,
 }
 
-const PortraitCard = (props: { id: number, sizes: GridItemSizes }) => {
+const getChampionImage = (champion: ChampionItem, display?: boolean) => (display ? getChampionTileUrl(champion.id) : getAssetUrl(champion.squarePortraitPath));
+
+const PortraitCard = (props: { id: number, sizes: GridItemSizes, display?: boolean }) => {
   const champions = useAppSelector(selectChampions);
   const skinLines = useAppSelector(selectSkinLines);
   const skins = useAppSelector(selectSkins);
@@ -25,7 +27,7 @@ const PortraitCard = (props: { id: number, sizes: GridItemSizes }) => {
   const champs = useAppSelector(selectDisplay);
   const dispatch = useAppDispatch();
 
-  const { id, sizes } = props;
+  const { id, sizes, display } = props;
   const champion = champions.entities[id]!;
   const skinLine: SkinLineItem | null
     = champs.hoverSkinLine === 0
@@ -41,9 +43,9 @@ const PortraitCard = (props: { id: number, sizes: GridItemSizes }) => {
         >
           <CardMedia
             component="img"
-            image={skinLine === null ? getAssetUrl(champion.squarePortraitPath)
+            image={skinLine === null ? getChampionImage(champion, display)
               : Object.keys(skinLine.skins).includes(id.toString()) ? getAssetUrl(skins.entities[skinLine.skins[id]]!.tilePath)
-                : getAssetUrl(champion.squarePortraitPath)}
+                : getChampionImage(champion)}
             alt={champion.name}
           />
           <CardContent sx={{
