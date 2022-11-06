@@ -35,13 +35,14 @@ const HomePage = () => {
       <Toolbar>
         {}
       </Toolbar>
-      {display.champions.length > 0 && (
-      <Grid container spacing={2} columns={5}>
+      <Grid container spacing={2} p={2} columns={5}>
         {display.champions.map((championId) => (
           <PortraitCard id={championId} sizes={selectedChampsGridItemSizes} display />
         ))}
+        {[...Array(5 - display.champions.length)].map(() => (
+          <PortraitCard id={-1} sizes={selectedChampsGridItemSizes} display />
+        ))}
       </Grid>
-      )}
       <Grid container spacing={2} columns={60}>
         {champions.ids
           .filter((id) => id > 0)
