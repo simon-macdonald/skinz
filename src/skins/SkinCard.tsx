@@ -22,7 +22,7 @@ const SkinCard = (props: any) => {
   return (
     <Grid item xs={1}>
       <Card>
-        <CardActionArea onClick={() => navigate(`/skins/${id}`)}>
+        <CardActionArea disabled={skin.chromas === undefined} onClick={() => navigate(`/skins/${id}`)}>
           <CardMedia
             component="img"
             image={`https://raw.communitydragon.org/latest/plugins/rcp-be-lol-game-data/global/default/${skin.splashPath.replace('/lol-game-data/assets/', '')}`}
