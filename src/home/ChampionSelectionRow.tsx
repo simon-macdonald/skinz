@@ -18,10 +18,10 @@ const ChampionSelectionRow = () => {
   return (
     <Grid container spacing={5} p={2} columns={5}>
       {display.champions.map((championId) => (
-        <PortraitCard id={championId} sizes={selectedChampsGridItemSizes} display />
+        <PortraitCard key={championId} id={championId} sizes={selectedChampsGridItemSizes} display />
       ))}
-      {[...Array(5 - display.champions.length)].map(() => (
-        <PortraitCard id={-1} sizes={selectedChampsGridItemSizes} display />
+      {[...Array(5 - display.champions.length)].map((_, i) => (
+        <PortraitCard key={i} id={-1} sizes={selectedChampsGridItemSizes} display />
       ))}
     </Grid>
   );
