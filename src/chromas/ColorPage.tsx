@@ -4,6 +4,8 @@ import {
 import React from 'react';
 import { useParams } from 'react-router-dom';
 import { useAppSelector } from '../glue/hooks';
+import ChampionSelectionRow from '../home/ChampionSelectionRow';
+import { selectDisplay } from '../home/displaySlice';
 import { selectSkins } from '../skins/skinSlice';
 import ChromaCard from './ChromaCard';
 
@@ -11,6 +13,7 @@ const ColorPage = () => {
   const { color, champions } = useParams();
 
   const skins = useAppSelector(selectSkins);
+  const champs = useAppSelector(selectDisplay);
 
   const skinLineIds = new Map<number, number>();
 
@@ -32,6 +35,7 @@ const ColorPage = () => {
       <Toolbar>
         {}
       </Toolbar>
+      {champs.champions.length > 0 && <ChampionSelectionRow />}
       <Typography variant="h2">
         {color}
       </Typography>

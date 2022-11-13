@@ -19,11 +19,7 @@ export interface GridItemSizes {
 
 const getChampionImage = (champion: ChampionItem, display?: boolean) => (display && champion.id !== -1 ? getChampionTileUrl(champion.id) : getAssetUrl(champion.squarePortraitPath));
 
-const getChampionText = (champion: ChampionItem, display?: boolean) => {
-  if (champion.id === -1) {
-    return display ? 'Champion Selection' : 'Clear';
-  }
-}
+const getChampionText = (champion: ChampionItem, display?: boolean) => (display ? 'Champion Selection' : 'Clear');
 
 const PortraitCard = (props: { id: number, sizes: GridItemSizes, display?: boolean }) => {
   const champions = useAppSelector(selectChampions);
@@ -43,9 +39,11 @@ const PortraitCard = (props: { id: number, sizes: GridItemSizes, display?: boole
   return (
     <Grid item xs={sizes.xs} sm={sizes.sm} md={sizes.md} lg={sizes.lg} xl={sizes.xl}>
       <Card>
-        <CardActionArea disabled={display && id === -1} onClick={() => {
-          dispatch(clickChamp(id));
-        }}
+        <CardActionArea
+          disabled={display && id === -1}
+          onClick={() => {
+            dispatch(clickChamp(id));
+          }}
         >
           <CardMedia
             component="img"

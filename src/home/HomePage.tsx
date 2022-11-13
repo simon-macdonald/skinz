@@ -9,6 +9,7 @@ import {
 } from './displaySlice';
 import PortraitCard from './PortraitCard';
 import { selectChampions } from '../champions/championSlice';
+import ChampionSelectionRow from './ChampionSelectionRow';
 
 const HomePage = () => {
   const champions = useAppSelector(selectChampions);
@@ -22,27 +23,12 @@ const HomePage = () => {
     xl: 5,
   };
 
-  const selectedChampsGridItemSizes = {
-    xs: 60,
-    sm: 1,
-    md: 1,
-    lg: 1,
-    xl: 1,
-  };
-
   return (
     <Container>
       <Toolbar>
         {}
       </Toolbar>
-      <Grid container spacing={2} p={2} columns={5}>
-        {display.champions.map((championId) => (
-          <PortraitCard id={championId} sizes={selectedChampsGridItemSizes} display />
-        ))}
-        {[...Array(5 - display.champions.length)].map(() => (
-          <PortraitCard id={-1} sizes={selectedChampsGridItemSizes} display />
-        ))}
-      </Grid>
+      <ChampionSelectionRow />
       <Grid container spacing={2} columns={60}>
         {champions.ids
           .filter((id) => id > 0)
