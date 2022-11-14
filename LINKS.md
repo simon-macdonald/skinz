@@ -3,3 +3,4 @@ https://raw.communitydragon.org/latest/plugins/rcp-be-lol-game-data/global/defau
 https://github.com/HextechDocs/lcu-explorer
 https://tahm-ken.ch/
 https://challenges.darkintaqt.com
+https://cdn.merakianalytics.com/riot/lol/resources/latest/en-US/champions.json
