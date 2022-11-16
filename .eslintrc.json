@@ -25,6 +25,7 @@
             }
         ],
         "react/jsx-one-expression-per-line": "off",
+        "react/no-array-index-key": "off",
         "react/require-default-props": "off",
         "import/no-cycle": "off",
         "max-len": "off",
