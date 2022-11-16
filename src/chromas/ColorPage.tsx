@@ -8,6 +8,7 @@ import ChampionSelectionRow from '../home/ChampionSelectionRow';
 import { selectDisplay } from '../home/displaySlice';
 import { selectSkins } from '../skins/skinSlice';
 import ChromaCard from './ChromaCard';
+import chromaNames from './chromaNames.json';
 
 const ColorPage = () => {
   const { color, champions } = useParams();
@@ -37,7 +38,7 @@ const ColorPage = () => {
       </Toolbar>
       {champs.champions.length > 0 && <ChampionSelectionRow />}
       <Typography variant="h2">
-        {color}
+        {chromaNames[color as keyof typeof chromaNames]}
       </Typography>
       <Grid container spacing={5} columns={3}>
         {chromas.slice(0, 20).map((chroma) => (
