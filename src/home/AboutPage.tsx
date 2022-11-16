@@ -38,6 +38,10 @@ const AboutPage = () => {
           This site was built with loads of support from <a href="https://www.communitydragon.org/">Community Dragon</a>.
         </Typography>
         <Divider />
+        <Typography variant="h4" paragraph>
+          Chroma names from <a href="https://github.com/meraki-analytics/lolstaticdata/">Meraki Analytics</a>.
+        </Typography>
+        <Divider />
         <Typography variant="h4">
           {'skinz.lol was created under Riot Games\' "Legal Jibber Jabber" policy using assets owned by Riot Games.  Riot Games does not endorse or sponsor this project.'}
         </Typography>
