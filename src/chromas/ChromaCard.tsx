@@ -4,6 +4,7 @@ import {
 } from '@mui/material';
 import { useNavigate } from 'react-router-dom';
 import getAssetUrl from '../urls';
+import chromaNames from './chromaNames.json';
 
 const ChromaCard = (props: { name: string, chromaPath: string, skinLineId: number, color: string, }) => {
   const {
@@ -32,7 +33,7 @@ const ChromaCard = (props: { name: string, chromaPath: string, skinLineId: numbe
                 textTransform: 'capitalize',
               }}
               >
-                {name}
+                {`${name} (${chromaNames[color as keyof typeof chromaNames]})`}
               </Box>
             </Typography>
           </CardContent>
