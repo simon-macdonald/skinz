@@ -18,7 +18,6 @@ import ChampionPage from '../champions/ChampionPage';
 import { selectChampions } from '../champions/championSlice';
 import SkinLineColorPage from '../home/SkinLineColorPage';
 import ColorPage from '../chromas/ColorPage';
-import BrowseDrawer from '../home/BrowseDrawer';
 import ChallengePage from '../challenges/ChallengePage';
 
 const App = () => {
@@ -50,7 +49,6 @@ const App = () => {
       <Box sx={{ display: 'flex' }}>
         <BrowserRouter>
           <NavBar />
-          <BrowseDrawer />
           <Routes>
             <Route path="/" element={<HomePage />} />
             <Route path="/challenges" element={<ChallengePage />} />

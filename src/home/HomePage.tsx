@@ -10,6 +10,7 @@ import {
 import PortraitCard from './PortraitCard';
 import { selectChampions } from '../champions/championSlice';
 import ChampionSelectionRow from './ChampionSelectionRow';
+import BrowseDrawer from './BrowseDrawer';
 
 const HomePage = () => {
   const champions = useAppSelector(selectChampions);
@@ -24,22 +25,25 @@ const HomePage = () => {
   };
 
   return (
-    <Container>
-      <Toolbar>
-        {}
-      </Toolbar>
-      <ChampionSelectionRow />
-      <Grid container spacing={2} columns={60}>
-        {champions.ids
-          .filter((id) => id > 0)
-          .filter((id) => display.displays[+id] !== 'hidden')
-          .filter((id) => display.displays[+id] !== 'chosen')
-          .map((id) => (
-            <PortraitCard id={+id} key={id} sizes={champGridItemSizes} />
-          ))}
-        {display.champions.length > 0 && <PortraitCard id={-1} sizes={champGridItemSizes} />}
-      </Grid>
-    </Container>
+    <>
+      <BrowseDrawer />
+      <Container>
+        <Toolbar>
+          {}
+        </Toolbar>
+        <ChampionSelectionRow />
+        <Grid container spacing={2} columns={60}>
+          {champions.ids
+            .filter((id) => id > 0)
+            .filter((id) => display.displays[+id] !== 'hidden')
+            .filter((id) => display.displays[+id] !== 'chosen')
+            .map((id) => (
+              <PortraitCard id={+id} key={id} sizes={champGridItemSizes} />
+            ))}
+          {display.champions.length > 0 && <PortraitCard id={-1} sizes={champGridItemSizes} />}
+        </Grid>
+      </Container>
+    </>
   );
 };
 
