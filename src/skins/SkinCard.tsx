@@ -8,6 +8,7 @@ import {
 } from '@mui/material/colors';
 import { useAppSelector } from '../glue/hooks';
 import { selectSkins } from './skinSlice';
+import getAssetUrl from '../urls';
 
 const SkinCard = (props: any) => {
   const { id } = props;
@@ -25,7 +26,7 @@ const SkinCard = (props: any) => {
         <CardActionArea disabled={skin.chromas === undefined} onClick={() => navigate(`/skins/${id}`)}>
           <CardMedia
             component="img"
-            image={`https://raw.communitydragon.org/latest/plugins/rcp-be-lol-game-data/global/default/${skin.splashPath.replace('/lol-game-data/assets/', '')}`}
+            image={getAssetUrl(skin.tilePath)}
           />
           <CardContent>
             <Typography

@@ -10,12 +10,15 @@ import { useAppSelector } from '../glue/hooks';
 import { selectChampions } from '../champions/championSlice';
 import { selectSkins } from './skinSlice';
 import BrowseDrawer from '../home/BrowseDrawer';
+import { selectSkinLines } from './skinLineSlice';
 
 const SkinPage = () => {
   const { id } = useParams();
 
   const skins = useAppSelector(selectSkins);
   const skin = skins.entities[+id!]!;
+
+  const skinLines = useAppSelector(selectSkinLines);
 
   const champions = useAppSelector(selectChampions);
   const champion = champions.entities[Math.floor(+id! / 1000)]!;
@@ -36,12 +39,16 @@ const SkinPage = () => {
             <List>
               <ListItem disablePadding button component={Link} to={`/champions/${champion.id}`}>
                 <ListItemButton>
-                  <ListItemAvatar>
-                    <Avatar src="https://raw.communitydragon.org/latest/plugins/rcp-be-lol-game-data/global/default/v1/hextech-images/currency_champion.png" />
-                  </ListItemAvatar>
                   <ListItemText primary={`Champion: ${champion.name}`} />
                 </ListItemButton>
               </ListItem>
+              {skin.skinLines.map((skinLine) => (
+              <ListItem disablePadding button component={Link} to={`/skinLines/${skinLine.id}`}>
+                <ListItemButton>
+                  <ListItemText primary={`Skin Line: ${skinLines.entities[skinLine.id]?.name}`} />
+                </ListItemButton>
+              </ListItem>
+              ))}
             </List>
           </Grid>
           {skin.chromas && skin.chromas
