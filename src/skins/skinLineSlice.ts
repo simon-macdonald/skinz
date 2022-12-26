@@ -8,6 +8,7 @@ export interface SkinLineItem {
   skins: {
     [championId: number]: number,
   },
+  colors: string[],
 }
 
 const skinLineAdapter = createEntityAdapter<SkinLineItem>({
@@ -30,6 +31,7 @@ const skinLinesSlice = createSlice({
         const { skinLines } = action.payload;
         skinLines.forEach((skinLine) => {
           skinLine.skins = {};
+          skinLine.colors = [];
         });
         Object
           .values(action.payload.skins)
@@ -37,6 +39,23 @@ const skinLinesSlice = createSlice({
           .forEach((skin) => {
             skin.skinLines.forEach((skinLine) => {
               skinLines[skinLine.id].skins[Math.floor(skin.id / 1000)] = skin.id;
+            });
+          });
+        Object
+          .values(action.payload.skins)
+          .filter((skin) => skin.chromas)
+          .filter((skin) => skin.skinLines)
+          .forEach((skin) => {
+            skin.skinLines.forEach((skinLine) => {
+              skin.chromas.forEach((chroma) => {
+                const { colors } = skinLines[skinLine.id];
+                // eg "colors":["#D33528","#D33528"] => 'D33528_D33528'
+                // makes it URL-friendly
+                const chromaId = (`${chroma.colors[0]}_${chroma.colors[1]}`).replaceAll('#', '');
+                if (colors.indexOf(chromaId) === -1) {
+                  colors.push(chromaId);
+                }
+              });
             });
           });
         skinLineAdapter.upsertMany(state, skinLines);

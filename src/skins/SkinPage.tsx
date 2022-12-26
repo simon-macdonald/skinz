@@ -1,6 +1,5 @@
 import {
-  Avatar,
-  Container, Grid, List, ListItem, ListItemAvatar, ListItemButton, ListItemText, Toolbar, Typography,
+  Container, Grid, List, ListItem, ListItemButton, ListItemText, Toolbar, Typography,
 } from '@mui/material';
 import React from 'react';
 import { Link, useParams } from 'react-router-dom';
@@ -43,11 +42,11 @@ const SkinPage = () => {
                 </ListItemButton>
               </ListItem>
               {skin.skinLines.map((skinLine) => (
-              <ListItem disablePadding button component={Link} to={`/skinLines/${skinLine.id}`}>
-                <ListItemButton>
-                  <ListItemText primary={`Skin Line: ${skinLines.entities[skinLine.id]?.name}`} />
-                </ListItemButton>
-              </ListItem>
+                <ListItem disablePadding button component={Link} to={`/skinLines/${skinLine.id}`}>
+                  <ListItemButton>
+                    <ListItemText primary={`Skin Line: ${skinLines.entities[skinLine.id]?.name}`} />
+                  </ListItemButton>
+                </ListItem>
               ))}
             </List>
           </Grid>

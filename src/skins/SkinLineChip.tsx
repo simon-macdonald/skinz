@@ -59,10 +59,8 @@ import React from 'react';
 // navigate to skin line page
 // navigate to specific chroma color page
 
-const SkinLineChip = () => {
-  return (
-    <Chip label="Bees" onDelete={() => null} />
-  );
-};
+const SkinLineChip = () => (
+  <Chip label="Bees" onDelete={() => null} />
+);
 
 export default SkinLineChip;
