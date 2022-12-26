@@ -7,6 +7,7 @@ import { useAppSelector } from '../glue/hooks';
 import BrowseDrawer from '../home/BrowseDrawer';
 import SkinCard from './SkinCard';
 import { selectSkinLines } from './skinLineSlice';
+import ColorsGrid from '../chromas/ColorsGrid';
 
 const SkinLinePage = () => {
   const { id } = useParams();
@@ -25,6 +26,9 @@ const SkinLinePage = () => {
           {skinLine.name}
         </Typography>
         <Grid container spacing={5} columns={3}>
+          <Grid item xs={1}>
+            <ColorsGrid skinLine={skinLine} />
+          </Grid>
           {Object.values(skinLine.skins)
             .map((skinId) => (
               <SkinCard id={skinId} key={skinId} />

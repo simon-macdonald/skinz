@@ -53,6 +53,7 @@ const BrowseDrawer = () => {
   const skinLinesDisplayed = display.skinLines.length === 0 ? skinLines.ids : display.skinLines;
   const colorsDisplayed = display.colors.length === 0 ? colors.ids : display.colors;
 
+  // TODO move this to redux
   const [value, setValue] = React.useState(0);
 
   const handleChange = (event: React.SyntheticEvent, newValue: number) => {
