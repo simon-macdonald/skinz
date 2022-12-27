@@ -2,6 +2,7 @@ import { createEntityAdapter, createSlice } from '@reduxjs/toolkit';
 import _ from 'lodash';
 import fetchEverything from '../home/fetchEverything';
 import { RootState } from '../glue/store';
+import chromaNames from './chromaNames.json';
 
 export interface ColorItem {
   id: string,
@@ -50,5 +51,7 @@ const colorSlice = createSlice({
 });
 
 export const selectColors = (state: RootState) => state.colors;
+
+export const maybeGetChromaName = (color: string) => chromaNames[color as keyof typeof chromaNames];
 
 export default colorSlice.reducer;

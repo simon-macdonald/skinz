@@ -7,8 +7,8 @@ import { useAppSelector } from '../glue/hooks';
 import { selectSkinLines } from '../skins/skinLineSlice';
 import { selectSkins } from '../skins/skinSlice';
 import ChromaCard from '../chromas/ChromaCard';
-import chromaNames from '../chromas/chromaNames.json';
 import BrowseDrawer from './BrowseDrawer';
+import ColorsGrid from '../chromas/ColorsGrid';
 
 const SkinLineColorPage = () => {
   const { id, color } = useParams();
@@ -40,10 +40,10 @@ const SkinLineColorPage = () => {
         <Typography variant="h2">
           {skinLine.name}
         </Typography>
-        <Typography variant="h2">
-          {chromaNames[color as keyof typeof chromaNames]}
-        </Typography>
         <Grid container spacing={5} columns={3}>
+          <Grid item xs={1}>
+            <ColorsGrid skinLine={skinLine} />
+          </Grid>
           {Object.values(skinLine.skins)
             .filter((skinId) => skins.entities[skinId]!.chromas)
             .flatMap((skinId) => skins.entities[skinId]!.chromas)
