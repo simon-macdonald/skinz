@@ -4,7 +4,7 @@ import {
 import React from 'react';
 import { useParams } from 'react-router-dom';
 import { useAppSelector } from '../glue/hooks';
-import BrowseDrawerChromas from '../home/BrowseDrawerChromas';
+import BrowseDrawer from '../home/BrowseDrawer';
 import ChampionSelectionRow from '../home/ChampionSelectionRow';
 import { selectDisplay } from '../home/displaySlice';
 import { selectSkins } from '../skins/skinSlice';
@@ -35,7 +35,7 @@ const ColorPage = () => {
 
   return (
     <>
-      <BrowseDrawerChromas />
+      <BrowseDrawer filterBy='chromas' />
       <Container>
         <Toolbar>
           {}

@@ -32,7 +32,7 @@ const SkinLineColorPage = () => {
 
   return (
     <>
-      <BrowseDrawer />
+      <BrowseDrawer filterBy='skins' />
       <Container>
         <Toolbar>
           {}

@@ -35,7 +35,7 @@ const HomePage = () => {
 
   return (
     <>
-      <BrowseDrawer />
+      <BrowseDrawer filterBy='skins' />
       <Container>
         <Toolbar>
           {}

@@ -6,15 +6,23 @@ import {
 import SkinLineHoverLink from '../skins/SkinLineHoverLink';
 import { useAppSelector } from '../glue/hooks';
 import {
+  FilterBy,
   selectDisplay,
 } from './displaySlice';
 import { selectSkinLines } from '../skins/skinLineSlice';
+import { selectColors } from '../chromas/colorSlice';
+import ColorHoverLink from '../chromas/ColorHoverLink';
 
-const BrowseDrawer = () => {
+const BrowseDrawer = (props: { filterBy: FilterBy }) => {
+  const { filterBy } = props;
+
   const skinLines = useAppSelector(selectSkinLines);
+  const colors = useAppSelector(selectColors);
   const display = useAppSelector(selectDisplay);
 
   const skinLinesDisplayed = display.skinLines.length === 0 ? skinLines.ids : display.skinLines;
+  const colorsDisplayed = display.colors.length === 0 ? colors.ids : display.colors;
+  const displayed = filterBy === 'skins' ? skinLinesDisplayed : colorsDisplayed;
 
   return (
     <Drawer
@@ -32,7 +40,10 @@ const BrowseDrawer = () => {
       <Toolbar>
         {}
       </Toolbar>
-      {skinLinesDisplayed.map((skinLine) => <SkinLineHoverLink theme={skinLine} key={skinLine} />)}
+      {displayed.map((entity) => (
+        filterBy === 'skins' ?
+          <SkinLineHoverLink theme={entity} key={entity} /> :
+          <ColorHoverLink theme={entity} key={entity} />))}
     </Drawer>
   );
 };

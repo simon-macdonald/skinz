@@ -24,7 +24,7 @@ const SkinPage = () => {
 
   return (
     <>
-      <BrowseDrawer />
+      <BrowseDrawer filterBy='skins' />
       <Container>
         <Toolbar>
           {}

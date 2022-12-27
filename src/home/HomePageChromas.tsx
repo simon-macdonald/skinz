@@ -12,7 +12,7 @@ import {
 import PortraitCard from './PortraitCard';
 import { selectChampions } from '../champions/championSlice';
 import ChampionSelectionRow from './ChampionSelectionRow';
-import BrowseDrawerChromas from './BrowseDrawerChromas';
+import BrowseDrawer from './BrowseDrawer';
 
 const HomePageChromas = () => {
   const dispatch = useAppDispatch();
@@ -35,7 +35,7 @@ const HomePageChromas = () => {
 
   return (
     <>
-      <BrowseDrawerChromas />
+      <BrowseDrawer filterBy='chromas' />
       <Container>
         <Toolbar>
           {}
