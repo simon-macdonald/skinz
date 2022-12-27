@@ -56,6 +56,12 @@ export const displaySlice = createSlice({
           ? 'skins'
           : 'chromas';
     },
+    doSkins: (state) => {
+      state.filterBy = 'skins';
+    },
+    doChromas: (state) => {
+      state.filterBy = 'chromas';
+    },
     showDrawer: (state) => {
       state.showDrawer = !state.showDrawer;
     },
@@ -127,7 +133,7 @@ export const displaySlice = createSlice({
 });
 
 export const {
-  hoverOver, hoverAway, clickTab, showDrawer,
+  hoverOver, hoverAway, clickTab, doSkins, doChromas, showDrawer,
 } = displaySlice.actions;
 
 export const selectDisplay = (state: RootState) => state.display;

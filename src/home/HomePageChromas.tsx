@@ -6,19 +6,19 @@ import {
 import { useAppDispatch, useAppSelector } from '../glue/hooks';
 import {
   clickChamp,
-  doSkins,
+  doChromas,
   selectDisplay,
 } from './displaySlice';
 import PortraitCard from './PortraitCard';
 import { selectChampions } from '../champions/championSlice';
 import ChampionSelectionRow from './ChampionSelectionRow';
-import BrowseDrawer from './BrowseDrawer';
+import BrowseDrawerChromas from './BrowseDrawerChromas';
 
-const HomePage = () => {
+const HomePageChromas = () => {
   const dispatch = useAppDispatch();
 
   useEffect(() => {
-    dispatch(doSkins());
+    dispatch(doChromas());
     dispatch(clickChamp(-1));
   }, [dispatch]);
 
@@ -35,7 +35,7 @@ const HomePage = () => {
 
   return (
     <>
-      <BrowseDrawer />
+      <BrowseDrawerChromas />
       <Container>
         <Toolbar>
           {}
@@ -56,4 +56,4 @@ const HomePage = () => {
   );
 };
 
-export default HomePage;
+export default HomePageChromas;

@@ -33,12 +33,7 @@ const BrowseDrawerChromas = () => {
       <Toolbar>
         {}
       </Toolbar>
-      <Box sx={{ overflow: 'auto' }}>
-        <Box sx={{ borderBottom: 1, borderColor: 'divider' }}>
-          Colors
-        </Box>
-        {colorsDisplayed.map((color) => <ColorHoverLink theme={color} key={color} />)}
-      </Box>
+      {colorsDisplayed.map((color) => <ColorHoverLink theme={color} key={color} />)}
     </Drawer>
   );
 };
