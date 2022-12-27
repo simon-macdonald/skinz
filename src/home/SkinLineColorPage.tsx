@@ -2,7 +2,7 @@ import {
   Container, Grid, Toolbar, Typography,
 } from '@mui/material';
 import React from 'react';
-import { useParams } from 'react-router-dom';
+import { Link, useParams } from 'react-router-dom';
 import { useAppSelector } from '../glue/hooks';
 import { selectSkinLines } from '../skins/skinLineSlice';
 import { selectSkins } from '../skins/skinSlice';
@@ -37,9 +37,21 @@ const SkinLineColorPage = () => {
         <Toolbar>
           {}
         </Toolbar>
-        <Typography variant="h2">
-          {skinLine.name}
-        </Typography>
+
+        <Link
+          to={`/skinLines/${skinLine.id}`}
+          className="button muted-button"
+          style={{
+            textDecoration: 'none',
+          }}
+        >
+          <Typography
+            variant="h2"
+            color="primary.main"
+          >
+            {skinLine.name}
+          </Typography>
+        </Link>
         <Grid container spacing={5} columns={3}>
           <Grid item xs={1}>
             <ColorsGrid skinLine={skinLine} />
