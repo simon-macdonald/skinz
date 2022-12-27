@@ -37,7 +37,7 @@ const skinLinesSlice = createSlice({
           .values(action.payload.skins)
           .filter((skin) => skin.skinLines)
           .forEach((skin) => {
-            skin.skinLines.forEach((skinLine) => {
+            skin.skinLines?.forEach((skinLine) => {
               skinLines[skinLine.id].skins[Math.floor(skin.id / 1000)] = skin.id;
             });
           });
@@ -46,7 +46,7 @@ const skinLinesSlice = createSlice({
           .filter((skin) => skin.chromas)
           .filter((skin) => skin.skinLines)
           .forEach((skin) => {
-            skin.skinLines.forEach((skinLine) => {
+            skin.skinLines?.forEach((skinLine) => {
               skin.chromas.forEach((chroma) => {
                 const { colors } = skinLines[skinLine.id];
                 // eg "colors":["#D33528","#D33528"] => 'D33528_D33528'

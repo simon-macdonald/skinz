@@ -41,7 +41,7 @@ const SkinPage = () => {
                   <ListItemText primary={`Champion: ${champion.name}`} />
                 </ListItemButton>
               </ListItem>
-              {skin.skinLines.map((skinLine) => (
+              {skin.skinLines?.map((skinLine) => (
                 <ListItem disablePadding button component={Link} to={`/skinLines/${skinLine.id}`}>
                   <ListItemButton>
                     <ListItemText primary={`Skin Line: ${skinLines.entities[skinLine.id]?.name}`} />
@@ -55,7 +55,7 @@ const SkinPage = () => {
               <ChromaCard
                 name={chroma.name}
                 chromaPath={chroma.chromaPath}
-                skinLineId={skin.skinLines && skin.skinLines[0].id}
+                skinLineId={(skin.skinLines && skin.skinLines.length > 0 && skin.skinLines[0].id) || -1}
                 color={(`${chroma.colors[0]}_${chroma.colors[1]}`).replaceAll('#', '')}
                 key={chroma.id}
               />

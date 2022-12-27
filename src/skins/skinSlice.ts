@@ -18,7 +18,7 @@ export interface SkinItem {
   }[],
   skinLines: {
     id: number;
-  }[];
+  }[] | null;
 }
 
 const skinAdapter = createEntityAdapter<SkinItem>({
