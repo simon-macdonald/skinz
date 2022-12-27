@@ -5,7 +5,6 @@ import React from 'react';
 import { useParams } from 'react-router-dom';
 import { useAppSelector } from '../glue/hooks';
 import BrowseDrawer from '../home/BrowseDrawer';
-import BrowseDrawerChromas from '../home/BrowseDrawerChromas';
 import ChampionSelectionRow from '../home/ChampionSelectionRow';
 import { selectDisplay } from '../home/displaySlice';
 import { selectSkins } from '../skins/skinSlice';
@@ -25,7 +24,7 @@ const ColorPage = () => {
     .filter((id) => skins.entities[id]!.chromas)
     .flatMap((id) => {
       skins.entities[id]!.chromas.forEach((chroma) => {
-        const skinLines = skins.entities[id]!.skinLines;
+        const { skinLines } = skins.entities[id]!;
         if (skinLines && skinLines.length > 0) {
           skinLineIds.set(chroma.id, skinLines[0].id);
         }
@@ -36,7 +35,7 @@ const ColorPage = () => {
 
   return (
     <>
-      <BrowseDrawerChromas />
+      <BrowseDrawer />
       <Container>
         <Toolbar>
           {}

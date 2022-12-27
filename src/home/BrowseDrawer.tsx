@@ -4,7 +4,6 @@ import {
   Box,
   Drawer, Tab, Tabs, Toolbar, Typography,
 } from '@mui/material';
-import { useLocation } from 'react-router-dom';
 import SkinLineHoverLink from '../skins/SkinLineHoverLink';
 import { useAppDispatch, useAppSelector } from '../glue/hooks';
 import {
@@ -61,8 +60,6 @@ const BrowseDrawer = () => {
     dispatch(clickTab(newValue));
     dispatch(clickChamp(-1));
   };
-
-  const location = useLocation();
 
   return (
     <Drawer

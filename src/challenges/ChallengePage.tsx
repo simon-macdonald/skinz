@@ -14,7 +14,6 @@ import {
   clickWhoDidWhatCheckbox, selectWhoDidWhat, whoDidWhatState, WhoDidWhatState,
 } from './whoDidWhatSlice';
 import getAssetUrl from '../urls';
-import BrowseDrawer from '../home/BrowseDrawer';
 
 const getChallengeIconPath = (path: string) => `https://raw.communitydragon.org/latest/game/${path.toLowerCase().replace('/lol-game-data/assets/', '')}`;
 
@@ -33,34 +32,33 @@ const ChallengePage = () => {
     setFind(event.target.value);
   };
   return (
-    <>
-      <Container>
-        <Toolbar>
-          {}
-        </Toolbar>
-        <TableContainer component={Paper}>
-          <Table stickyHeader>
-            <TableHead>
-              <TableRow>
-                <TableCell>
-                  <Typography variant="h4" gutterBottom>
-                    Challenges
-                    <Tooltip title={(
-                      <Typography variant="h4" gutterBottom>
-                        Track the challenges you have progressed with each champion. It&apos;s hard to remember in the lobby!
-                      </Typography>
+    <Container>
+      <Toolbar>
+        {}
+      </Toolbar>
+      <TableContainer component={Paper}>
+        <Table stickyHeader>
+          <TableHead>
+            <TableRow>
+              <TableCell>
+                <Typography variant="h4" gutterBottom>
+                  Challenges
+                  <Tooltip title={(
+                    <Typography variant="h4" gutterBottom>
+                      Track the challenges you have progressed with each champion. It&apos;s hard to remember in the lobby!
+                    </Typography>
                     )}
-                    >
-                      <HelpIcon />
-                    </Tooltip>
-                  </Typography>
-                </TableCell>
-                {Object.keys(whoDidWhatState).map((challengeName) => {
-                  const challenge = challenges.entities[challengeName]!;
-                  const { levelToIconPath } = challenge;
-                  const howManyChampsDoIHave = whoDidWhat[challengeName as keyof WhoDidWhatState].length;
-                  const { thresholds } = challenge;
-                  const iconPath =
+                  >
+                    <HelpIcon />
+                  </Tooltip>
+                </Typography>
+              </TableCell>
+              {Object.keys(whoDidWhatState).map((challengeName) => {
+                const challenge = challenges.entities[challengeName]!;
+                const { levelToIconPath } = challenge;
+                const howManyChampsDoIHave = whoDidWhat[challengeName as keyof WhoDidWhatState].length;
+                const { thresholds } = challenge;
+                const iconPath =
                     howManyChampsDoIHave >= thresholds.MASTER.value ? levelToIconPath.MASTER :
                       howManyChampsDoIHave >= thresholds.DIAMOND.value ? levelToIconPath.DIAMOND :
                         howManyChampsDoIHave >= thresholds.PLATINUM.value ? levelToIconPath.PLATINUM :
@@ -69,38 +67,38 @@ const ChallengePage = () => {
                               (howManyChampsDoIHave >= thresholds.BRONZE.value || !thresholds.IRON) ? levelToIconPath.BRONZE :
                                 howManyChampsDoIHave >= thresholds.IRON.value ? levelToIconPath.IRON :
                                   levelToIconPath.IRON;
-                  return (
-                    <TableCell>
-                      <Tooltip title={(
-                        <>
-                          <Typography variant="h4" gutterBottom>
-                            {challenge.name}
-                          </Typography>
-                          <Divider />
-                          <Typography variant="h5" gutterBottom>
-                            {challenge.description}
-                          </Typography>
-                        </>
+                return (
+                  <TableCell>
+                    <Tooltip title={(
+                      <>
+                        <Typography variant="h4" gutterBottom>
+                          {challenge.name}
+                        </Typography>
+                        <Divider />
+                        <Typography variant="h5" gutterBottom>
+                          {challenge.description}
+                        </Typography>
+                      </>
                       )}
-                      >
-                        <Avatar src={getChallengeIconPath(iconPath)} />
-                      </Tooltip>
-                      <Typography variant="h5" gutterBottom>
-                        {`${howManyChampsDoIHave}/${thresholds.MASTER.value}`}
-                      </Typography>
-                    </TableCell>
-                  );
-                })}
-              </TableRow>
-              <TableRow>
-                <TableCell>
-                  <TextField
-                    label="Find Champion"
-                    variant="outlined"
-                    value={find}
-                    onChange={handleFindChange}
-                    InputProps={{
-                      endAdornment:
+                    >
+                      <Avatar src={getChallengeIconPath(iconPath)} />
+                    </Tooltip>
+                    <Typography variant="h5" gutterBottom>
+                      {`${howManyChampsDoIHave}/${thresholds.MASTER.value}`}
+                    </Typography>
+                  </TableCell>
+                );
+              })}
+            </TableRow>
+            <TableRow>
+              <TableCell>
+                <TextField
+                  label="Find Champion"
+                  variant="outlined"
+                  value={find}
+                  onChange={handleFindChange}
+                  InputProps={{
+                    endAdornment:
   <InputAdornment position="end">
     {find !== '' && (
     <IconButton onClick={() => setFind('')}>
@@ -108,67 +106,66 @@ const ChallengePage = () => {
     </IconButton>
     )}
   </InputAdornment>,
+                  }}
+                />
+              </TableCell>
+              {Object.keys(whoDidWhatState).map((challengeName) => (
+                <TableCell>
+                  <IconButton
+                    color="primary"
+                    onClick={() => {
+                      if (sortBy === challengeName) {
+                        setChampionIds(champions.ids);
+                        setSortBy('');
+                        return;
+                      }
+                      const completed = champions.ids.filter((id) => whoDidWhat[challengeName as keyof WhoDidWhatState].includes(id as number));
+                      const uncompleted = champions.ids.filter((id) => !whoDidWhat[challengeName as keyof WhoDidWhatState].includes(id as number));
+                      const all = completed.concat(uncompleted);
+                      setChampionIds(all);
+                      setSortBy(challengeName);
                     }}
-                  />
+                    aria-label={`sort by ${challengeName}`}
+                  >
+                    <Sort
+                      sx={{ transform: sortBy === challengeName ? 'rotate(0.5turn)' : 'rotate(0)' }}
+                      color={sortBy === challengeName ? 'secondary' : 'primary'}
+                    />
+                  </IconButton>
                 </TableCell>
-                {Object.keys(whoDidWhatState).map((challengeName) => (
+              ))}
+            </TableRow>
+          </TableHead>
+          <TableBody>
+            {championIds.filter((id) => find === '' || champions.entities[id]!.name.toLowerCase().includes(find.toLowerCase())).map((id) => champions.entities[id]).map((champion) => (
+              <TableRow
+                key={champion!.name}
+                sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
+              >
+                <TableCell>
+                  <Avatar src={getAssetUrl(champion!.squarePortraitPath)} variant="square" />
+                </TableCell>
+                {Object.keys(whoDidWhatState).map((challenge) => (
                   <TableCell>
-                    <IconButton
-                      color="primary"
-                      onClick={() => {
-                        if (sortBy === challengeName) {
-                          setChampionIds(champions.ids);
-                          setSortBy('');
-                          return;
-                        }
-                        const completed = champions.ids.filter((id) => whoDidWhat[challengeName as keyof WhoDidWhatState].includes(id as number));
-                        const uncompleted = champions.ids.filter((id) => !whoDidWhat[challengeName as keyof WhoDidWhatState].includes(id as number));
-                        const all = completed.concat(uncompleted);
-                        setChampionIds(all);
-                        setSortBy(challengeName);
-                      }}
-                      aria-label={`sort by ${challengeName}`}
+                    <Tooltip title={(
+                      <Typography variant="h4" gutterBottom>
+                        {challenge}
+                      </Typography>
+                      )}
                     >
-                      <Sort
-                        sx={{ transform: sortBy === challengeName ? 'rotate(0.5turn)' : 'rotate(0)' }}
-                        color={sortBy === challengeName ? 'secondary' : 'primary'}
+                      <Checkbox
+                        checked={whoDidWhat[challenge as keyof WhoDidWhatState].includes(champion!.id)}
+                        onChange={() => { dispatch(clickWhoDidWhatCheckbox([challenge, champion!.id])); }}
                       />
-                    </IconButton>
+                    </Tooltip>
                   </TableCell>
                 ))}
               </TableRow>
-            </TableHead>
-            <TableBody>
-              {championIds.filter((id) => find === '' || champions.entities[id]!.name.toLowerCase().includes(find.toLowerCase())).map((id) => champions.entities[id]).map((champion) => (
-                <TableRow
-                  key={champion!.name}
-                  sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
-                >
-                  <TableCell>
-                    <Avatar src={getAssetUrl(champion!.squarePortraitPath)} variant="square" />
-                  </TableCell>
-                  {Object.keys(whoDidWhatState).map((challenge) => (
-                    <TableCell>
-                      <Tooltip title={(
-                        <Typography variant="h4" gutterBottom>
-                          {challenge}
-                        </Typography>
-                      )}
-                      >
-                        <Checkbox
-                          checked={whoDidWhat[challenge as keyof WhoDidWhatState].includes(champion!.id)}
-                          onChange={() => { dispatch(clickWhoDidWhatCheckbox([challenge, champion!.id])); }}
-                        />
-                      </Tooltip>
-                    </TableCell>
-                  ))}
-                </TableRow>
-              ))}
-            </TableBody>
-          </Table>
-        </TableContainer>
-      </Container>
-    </>
+            ))}
+          </TableBody>
+        </Table>
+      </TableContainer>
+    </Container>
   );
 };
 
