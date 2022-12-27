@@ -23,7 +23,7 @@ const SkinCard = (props: any) => {
   return (
     <Grid item xs={1}>
       <Card>
-        <CardActionArea disabled={skin.chromas === undefined} onClick={() => navigate(`/skins/${id}`)}>
+        <CardActionArea onClick={() => navigate(`/skins/${id}`)}>
           <CardMedia
             component="img"
             image={getAssetUrl(skin.tilePath)}
