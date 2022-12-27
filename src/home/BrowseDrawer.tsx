@@ -64,10 +64,6 @@ const BrowseDrawer = () => {
 
   const location = useLocation();
 
-  if (!display.showDrawer || ['/about', '/challenges'].includes(location.pathname)) {
-    return null;
-  }
-
   return (
     <Drawer
       sx={{
