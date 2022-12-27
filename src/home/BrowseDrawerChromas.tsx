@@ -1,7 +1,6 @@
 import React from 'react';
 import '../glue/App.css';
 import {
-  Box,
   Drawer, Toolbar,
 } from '@mui/material';
 import { useAppSelector } from '../glue/hooks';

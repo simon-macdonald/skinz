@@ -1,7 +1,6 @@
 import React from 'react';
 import '../glue/App.css';
 import {
-  Box,
   Drawer, Toolbar,
 } from '@mui/material';
 import SkinLineHoverLink from '../skins/SkinLineHoverLink';
@@ -16,7 +15,7 @@ const BrowseDrawer = () => {
   const display = useAppSelector(selectDisplay);
 
   const skinLinesDisplayed = display.skinLines.length === 0 ? skinLines.ids : display.skinLines;
-  
+
   return (
     <Drawer
       sx={{

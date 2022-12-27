@@ -4,7 +4,6 @@ import {
 import React from 'react';
 import { useParams } from 'react-router-dom';
 import { useAppSelector } from '../glue/hooks';
-import BrowseDrawer from '../home/BrowseDrawer';
 import BrowseDrawerChromas from '../home/BrowseDrawerChromas';
 import ChampionSelectionRow from '../home/ChampionSelectionRow';
 import { selectDisplay } from '../home/displaySlice';
