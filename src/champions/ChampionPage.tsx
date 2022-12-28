@@ -15,7 +15,7 @@ const ChampionPage = () => {
 
   return (
     <>
-      <BrowseDrawer filterBy='skins' />
+      <BrowseDrawer filterBy="skins" />
       <Container>
         <Toolbar>
           {}

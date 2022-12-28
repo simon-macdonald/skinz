@@ -24,7 +24,7 @@ const SkinPage = () => {
 
   return (
     <>
-      <BrowseDrawer filterBy='skins' />
+      <BrowseDrawer filterBy="skins" />
       <Container>
         <Toolbar>
           {}
@@ -57,7 +57,7 @@ const SkinPage = () => {
                 chromaPath={chroma.chromaPath}
                 skinLineId={(skin.skinLines && skin.skinLines.length > 0 && skin.skinLines[0].id) || -1}
                 color={(`${chroma.colors[0]}_${chroma.colors[1]}`).replaceAll('#', '')}
-                displayText='chromaName'
+                displayText="chromaName"
                 key={chroma.id}
               />
             ))}

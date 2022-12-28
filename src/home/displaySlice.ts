@@ -3,7 +3,7 @@ import _ from 'lodash';
 import fetchEverything from './fetchEverything';
 import type { AppDispatch, RootState } from '../glue/store';
 
-export type FilterBy = 'skins' | 'chromas' | 'both';
+export type FilterBy = 'skins' | 'chromas';
 export type DisplayState = 'visible' | 'chosen' | 'hidden';
 
 export interface ChosenChampionsState {

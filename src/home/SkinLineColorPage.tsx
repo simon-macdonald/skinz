@@ -32,7 +32,7 @@ const SkinLineColorPage = () => {
 
   return (
     <>
-      <BrowseDrawer filterBy='skins' />
+      <BrowseDrawer filterBy="skins" />
       <Container>
         <Toolbar>
           {}
@@ -66,7 +66,7 @@ const SkinLineColorPage = () => {
                 chromaPath={chroma.chromaPath}
                 skinLineId={+id!}
                 color={(`${chroma.colors[0]}_${chroma.colors[1]}`).replaceAll('#', '')}
-                displayText='skinName'
+                displayText="skinName"
                 key={chroma.id}
               />
             ))}

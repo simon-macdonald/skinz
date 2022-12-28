@@ -6,7 +6,9 @@ import {
 import { useAppDispatch, useAppSelector } from '../glue/hooks';
 import {
   clickChamp,
+  doChromas,
   doSkins,
+  FilterBy,
   selectDisplay,
 } from './displaySlice';
 import PortraitCard from './PortraitCard';
@@ -14,11 +16,12 @@ import { selectChampions } from '../champions/championSlice';
 import ChampionSelectionRow from './ChampionSelectionRow';
 import BrowseDrawer from './BrowseDrawer';
 
-const HomePage = () => {
+const HomePage = (props: { filterBy: FilterBy, }) => {
+  const { filterBy } = props;
   const dispatch = useAppDispatch();
 
   useEffect(() => {
-    dispatch(doSkins());
+    dispatch(filterBy === 'skins' ? doSkins() : doChromas());
     dispatch(clickChamp(-1));
   }, [dispatch]);
 
@@ -35,7 +38,7 @@ const HomePage = () => {
 
   return (
     <>
-      <BrowseDrawer filterBy='skins' />
+      <BrowseDrawer filterBy={filterBy} />
       <Container>
         <Toolbar>
           {}
