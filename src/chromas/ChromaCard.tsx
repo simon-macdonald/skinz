@@ -6,12 +6,23 @@ import { useNavigate } from 'react-router-dom';
 import getAssetUrl from '../urls';
 import chromaNames from './chromaNames.json';
 
-const ChromaCard = (props: { name: string, chromaPath: string, skinLineId: number, color: string, }) => {
+export type DisplayText = 'chromaName' | 'skinName';
+
+const ChromaCard = (props: {
+  skinName: string,
+  chromaPath: string,
+  skinLineId: number,
+  color: string,
+  displayText: DisplayText,
+}) => {
   const {
-    name, chromaPath, skinLineId, color,
+    skinName, chromaPath, skinLineId, color, displayText,
   } = props;
 
   const navigate = useNavigate();
+
+  const colorName = chromaNames[color as keyof typeof chromaNames];
+  const cardContent = displayText === 'chromaName' ? colorName : skinName;
 
   return (
     <Grid item xs={1}>
@@ -33,7 +44,7 @@ const ChromaCard = (props: { name: string, chromaPath: string, skinLineId: numbe
                 textTransform: 'capitalize',
               }}
               >
-                {`${name} (${chromaNames[color as keyof typeof chromaNames]})`}
+                {cardContent}
               </Box>
             </Typography>
           </CardContent>

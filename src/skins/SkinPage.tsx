@@ -53,10 +53,11 @@ const SkinPage = () => {
           {skin.chromas && skin.chromas
             .map((chroma) => (
               <ChromaCard
-                name={chroma.name}
+                skinName={chroma.name}
                 chromaPath={chroma.chromaPath}
                 skinLineId={(skin.skinLines && skin.skinLines.length > 0 && skin.skinLines[0].id) || -1}
                 color={(`${chroma.colors[0]}_${chroma.colors[1]}`).replaceAll('#', '')}
+                displayText='chromaName'
                 key={chroma.id}
               />
             ))}

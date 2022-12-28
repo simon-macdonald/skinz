@@ -47,10 +47,11 @@ const ColorPage = () => {
         <Grid container spacing={5} columns={3}>
           {chromas.slice(0, 20).map((chroma) => (
             <ChromaCard
-              name={chroma.name}
+              skinName={chroma.name}
               chromaPath={chroma.chromaPath}
               skinLineId={skinLineIds.get(chroma.id)!}
               color={(`${chroma.colors[0]}_${chroma.colors[1]}`).replaceAll('#', '')}
+              displayText='skinName'
               key={chroma.id}
             />
           ))}

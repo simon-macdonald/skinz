@@ -12,7 +12,7 @@ export interface SkinItem {
   uncenteredSplashPath: string,
   chromas: {
     id: number,
-    name: string,
+    name: string, // this is actually awkwardly the skin name
     chromaPath: string,
     colors: string[],
   }[],
