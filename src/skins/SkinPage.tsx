@@ -29,10 +29,10 @@ const SkinPage = () => {
         <Toolbar>
           {}
         </Toolbar>
-        <Typography variant="h2">
+        <Typography variant="h3">
           {skin.name}
         </Typography>
-        <Grid container spacing={5} columns={3}>
+        <Grid container sx={{ marginTop: 0 }} spacing={5} columns={3}>
           <SkinCard id={skin.id} />
           <Grid item xs={2}>
             <List>
