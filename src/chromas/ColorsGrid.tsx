@@ -1,8 +1,7 @@
 import { Avatar, Grid, Typography } from '@mui/material';
 import React from 'react';
-import { Link, useLocation, useParams } from 'react-router-dom';
+import { Link, useLocation } from 'react-router-dom';
 import { SkinLineItem } from '../skins/skinLineSlice';
-import chromaNames from './chromaNames.json';
 import { maybeGetChromaName } from './colorSlice';
 
 const ColorsGrid = (props: { skinLine: SkinLineItem }) => {
@@ -17,12 +16,11 @@ const ColorsGrid = (props: { skinLine: SkinLineItem }) => {
   }
 
   const { pathname } = useLocation();
-  const urlColor = useParams().color;
 
   return (
     <>
       <Typography variant="h5">
-        {(urlColor && chromaNames[urlColor as keyof typeof chromaNames]) || 'View chromas:'}
+        Chromas:
       </Typography>
       <Grid container spacing={5} columns={5}>
         {skinLine.colors.map((color) => (

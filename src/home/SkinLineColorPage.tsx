@@ -1,14 +1,17 @@
 import {
+  Breadcrumbs,
   Container, Grid, Toolbar, Typography,
 } from '@mui/material';
 import React from 'react';
 import { Link, useParams } from 'react-router-dom';
+import { NavigateNext } from '@mui/icons-material';
 import { useAppSelector } from '../glue/hooks';
 import { selectSkinLines } from '../skins/skinLineSlice';
 import { selectSkins } from '../skins/skinSlice';
 import ChromaCard from '../chromas/ChromaCard';
 import BrowseDrawer from './BrowseDrawer';
 import ColorsGrid from '../chromas/ColorsGrid';
+import chromaNames from '../chromas/chromaNames.json';
 
 const SkinLineColorPage = () => {
   const { id, color } = useParams();
@@ -16,6 +19,9 @@ const SkinLineColorPage = () => {
   const skinLines = useAppSelector(selectSkinLines);
   const skins = useAppSelector(selectSkins);
   const skinLine = skinLines.entities[+id!];
+  const urlColor = useParams().color;
+
+  const [hover, setHover] = React.useState(false);
 
   if (skinLine === undefined) {
     return (
@@ -37,22 +43,28 @@ const SkinLineColorPage = () => {
         <Toolbar>
           {}
         </Toolbar>
-
-        <Link
-          to={`/skinLines/${skinLine.id}`}
-          className="button muted-button"
-          style={{
-            textDecoration: 'none',
-          }}
-        >
-          <Typography
-            variant="h2"
-            color="primary.main"
+        <Breadcrumbs separator={<NavigateNext />}>
+          <Link
+            to={`/skinLines/${skinLine.id}`}
+            className="button muted-button"
+            style={{
+              textDecoration: 'none',
+            }}
           >
-            {skinLine.name}
+            <Typography
+              variant="h3"
+              onMouseEnter={() => setHover(true)}
+              onMouseLeave={() => setHover(false)}
+              color={hover ? 'secondary.main' : 'primary.main'}
+            >
+              {skinLine.name}
+            </Typography>
+          </Link>
+          <Typography variant="h3">
+            {(urlColor && chromaNames[urlColor as keyof typeof chromaNames]) || 'View chromas:'}
           </Typography>
-        </Link>
-        <Grid container spacing={5} columns={3}>
+        </Breadcrumbs>
+        <Grid container sx={{ marginTop: 0 }} spacing={5} columns={3}>
           <Grid item xs={1}>
             <ColorsGrid skinLine={skinLine} />
           </Grid>

@@ -22,10 +22,10 @@ const SkinLinePage = () => {
         <Toolbar>
           {}
         </Toolbar>
-        <Typography variant="h2">
+        <Typography variant="h3">
           {skinLine.name}
         </Typography>
-        <Grid container spacing={5} columns={3}>
+        <Grid container sx={{ marginTop: 0 }} spacing={5} columns={3}>
           <Grid item xs={1}>
             <ColorsGrid skinLine={skinLine} />
           </Grid>
