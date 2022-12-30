@@ -64,6 +64,7 @@ const SkinLineColorPage = () => {
             {(urlColor && chromaNames[urlColor as keyof typeof chromaNames]) || 'View chromas:'}
           </Typography>
         </Breadcrumbs>
+        {/* see https://github.com/mui/material-ui/issues/30617 for marginTop attribute */}
         <Grid container sx={{ marginTop: 0 }} spacing={5} columns={3}>
           <Grid item xs={1}>
             <ColorsGrid skinLine={skinLine} />
