@@ -15,19 +15,22 @@ import PortraitCard from './PortraitCard';
 import { selectChampions } from '../champions/championSlice';
 import ChampionSelectionRow from './ChampionSelectionRow';
 import BrowseDrawer from './BrowseDrawer';
+import { useLocation } from 'react-router-dom';
 
 const HomePage = (props: { filterBy: FilterBy, }) => {
   const { filterBy } = props;
   const dispatch = useAppDispatch();
+  const { pathname } = useLocation();
 
   useEffect(() => {
     dispatch(filterBy === 'skins' ? doSkins() : doChromas());
     dispatch(clickChamp(-1));
-  }, [dispatch]);
+  }, [pathname]);
+
 
   const champions = useAppSelector(selectChampions);
   const display = useAppSelector(selectDisplay);
-
+  
   const champGridItemSizes = {
     xs: 60,
     sm: 12,
