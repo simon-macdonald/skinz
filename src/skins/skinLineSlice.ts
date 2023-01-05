@@ -1,10 +1,12 @@
 import { createEntityAdapter, createSlice } from '@reduxjs/toolkit';
 import fetchEverything from '../home/fetchEverything';
 import { RootState } from '../glue/store';
+import universes from './skin_line_to_universe.json';
 
 export interface SkinLineItem {
   id: number,
   name: string,
+  universe: string,
   skins: {
     [championId: number]: number,
   },
@@ -32,6 +34,10 @@ const skinLinesSlice = createSlice({
         skinLines.forEach((skinLine) => {
           skinLine.skins = {};
           skinLine.colors = [];
+          skinLine.universe
+              = Object.prototype.hasOwnProperty.call(universes, skinLine.name)
+              ? universes[skinLine.name as keyof typeof universes]
+              : 'unknown';
         });
         Object
           .values(action.payload.skins)

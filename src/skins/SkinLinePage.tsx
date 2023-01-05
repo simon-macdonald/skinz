@@ -27,6 +27,9 @@ const SkinLinePage = () => {
         </Typography>
         <Grid container sx={{ marginTop: 0 }} spacing={5} columns={3}>
           <Grid item xs={1}>
+            <Typography variant="h5">
+              Universe: {skinLine.universe}
+            </Typography>
             <ColorsGrid skinLine={skinLine} />
           </Grid>
           {Object.values(skinLine.skins)

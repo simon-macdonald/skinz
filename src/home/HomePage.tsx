@@ -3,6 +3,7 @@ import '../glue/App.css';
 import {
   Container, Grid, Toolbar,
 } from '@mui/material';
+import { useLocation } from 'react-router-dom';
 import { useAppDispatch, useAppSelector } from '../glue/hooks';
 import {
   clickChamp,
@@ -15,7 +16,6 @@ import PortraitCard from './PortraitCard';
 import { selectChampions } from '../champions/championSlice';
 import ChampionSelectionRow from './ChampionSelectionRow';
 import BrowseDrawer from './BrowseDrawer';
-import { useLocation } from 'react-router-dom';
 
 const HomePage = (props: { filterBy: FilterBy, }) => {
   const { filterBy } = props;
@@ -27,10 +27,9 @@ const HomePage = (props: { filterBy: FilterBy, }) => {
     dispatch(clickChamp(-1));
   }, [pathname]);
 
-
   const champions = useAppSelector(selectChampions);
   const display = useAppSelector(selectDisplay);
-  
+
   const champGridItemSizes = {
     xs: 60,
     sm: 12,

@@ -11,7 +11,7 @@ const ColorsGrid = (props: { skinLine: SkinLineItem }) => {
 
   if (skinLine.colors.length === 0) {
     return (
-      <Typography variant="body1">
+      <Typography variant="h5">
         No chromas.
       </Typography>
     );
