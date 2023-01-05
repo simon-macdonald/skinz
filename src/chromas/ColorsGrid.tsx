@@ -26,7 +26,7 @@ const ColorsGrid = (props: { skinLine: SkinLineItem }) => {
       </Typography>
       <Grid container spacing={5} columns={5}>
         {skinLine.colors.map((color) => (
-          <Grid item xs={1}>
+          <Grid key={color} item xs={1}>
             <Tooltip title={(
               <Typography>
                 {maybeGetChromaName(color)}
