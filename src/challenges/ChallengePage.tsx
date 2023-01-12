@@ -1,24 +1,25 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import '../glue/App.css';
 import {
   Avatar,
   Checkbox,
-  Container, Divider, IconButton, InputAdornment, Paper, Table, TableBody, TableCell, TableContainer, TableHead, TableRow, TextField, Toolbar, Tooltip, Typography,
+  Container, Divider, IconButton, InputAdornment, Paper, Skeleton, Table, TableBody, TableCell, TableContainer, TableHead, TableRow, TextField, Toolbar, Tooltip, Typography,
 } from '@mui/material';
 import HelpIcon from '@mui/icons-material/Help';
 import { Clear, Sort } from '@mui/icons-material';
 import { useAppDispatch, useAppSelector } from '../glue/hooks';
-import { selectChallenges } from './challengeSlice';
+import { ChallengeItem } from './challengeSlice';
 import { selectChampions } from '../champions/championSlice';
 import {
   clickWhoDidWhatCheckbox, selectWhoDidWhat, whoDidWhatState, WhoDidWhatState,
 } from './whoDidWhatSlice';
 import getAssetUrl from '../urls';
+import axios from 'axios';
+import _, { Dictionary } from 'lodash';
 
 const getChallengeIconPath = (path: string) => `https://raw.communitydragon.org/latest/game/${path.toLowerCase().replace('/lol-game-data/assets/', '')}`;
 
 const ChallengePage = () => {
-  const challenges = useAppSelector(selectChallenges);
   const champions = useAppSelector(selectChampions);
   const whoDidWhat = useAppSelector(selectWhoDidWhat);
   const dispatch = useAppDispatch();
@@ -27,6 +28,23 @@ const ChallengePage = () => {
   const [sortBy, setSortBy] = React.useState('');
 
   const [find, setFind] = React.useState('');
+
+  const [challengeData, setChallengeData] = useState<Dictionary<ChallengeItem>>(_.keyBy(null));
+
+  useEffect(() => {
+    const fetchData = async () => {
+      const result = await axios(
+        'https://raw.communitydragon.org/latest/plugins/rcp-be-lol-game-data/global/default/v1/challenges.json',
+      );
+      
+      const allChallenges = Object.values(result.data.challenges);
+      const relevantChallenges = allChallenges.filter((challenge: any) => Object.keys(whoDidWhatState).includes(challenge.name)) as ChallengeItem[];
+
+      setChallengeData(_.keyBy(relevantChallenges, 'name'));
+    };
+
+    fetchData();
+  }, []);
 
   const handleFindChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     setFind(event.target.value);
@@ -54,7 +72,14 @@ const ChallengePage = () => {
                 </Typography>
               </TableCell>
               {Object.keys(whoDidWhatState).map((challengeName) => {
-                const challenge = challenges.entities[challengeName]!;
+                if (!(challengeName in challengeData)) {
+                  return (
+                    <TableCell>
+                      <Skeleton variant="rounded" />
+                    </TableCell>
+                  );
+                }
+                const challenge = challengeData[challengeName];
                 const { levelToIconPath } = challenge;
                 const howManyChampsDoIHave = whoDidWhat[challengeName as keyof WhoDidWhatState].length;
                 const { thresholds } = challenge;
