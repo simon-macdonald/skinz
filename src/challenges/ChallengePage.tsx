@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 import '../glue/App.css';
 import {
   Avatar,
@@ -7,6 +7,9 @@ import {
 } from '@mui/material';
 import HelpIcon from '@mui/icons-material/Help';
 import { Clear, Sort } from '@mui/icons-material';
+import axios from 'axios';
+import _, { Dictionary } from 'lodash';
+import useSWR from 'swr';
 import { useAppDispatch, useAppSelector } from '../glue/hooks';
 import { ChallengeItem } from './challengeSlice';
 import { selectChampions } from '../champions/championSlice';
@@ -14,37 +17,67 @@ import {
   clickWhoDidWhatCheckbox, selectWhoDidWhat, whoDidWhatState, WhoDidWhatState,
 } from './whoDidWhatSlice';
 import getAssetUrl from '../urls';
-import axios from 'axios';
-import _, { Dictionary } from 'lodash';
 
 const getChallengeIconPath = (path: string) => `https://raw.communitydragon.org/latest/game/${path.toLowerCase().replace('/lol-game-data/assets/', '')}`;
+
+const fetcher = (url: string) => axios.get(url).then((result) => {
+  const allChallenges = Object.values(result.data.challenges);
+  const relevantChallenges = allChallenges.filter((challenge: any) => Object.keys(whoDidWhatState).includes(challenge.name)) as ChallengeItem[];
+
+  return _.keyBy(relevantChallenges, 'name');
+});
+
+const getChallengeHeaderCell = (data: Dictionary<ChallengeItem>, challengeName: string, whoDidWhat: WhoDidWhatState) => {
+  const challenge = data[challengeName];
+  const { levelToIconPath } = challenge;
+  const howManyChampsDoIHave = whoDidWhat[challengeName as keyof WhoDidWhatState].length;
+  const { thresholds } = challenge;
+  const iconPath =
+    howManyChampsDoIHave >= thresholds.MASTER.value ? levelToIconPath.MASTER :
+      howManyChampsDoIHave >= thresholds.DIAMOND.value ? levelToIconPath.DIAMOND :
+        howManyChampsDoIHave >= thresholds.PLATINUM.value ? levelToIconPath.PLATINUM :
+          howManyChampsDoIHave >= thresholds.GOLD.value ? levelToIconPath.GOLD :
+            howManyChampsDoIHave >= thresholds.SILVER.value ? levelToIconPath.SILVER :
+              (howManyChampsDoIHave >= thresholds.BRONZE.value || !thresholds.IRON) ? levelToIconPath.BRONZE :
+                howManyChampsDoIHave >= thresholds.IRON.value ? levelToIconPath.IRON :
+                  levelToIconPath.IRON;
+  return (
+    <>
+      <Tooltip title={(
+        <>
+          <Typography variant="h4" gutterBottom>
+            {challenge.name}
+          </Typography>
+          <Divider />
+          <Typography variant="h5" gutterBottom>
+            {challenge.description}
+          </Typography>
+        </>
+                      )}
+      >
+        <Avatar src={getChallengeIconPath(iconPath)} />
+      </Tooltip>
+      <Typography variant="h5" gutterBottom>
+        {`${howManyChampsDoIHave}/${data[challengeName].thresholds.MASTER.value}`}
+      </Typography>
+    </>
+  );
+};
 
 const ChallengePage = () => {
   const champions = useAppSelector(selectChampions);
   const whoDidWhat = useAppSelector(selectWhoDidWhat);
   const dispatch = useAppDispatch();
 
-  const [championIds, setChampionIds] = React.useState(champions.ids);
-  const [sortBy, setSortBy] = React.useState('');
+  const [championIds, setChampionIds] = useState(champions.ids);
+  const [sortBy, setSortBy] = useState('');
 
-  const [find, setFind] = React.useState('');
+  const [find, setFind] = useState('');
 
-  const [challengeData, setChallengeData] = useState<Dictionary<ChallengeItem>>(_.keyBy(null));
-
-  useEffect(() => {
-    const fetchData = async () => {
-      const result = await axios(
-        'https://raw.communitydragon.org/latest/plugins/rcp-be-lol-game-data/global/default/v1/challenges.json',
-      );
-      
-      const allChallenges = Object.values(result.data.challenges);
-      const relevantChallenges = allChallenges.filter((challenge: any) => Object.keys(whoDidWhatState).includes(challenge.name)) as ChallengeItem[];
-
-      setChallengeData(_.keyBy(relevantChallenges, 'name'));
-    };
-
-    fetchData();
-  }, []);
+  const { data } = useSWR(
+    'https://raw.communitydragon.org/latest/plugins/rcp-be-lol-game-data/global/default/v1/challenges.json',
+    fetcher,
+  );
 
   const handleFindChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     setFind(event.target.value);
@@ -71,49 +104,15 @@ const ChallengePage = () => {
                   </Tooltip>
                 </Typography>
               </TableCell>
-              {Object.keys(whoDidWhatState).map((challengeName) => {
-                if (!(challengeName in challengeData)) {
-                  return (
-                    <TableCell>
-                      <Skeleton variant="rounded" />
-                    </TableCell>
-                  );
-                }
-                const challenge = challengeData[challengeName];
-                const { levelToIconPath } = challenge;
-                const howManyChampsDoIHave = whoDidWhat[challengeName as keyof WhoDidWhatState].length;
-                const { thresholds } = challenge;
-                const iconPath =
-                    howManyChampsDoIHave >= thresholds.MASTER.value ? levelToIconPath.MASTER :
-                      howManyChampsDoIHave >= thresholds.DIAMOND.value ? levelToIconPath.DIAMOND :
-                        howManyChampsDoIHave >= thresholds.PLATINUM.value ? levelToIconPath.PLATINUM :
-                          howManyChampsDoIHave >= thresholds.GOLD.value ? levelToIconPath.GOLD :
-                            howManyChampsDoIHave >= thresholds.SILVER.value ? levelToIconPath.SILVER :
-                              (howManyChampsDoIHave >= thresholds.BRONZE.value || !thresholds.IRON) ? levelToIconPath.BRONZE :
-                                howManyChampsDoIHave >= thresholds.IRON.value ? levelToIconPath.IRON :
-                                  levelToIconPath.IRON;
-                return (
-                  <TableCell>
-                    <Tooltip title={(
-                      <>
-                        <Typography variant="h4" gutterBottom>
-                          {challenge.name}
-                        </Typography>
-                        <Divider />
-                        <Typography variant="h5" gutterBottom>
-                          {challenge.description}
-                        </Typography>
-                      </>
-                      )}
-                    >
-                      <Avatar src={getChallengeIconPath(iconPath)} />
-                    </Tooltip>
-                    <Typography variant="h5" gutterBottom>
-                      {`${howManyChampsDoIHave}/${thresholds.MASTER.value}`}
-                    </Typography>
-                  </TableCell>
-                );
-              })}
+              {Object.keys(whoDidWhatState).map((challengeName) => (
+                <TableCell>
+                  {data ? (
+                    getChallengeHeaderCell(data, challengeName, whoDidWhat)
+                  ) : (
+                    <Skeleton variant="rounded" />
+                  )}
+                </TableCell>
+              ))}
             </TableRow>
             <TableRow>
               <TableCell>
