@@ -9,7 +9,7 @@ import HelpIcon from '@mui/icons-material/Help';
 import { Clear, Sort } from '@mui/icons-material';
 import axios from 'axios';
 import _, { Dictionary } from 'lodash';
-import useSWR from 'swr';
+import useSWRImmutable from 'swr';
 import { useAppDispatch, useAppSelector } from '../glue/hooks';
 import { ChallengeItem } from './challengeSlice';
 import { selectChampions } from '../champions/championSlice';
@@ -74,7 +74,7 @@ const ChallengePage = () => {
 
   const [find, setFind] = useState('');
 
-  const { data } = useSWR(
+  const { data } = useSWRImmutable(
     'https://raw.communitydragon.org/latest/plugins/rcp-be-lol-game-data/global/default/v1/challenges.json',
     fetcher,
   );
