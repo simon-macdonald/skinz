@@ -44,7 +44,9 @@ const skinLinesSlice = createSlice({
           .filter((skin) => skin.skinLines)
           .forEach((skin) => {
             skin.skinLines?.forEach((skinLine) => {
-              skinLines[skinLine.id].skins[Math.floor(skin.id / 1000)] = skin.id;
+              if (skinLines[skinLine.id]) {
+                skinLines[skinLine.id].skins[Math.floor(skin.id / 1000)] = skin.id;
+              }
             });
           });
         Object
@@ -54,6 +56,9 @@ const skinLinesSlice = createSlice({
           .forEach((skin) => {
             skin.skinLines?.forEach((skinLine) => {
               skin.chromas.forEach((chroma) => {
+                if (!skinLines[skinLine.id]) {
+                  return;
+                }
                 const { colors } = skinLines[skinLine.id];
                 // eg "colors":["#D33528","#D33528"] => 'D33528_D33528'
                 // makes it URL-friendly
