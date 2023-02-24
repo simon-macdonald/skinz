@@ -1,4 +1,5 @@
 import {
+  Alert,
   AppBar, Avatar, Toolbar, Typography,
 } from '@mui/material';
 import React from 'react';
@@ -56,6 +57,10 @@ const NavBar = () => (
           About
         </Typography>
       </LinkReactRouter>
+      &nbsp;&nbsp;&nbsp;&nbsp;
+      <Alert variant="outlined" severity="warning">
+        Super buggy right now. Thanks for your patience!
+      </Alert>
     </Toolbar>
   </AppBar>
 );
