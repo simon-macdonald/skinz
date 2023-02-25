@@ -54,10 +54,7 @@ const skinLinesSlice = createSlice({
           .forEach((skin) => {
             skin.skinLines?.forEach((skinLine) => {
               skin.chromas.forEach((chroma) => {
-                if (!skinLines[skinLine.id]) {
-                  return;
-                }
-                const { colors } = skinLines[skinLine.id];
+                const { colors } = skinLines.find((i) => i.id === skinLine.id)!;
                 // eg "colors":["#D33528","#D33528"] => 'D33528_D33528'
                 // makes it URL-friendly
                 const chromaId = (`${chroma.colors[0]}_${chroma.colors[1]}`).replaceAll('#', '');
