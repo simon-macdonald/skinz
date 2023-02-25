@@ -44,9 +44,7 @@ const skinLinesSlice = createSlice({
           .filter((skin) => skin.skinLines)
           .forEach((skin) => {
             skin.skinLines?.forEach((skinLine) => {
-              if (skinLines[skinLine.id]) {
-                skinLines[skinLine.id].skins[Math.floor(skin.id / 1000)] = skin.id;
-              }
+              skinLines.find((i) => i.id === skinLine.id)!.skins[Math.floor(skin.id / 1000)] = skin.id;
             });
           });
         Object
