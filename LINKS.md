@@ -6,3 +6,7 @@ https://challenges.darkintaqt.com
 https://cdn.merakianalytics.com/riot/lol/resources/latest/en-US/champions.json
 https://leagueoflegends.fandom.com/wiki/Module:SkinData/universes?action=raw
 https://leagueoflegends.fandom.com/wiki/Champion_skin/Skin_themes
+https://alistapart.com/article/responsive-web-design/
+https://web.dev
+https://developer.mozilla.org/en-US/docs/Learn/Front-end_web_developer
+https://gaia.cs.umass.edu/kurose_ross/ppt.php
