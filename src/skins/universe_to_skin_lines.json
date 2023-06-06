@@ -149,11 +149,17 @@
   "Fables": [
     "Fables"
   ],
+  "Fallen World": [
+    "Ashen Knights"
+  ],
   "Folded Edges": [
     "Papercraft"
   ],
   "Forgotten Depths": [
     "Forgotten Depths"
+  ],
+  "Forsaken Hymn": [
+    "Broken Covenant"
   ],
   "Four Beasts": [
     "Dragonmancers",
@@ -202,6 +208,9 @@
   ],
   "Infernal": [
     "Infernal"
+  ],
+  "Inkshadow Uprising": [
+    "Inkshadow"
   ],
   "Institute of War": [
     "Marauder",
@@ -381,8 +390,7 @@
   ],
   "Versus": [
     "Battle of the God-Kings",
-    "Dawnbringer",
-    "Nightbringer"
+    "Nightbringer and Dawnbringer"
   ],
   "Victorious": [
     "Victorious"
@@ -393,6 +401,9 @@
   ],
   "Warring Kingdoms": [
     "Lunar Revel: Warring Kingdoms"
+  ],
+  "Winged Reign": [
+    "Faerie Court"
   ],
   "Winter Sports": [
     "Winter Sports"
@@ -412,5 +423,8 @@
   ],
   "Zombie VS Slayers": [
     "Zombies VS Slayers"
+  ],
+  "\u14383": [
+    "Heartthrobs and Heartaches"
   ]
 }

@@ -4,6 +4,7 @@ import {
   Container, Grid, IconButton, InputAdornment, TextField, Toolbar,
 } from '@mui/material';
 import { useLocation } from 'react-router-dom';
+import { Clear } from '@mui/icons-material';
 import { useAppDispatch, useAppSelector } from '../glue/hooks';
 import {
   clickChamp,
@@ -16,15 +17,14 @@ import PortraitCard from './PortraitCard';
 import { selectChampions } from '../champions/championSlice';
 import ChampionSelectionRow from './ChampionSelectionRow';
 import BrowseDrawer from './BrowseDrawer';
-import { Clear } from '@mui/icons-material';
 
 const HomePage = (props: { filterBy: FilterBy, }) => {
   const { filterBy } = props;
   const dispatch = useAppDispatch();
   const { pathname } = useLocation();
-  
+
   const [find, setFind] = useState('');
-  
+
   const handleFindChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     setFind(event.target.value);
   };
@@ -53,13 +53,14 @@ const HomePage = (props: { filterBy: FilterBy, }) => {
           {}
         </Toolbar>
         <ChampionSelectionRow />
-                <TextField
-                  label="Find Champion"
-                  variant="outlined"
-                  value={find}
-                  onChange={handleFindChange}
-                  InputProps={{
-                    endAdornment:
+        <TextField
+          label="Find Champion"
+          variant="outlined"
+          value={find}
+          onChange={handleFindChange}
+          InputProps={{
+            spellCheck: false,
+            endAdornment:
   <InputAdornment position="end">
     {find !== '' && (
     <IconButton onClick={() => setFind('')}>
@@ -67,8 +68,8 @@ const HomePage = (props: { filterBy: FilterBy, }) => {
     </IconButton>
     )}
   </InputAdornment>,
-                  }}
-                />
+          }}
+        />
         <Grid container spacing={2} columns={60}>
           {champions.ids
             .filter((id) => id > 0)

@@ -122,6 +122,7 @@ const ChallengePage = () => {
                   value={find}
                   onChange={handleFindChange}
                   InputProps={{
+                    spellCheck: false,
                     endAdornment:
   <InputAdornment position="end">
     {find !== '' && (
