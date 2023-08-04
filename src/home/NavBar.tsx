@@ -1,6 +1,7 @@
+import { Instagram } from '@mui/icons-material';
 import {
   Alert,
-  AppBar, Avatar, Toolbar, Typography,
+  AppBar, Avatar, Link, Toolbar, Typography,
 } from '@mui/material';
 import React from 'react';
 import { Link as LinkReactRouter } from 'react-router-dom';
@@ -59,6 +60,12 @@ const NavBar = () => (
           About
         </Typography>
       </LinkReactRouter>
+      &nbsp;&nbsp;&nbsp;&nbsp;
+      <Link href="https://www.instagram.com/simondotvoyage/" target="_blank">
+        <Typography color="white">
+          <Instagram />
+        </Typography>
+      </Link>
       &nbsp;&nbsp;&nbsp;&nbsp;
       {BUGGY && (
         <Alert variant="outlined" severity="warning">
