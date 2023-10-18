@@ -32,6 +32,7 @@ const HomePage = (props: { filterBy: FilterBy, }) => {
   useEffect(() => {
     dispatch(filterBy === 'skins' ? doSkins() : doChromas());
     dispatch(clickChamp(-1));
+    setFind('');
   }, [pathname]);
 
   const champions = useAppSelector(selectChampions);
@@ -77,9 +78,9 @@ const HomePage = (props: { filterBy: FilterBy, }) => {
             .filter((id) => display.displays[+id] !== 'chosen')
             .filter((id) => find === '' || champions.entities[id]!.name.toLowerCase().includes(find.toLowerCase()))
             .map((id) => (
-              <PortraitCard id={+id} key={id} sizes={champGridItemSizes} />
+              <PortraitCard id={+id} key={id} sizes={champGridItemSizes} setFindChampion={setFind} />
             ))}
-          {display.champions.length > 0 && <PortraitCard id={-1} sizes={champGridItemSizes} />}
+          {display.champions.length > 0 && <PortraitCard id={-1} sizes={champGridItemSizes} setFindChampion={setFind} />}
         </Grid>
       </Container>
     </>

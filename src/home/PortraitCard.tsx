@@ -21,7 +21,7 @@ const getChampionImage = (champion: ChampionItem, display?: boolean) => (display
 
 const getChampionText = (champion: ChampionItem, display?: boolean) => (display ? 'Champion Selection' : 'Clear');
 
-const PortraitCard = (props: { id: number, sizes: GridItemSizes, display?: boolean }) => {
+const PortraitCard = (props: { id: number, sizes: GridItemSizes, display?: boolean, setFindChampion?: React.Dispatch<React.SetStateAction<string>> }) => {
   const champions = useAppSelector(selectChampions);
   const skinLines = useAppSelector(selectSkinLines);
   const skins = useAppSelector(selectSkins);
@@ -29,7 +29,9 @@ const PortraitCard = (props: { id: number, sizes: GridItemSizes, display?: boole
   const champs = useAppSelector(selectDisplay);
   const dispatch = useAppDispatch();
 
-  const { id, sizes, display } = props;
+  const {
+    id, sizes, display, setFindChampion,
+  } = props;
   const champion = champions.entities[id]!;
   const skinLine: SkinLineItem | null
     = champs.hoverSkinLine === 0
@@ -43,6 +45,9 @@ const PortraitCard = (props: { id: number, sizes: GridItemSizes, display?: boole
           disabled={display && id === -1}
           onClick={() => {
             dispatch(clickChamp(id));
+            if (setFindChampion) {
+              setFindChampion('');
+            }
           }}
         >
           <CardMedia
