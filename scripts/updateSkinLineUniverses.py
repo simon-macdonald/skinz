@@ -11,6 +11,8 @@ universe_to_skin_lines = {}
 skin_line_to_universe = {}
 
 for line in lines[3:-4]:
+  if not '=' in line:
+    continue
   universe, skin_lines = line.split('=')
   universe = universe.strip()[2:-2]
   skin_lines = [skin_line[1:-1] for skin_line in skin_lines.strip()[1:-2].split(', ')]
