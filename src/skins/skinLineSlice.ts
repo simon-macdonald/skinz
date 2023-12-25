@@ -13,6 +13,8 @@ export interface SkinLineItem {
   colors: string[],
 }
 
+export const PRESTIGE_SKIN_LINE_ID = 9001;
+
 const skinLineAdapter = createEntityAdapter<SkinLineItem>({
   sortComparer: (a, b) => a.name.localeCompare(b.name),
 });
@@ -30,7 +32,13 @@ const skinLinesSlice = createSlice({
       })
       .addCase(fetchEverything.fulfilled, (state, action) => {
         state.loading = 'fulfilled';
-        const { skinLines } = action.payload;
+        const skinLines = action.payload.skinLines.concat([{
+          id: PRESTIGE_SKIN_LINE_ID,
+          name: 'Prestige',
+          universe: '',
+          skins: {},
+          colors: [],
+        }]);
         skinLines.forEach((skinLine) => {
           skinLine.skins = {};
           skinLine.colors = [];
@@ -41,6 +49,7 @@ const skinLinesSlice = createSlice({
         });
         Object
           .values(action.payload.skins)
+          .map((skin) => (skin.name.includes('Prestige') ? { ...skin, skinLines: [{ id: PRESTIGE_SKIN_LINE_ID }] } : skin))
           .filter((skin) => skin.skinLines)
           .forEach((skin) => {
             skin.skinLines?.forEach((skinLine) => {
@@ -49,6 +58,7 @@ const skinLinesSlice = createSlice({
           });
         Object
           .values(action.payload.skins)
+          .map((skin) => (skin.name.includes('Prestige') ? { ...skin, skinLines: [{ id: PRESTIGE_SKIN_LINE_ID }] } : skin))
           .filter((skin) => skin.chromas)
           .filter((skin) => skin.skinLines)
           .forEach((skin) => {

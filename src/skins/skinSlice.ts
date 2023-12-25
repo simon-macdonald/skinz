@@ -1,6 +1,7 @@
 import { createEntityAdapter, createSlice } from '@reduxjs/toolkit';
 import fetchEverything from '../home/fetchEverything';
 import { RootState } from '../glue/store';
+import { PRESTIGE_SKIN_LINE_ID } from './skinLineSlice';
 
 export interface SkinItem {
   id: number,
@@ -47,6 +48,9 @@ const skinsSlice = createSlice({
         Object.values(skins).forEach((skin) => {
           skin.championId = Math.floor(skin.id / 1000);
           skin.championName = championNames[skin.championId];
+          if (skin.name.includes('Prestige')) {
+            skin.skinLines = [{ id: PRESTIGE_SKIN_LINE_ID }];
+          }
         });
         skinAdapter.upsertMany(state, action.payload.skins);
       });

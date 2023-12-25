@@ -1,6 +1,7 @@
 import { createEntityAdapter, createSlice } from '@reduxjs/toolkit';
 import fetchEverything from '../home/fetchEverything';
 import { RootState } from '../glue/store';
+import { PRESTIGE_SKIN_LINE_ID } from '../skins/skinLineSlice';
 
 export interface ChampionItem {
   id: number,
@@ -52,6 +53,9 @@ const championsSlice = createSlice({
             return;
           }
           champions[championIndex].skins.push(skin.id);
+          if (skin.name.includes('Prestige')) {
+            skin.skinLines = [{ id: PRESTIGE_SKIN_LINE_ID }];
+          }
           skin.skinLines?.forEach((skinLine) => {
             const { skinLines } = champions[championIndex];
             if (!skinLines.includes(skinLine.id)) {

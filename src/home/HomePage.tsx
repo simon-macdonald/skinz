@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import '../glue/App.css';
 import {
+  Alert,
   Container, Grid, IconButton, InputAdornment, TextField, Toolbar,
 } from '@mui/material';
 import { useLocation } from 'react-router-dom';
@@ -54,14 +55,16 @@ const HomePage = (props: { filterBy: FilterBy, }) => {
           {}
         </Toolbar>
         <ChampionSelectionRow />
-        <TextField
-          label="Find Champion"
-          variant="outlined"
-          value={find}
-          onChange={handleFindChange}
-          InputProps={{
-            spellCheck: false,
-            endAdornment:
+        <Grid container columns={2}>
+          <Grid item>
+            <TextField
+              label="Find Champion"
+              variant="outlined"
+              value={find}
+              onChange={handleFindChange}
+              InputProps={{
+                spellCheck: false,
+                endAdornment:
   <InputAdornment position="end">
     {find !== '' && (
     <IconButton onClick={() => setFind('')}>
@@ -69,8 +72,13 @@ const HomePage = (props: { filterBy: FilterBy, }) => {
     </IconButton>
     )}
   </InputAdornment>,
-          }}
-        />
+              }}
+            />
+          </Grid>
+          <Grid item>
+            <Alert severity="info">{'Prestige skin line added. Let me know if you find any bugs. Merry Christmas y\'all.'}</Alert>
+          </Grid>
+        </Grid>
         <Grid container spacing={2} columns={60}>
           {champions.ids
             .filter((id) => id > 0)
