@@ -12,7 +12,7 @@ import { hoverAway, hoverOver } from '../home/displaySlice';
 import { useAppDispatch, useAppSelector } from '../glue/hooks';
 import { selectSkinLines } from './skinLineSlice';
 import { selectSkins, SkinItem } from './skinSlice';
-import { selectChampions } from '../champions/championSlice2';
+import { selectChampions } from '../champions/championSlice';
 
 const SkinLineHoverLink = (props: { theme: EntityId }) => {
   const { theme } = props;
