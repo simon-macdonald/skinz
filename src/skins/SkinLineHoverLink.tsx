@@ -11,7 +11,7 @@ import {
 import { hoverAway, hoverOver } from '../home/displaySlice';
 import { useAppDispatch, useAppSelector } from '../glue/hooks';
 import { selectSkinLines } from './skinLineSlice';
-import { selectSkins } from './skinSlice';
+import { selectSkins, SkinItem } from './skinSlice';
 import { selectChampions } from '../champions/championSlice2';
 
 const SkinLineHoverLink = (props: { theme: EntityId }) => {
@@ -94,8 +94,10 @@ const SkinLineHoverLink = (props: { theme: EntityId }) => {
           .map((skin) => skins.entities[skin]!)
           .sort((a, b) => {
             try {
-              const championNameA = champions.entities[a.championId]!.name;
-              const championNameB = champions.entities[b.championId]!.name;
+              const deriveChampionId = (skin: SkinItem) => Math.floor(skin.id / 1000);
+              const getChampName = (skin: SkinItem) => champions.entities[deriveChampionId(skin)]!.name;
+              const championNameA = getChampName(a);
+              const championNameB = getChampName(b);
               return championNameA.localeCompare(championNameB);
             } catch (championInfoTooOldSoDoAHardReload: any) {
               return -1;

@@ -1,4 +1,4 @@
-export {}
+export {};
 // import { createSelector } from '@reduxjs/toolkit';
 // import { selectChampions } from '../champions/championSlice2';
 // import { selectSkins } from './skinSlice2';
