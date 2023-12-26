@@ -12,10 +12,12 @@ import { hoverAway, hoverOver } from '../home/displaySlice';
 import { useAppDispatch, useAppSelector } from '../glue/hooks';
 import { selectSkinLines } from './skinLineSlice';
 import { selectSkins } from './skinSlice';
+import { selectChampions } from '../champions/championSlice2';
 
 const SkinLineHoverLink = (props: { theme: EntityId }) => {
   const { theme } = props;
 
+  const champions = useAppSelector(selectChampions);
   const skins = useAppSelector(selectSkins);
   const skinLines = useAppSelector(selectSkinLines);
   const skinLine = skinLines.entities[theme]!;
@@ -92,7 +94,9 @@ const SkinLineHoverLink = (props: { theme: EntityId }) => {
           .map((skin) => skins.entities[skin]!)
           .sort((a, b) => {
             try {
-              return a.championName.localeCompare(b.championName);
+              const championNameA = champions.entities[a.championId]!.name;
+              const championNameB = champions.entities[b.championId]!.name;
+              return championNameA.localeCompare(championNameB);
             } catch (championInfoTooOldSoDoAHardReload: any) {
               return -1;
             }

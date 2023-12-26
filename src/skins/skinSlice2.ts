@@ -1,6 +1,6 @@
 import { createEntityAdapter, createSlice } from '@reduxjs/toolkit';
-import fetchEverything from '../home/fetchEverything';
 import { RootState } from '../glue/store';
+import fetchSkins from './fetchSkins';
 
 export interface SkinItem2 {
   id: number,
@@ -31,12 +31,12 @@ const skinsSlice = createSlice({
   reducers: {},
   extraReducers: (builder) => {
     builder
-      .addCase(fetchEverything.pending, (state) => {
+      .addCase(fetchSkins.pending, (state) => {
         state.loading = 'pending';
       })
-      .addCase(fetchEverything.fulfilled, (state, action) => {
+      .addCase(fetchSkins.fulfilled, (state, action) => {
         state.loading = 'fulfilled';
-        skinAdapter.upsertMany(state, action.payload.skins);
+        skinAdapter.upsertMany(state, action.payload);
       });
   },
 });

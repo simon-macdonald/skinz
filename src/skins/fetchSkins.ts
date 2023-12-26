@@ -4,9 +4,9 @@ import { SkinItem2 } from './skinSlice2';
 
 const URL = 'https://raw.communitydragon.org/latest/plugins/rcp-be-lol-game-data/global/default/v1/skins.json';
 
-const fetchEverything = createAsyncThunk<
+const fetchSkins = createAsyncThunk<
 // Return type of the payload creator
-SkinItem2,
+SkinItem2[],
 number,
 // First argument to the payload creator
 {
@@ -16,4 +16,4 @@ number,
 }
 >('fetchSkins', async () => (await fetch(URL)).json());
 
-export default fetchEverything;
+export default fetchSkins;

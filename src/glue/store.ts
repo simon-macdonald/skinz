@@ -4,6 +4,7 @@ import storage from 'redux-persist/lib/storage';
 import displayReducer from '../home/displaySlice';
 import whoDidWhatReducer from '../challenges/whoDidWhatSlice';
 import championsReducer from '../champions/championSlice';
+import championsReducer2 from '../champions/championSlice2';
 import skinLinesReducer from '../skins/skinLineSlice';
 import skinsReducer from '../skins/skinSlice';
 import skinsReducer2 from '../skins/skinSlice2';
@@ -14,6 +15,7 @@ const reducers = combineReducers({
   display: displayReducer,
   whoDidWhat: whoDidWhatReducer,
   champions: championsReducer,
+  champions2: championsReducer2,
   skinLines: skinLinesReducer,
   skins: skinsReducer,
   skins2: skinsReducer2,

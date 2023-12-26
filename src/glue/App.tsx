@@ -19,6 +19,8 @@ import { selectChampions } from '../champions/championSlice';
 import SkinLineColorPage from '../home/SkinLineColorPage';
 import ColorPage from '../chromas/ColorPage';
 import ChallengePage from '../challenges/ChallengePage';
+import fetchSkins from '../skins/fetchSkins';
+import fetchChampions from '../champions/fetchChampions';
 
 const App = () => {
   const prefersDarkMode = useMediaQuery('(prefers-color-scheme: dark)');
@@ -27,6 +29,8 @@ const App = () => {
 
   useEffect(() => {
     dispatch(fetchEverything(0));
+    dispatch(fetchSkins(0));
+    dispatch(fetchChampions(0));
   }, [dispatch]);
 
   const champions = useAppSelector(selectChampions);
