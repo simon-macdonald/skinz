@@ -1,8 +1,8 @@
 import { createEntityAdapter, createSlice } from '@reduxjs/toolkit';
 import _ from 'lodash';
-import fetchEverything from '../home/fetchEverything';
 import { RootState } from '../glue/store';
 import chromaNames from './chromaNames.json';
+import fetchSkins from '../skins/fetchSkins';
 
 export interface ColorItem {
   id: string,
@@ -23,13 +23,13 @@ const colorSlice = createSlice({
   reducers: {},
   extraReducers: (builder) => {
     builder
-      .addCase(fetchEverything.pending, (state) => {
+      .addCase(fetchSkins.pending, (state) => {
         state.loading = 'pending';
       })
-      .addCase(fetchEverything.fulfilled, (state, action) => {
+      .addCase(fetchSkins.fulfilled, (state, action) => {
         state.loading = 'fulfilled';
         const getChromaId = (colors: string[]) => (`${colors[0]}_${colors[1]}`).replaceAll('#', '');
-        const allColors = Object.values(action.payload.skins)
+        const allColors = Object.values(action.payload)
           .filter((skin) => skin.chromas)
           .flatMap((skin) => skin.chromas)
           .map((chroma) => getChromaId(chroma.colors))
@@ -39,7 +39,7 @@ const colorSlice = createSlice({
         for (let i = 0; i < colors.length; i++) {
           colorIndices.set(colors[i].id, i);
         }
-        Object.values(action.payload.skins)
+        Object.values(action.payload)
           .filter((skin) => skin.chromas)
           .flatMap((skin) => skin.chromas)
           .forEach((chroma) => {
