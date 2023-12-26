@@ -7,11 +7,13 @@ import SkinCard from '../skins/SkinCard';
 import { selectChampions } from './championSlice';
 import { useAppSelector } from '../glue/hooks';
 import BrowseDrawer from '../home/BrowseDrawer';
+import { selectChampionIdToSkinsMap } from './selectors';
 
 const ChampionPage = () => {
   const { id } = useParams();
 
   const champions = useAppSelector(selectChampions);
+  const championSkins = useAppSelector(selectChampionIdToSkinsMap);
 
   return (
     <>
@@ -24,7 +26,7 @@ const ChampionPage = () => {
           {champions.entities[+id!]!.name}
         </Typography>
         <Grid container sx={{ marginTop: 0 }} spacing={5} columns={3}>
-          {champions.entities[+id!]!.skins
+          {championSkins[+id!]
             .map((skinId) => (
               <SkinCard id={skinId} key={skinId} />
             ))}

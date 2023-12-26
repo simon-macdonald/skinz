@@ -10,10 +10,6 @@ export interface ChampionItem {
   squarePortraitPath: string,
   roles: string[],
   skinLines: number[],
-  skins: number[],
-  skinz: {
-    [skinLine: number]: number,
-  },
   colors: {
     [color: string]: number,
   },
@@ -42,17 +38,14 @@ const championsSlice = createSlice({
           championIndices.set(champions[i].id, i);
         }
         champions.forEach((champion) => {
-          champion.skins = [];
           champion.skinLines = [];
           champion.colors = {};
-          champion.skinz = {};
         });
         Object.values(action.payload.skins).forEach((skin) => {
           const championIndex = championIndices.get(Math.floor(skin.id / 1000))!;
           if (!(championIndex in champions)) {
             return;
           }
-          champions[championIndex].skins.push(skin.id);
           if (skin.name.includes('Prestige')) {
             skin.skinLines = [{ id: PRESTIGE_SKIN_LINE_ID }];
           }
@@ -61,7 +54,6 @@ const championsSlice = createSlice({
             if (!skinLines.includes(skinLine.id)) {
               skinLines.push(skinLine.id);
             }
-            champions[championIndex].skinz[skinLine.id] = skin.id;
           });
           skin.chromas?.forEach((chroma) => {
             const chromas = champions[championIndex].colors;
