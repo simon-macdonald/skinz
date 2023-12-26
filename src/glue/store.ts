@@ -6,6 +6,7 @@ import whoDidWhatReducer from '../challenges/whoDidWhatSlice';
 import championsReducer from '../champions/championSlice';
 import skinLinesReducer from '../skins/skinLineSlice';
 import skinsReducer from '../skins/skinSlice';
+import skinsReducer2 from '../skins/skinSlice2';
 import colorsReducer from '../chromas/colorSlice';
 import challengesReducer from '../challenges/challengeSlice';
 
@@ -15,6 +16,7 @@ const reducers = combineReducers({
   champions: championsReducer,
   skinLines: skinLinesReducer,
   skins: skinsReducer,
+  skins2: skinsReducer2,
   colors: colorsReducer,
   challenges: challengesReducer,
 });
