@@ -1,6 +1,6 @@
 import { createEntityAdapter, createSlice } from '@reduxjs/toolkit';
-import fetchEverything from '../home/fetchEverything';
 import { RootState } from '../glue/store';
+import fetchSkins from './fetchSkins';
 import { PRESTIGE_SKIN_LINE_ID } from './skinLineSlice';
 
 export interface SkinItem {
@@ -32,18 +32,17 @@ const skinsSlice = createSlice({
   reducers: {},
   extraReducers: (builder) => {
     builder
-      .addCase(fetchEverything.pending, (state) => {
+      .addCase(fetchSkins.pending, (state) => {
         state.loading = 'pending';
       })
-      .addCase(fetchEverything.fulfilled, (state, action) => {
+      .addCase(fetchSkins.fulfilled, (state, action) => {
         state.loading = 'fulfilled';
-        const { skins } = action.payload;
-        Object.values(skins).forEach((skin) => {
+        Object.values(action.payload).forEach((skin) => {
           if (skin.name.includes('Prestige')) {
             skin.skinLines = [{ id: PRESTIGE_SKIN_LINE_ID }];
           }
         });
-        skinAdapter.upsertMany(state, action.payload.skins);
+        skinAdapter.upsertMany(state, action.payload);
       });
   },
 });

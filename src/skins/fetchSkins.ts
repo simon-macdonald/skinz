@@ -1,12 +1,12 @@
 import { createAsyncThunk } from '@reduxjs/toolkit';
 import { AppDispatch, RootState } from '../glue/store';
-import { SkinItem2 } from './skinSlice2';
+import { SkinItem } from './skinSlice';
 
 const URL = 'https://raw.communitydragon.org/latest/plugins/rcp-be-lol-game-data/global/default/v1/skins.json';
 
 const fetchSkins = createAsyncThunk<
 // Return type of the payload creator
-SkinItem2[],
+SkinItem[],
 number,
 // First argument to the payload creator
 {
