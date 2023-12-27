@@ -8,8 +8,6 @@ export type DisplayState = 'visible' | 'chosen' | 'hidden';
 
 export interface ChosenChampionsState {
   champions: number[];
-  colors: string[];
-  displays: DisplayState[];
   filterBy: FilterBy;
   hoverSkinLine: number;
   loading: 'idle' | 'pending' | 'fulfilled';
@@ -17,8 +15,6 @@ export interface ChosenChampionsState {
 
 const initialState: ChosenChampionsState = {
   champions: [],
-  colors: [],
-  displays: [],
   filterBy: 'skins',
   hoverSkinLine: 0,
   loading: 'idle',
@@ -59,23 +55,15 @@ export const displaySlice = createSlice({
         state.loading = 'pending';
       })
       .addCase(fetchEverything.fulfilled, (state, action) => {
-        const { champions } = action.payload;
-        const max = Math.max(...champions.map((c) => c.id));
-        state.displays = new Array(max + 1);
-        champions.forEach((c) => state.displays[c.id] = 'visible');
         state.loading = 'fulfilled';
       })
       .addCase(clickChamp.fulfilled, (state, action) => {
-        const rootState = action.payload[0];
         const champClicked = action.payload[1];
         const unclickedOnlyChosenChampion
             = state.champions.length === 1
               && champClicked === state.champions[0];
         if (champClicked === -1 || unclickedOnlyChosenChampion) {
           state.champions = [];
-          state.displays = new Array(state.displays.length);
-          rootState.champions.ids.forEach((c) => state.displays[+c] = 'visible');
-          state.colors = [];
           return;
         }
 
@@ -86,21 +74,6 @@ export const displaySlice = createSlice({
 
         if (state.champions.length === 6) {
           state.champions = state.champions.slice(1);
-        }
-
-        state.displays = new Array(state.displays.length);
-        state.champions.forEach((c) => state.displays[c] = 'chosen');
-
-        if (state.filterBy === 'chromas') {
-          const colorsPerChamp = state.champions.map((id) => Object.keys(rootState.champions.entities[id]!.colors));
-          state.colors = _.intersection(...colorsPerChamp);
-          const commonColors = state.colors.map((colorId) => rootState.colors.entities[colorId]!);
-          const visibleChampions = commonColors.flatMap((color) => Object.keys(color.chromas)).map((id) => +id);
-          rootState.champions.ids.forEach((c) => {
-            if (state.displays[+c] !== 'chosen') {
-              state.displays[+c] = visibleChampions.includes(+c) ? 'visible' : 'hidden';
-            }
-          });
         }
       });
   },

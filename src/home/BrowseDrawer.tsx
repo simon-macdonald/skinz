@@ -9,20 +9,19 @@ import {
   FilterBy,
   selectDisplay,
 } from './displaySlice';
-import { selectColors } from '../chromas/colorSlice';
 import ColorHoverLink from '../chromas/ColorHoverLink';
-import { selectVisibleSkinLines } from './selectors';
+import { selectVisibleSkinLines } from './skinLineSelectors';
+import { selectVisibleColors } from './colorSelectors';
 
 const BrowseDrawer = (props: { filterBy: FilterBy }) => {
   const { filterBy } = props;
 
-  const colors = useAppSelector(selectColors);
   const display = useAppSelector(selectDisplay);
 
   const visibleSkinLines = useAppSelector(selectVisibleSkinLines(display.champions));
+  const visibleColors = useAppSelector(selectVisibleColors(display.champions));
 
-  const colorsDisplayed = display.colors.length === 0 ? colors.ids : display.colors;
-  const displayed = filterBy === 'skins' ? visibleSkinLines : colorsDisplayed;
+  const displayed = filterBy === 'skins' ? visibleSkinLines : visibleColors;
 
   return (
     <Drawer

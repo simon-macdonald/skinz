@@ -46,7 +46,7 @@ export const selectVisibleSkinLines = (championIds: number[]) => createSelector(
   },
 );
 
-export const selectChampionDisplayStates = (championIds: number[]) => createSelector(
+export const selectSkinLineDisplayStates = (championIds: number[]) => createSelector(
   selectSkinLines,
   selectChampions,
   selectVisibleSkinLines(championIds),

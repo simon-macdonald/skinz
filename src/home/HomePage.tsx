@@ -18,7 +18,8 @@ import PortraitCard from './PortraitCard';
 import { selectChampions } from '../champions/championSlice';
 import ChampionSelectionRow from './ChampionSelectionRow';
 import BrowseDrawer from './BrowseDrawer';
-import { selectChampionDisplayStates } from './selectors';
+import { selectSkinLineDisplayStates } from './skinLineSelectors';
+import { selectColorDisplayStates } from './colorSelectors';
 
 const HomePage = (props: { filterBy: FilterBy, }) => {
   const { filterBy } = props;
@@ -39,12 +40,13 @@ const HomePage = (props: { filterBy: FilterBy, }) => {
 
   const champions = useAppSelector(selectChampions);
   const display = useAppSelector(selectDisplay);
-  const championDisplayStates = useAppSelector(selectChampionDisplayStates(display.champions));
+  const skinLineDisplayStates = useAppSelector(selectSkinLineDisplayStates(display.champions));
+  const colorDisplayStates = useAppSelector(selectColorDisplayStates(display.champions));
 
   const displayStates
     = display.filterBy === 'chromas'
-      ? display.displays
-      : championDisplayStates;
+      ? colorDisplayStates
+      : skinLineDisplayStates;
 
   const champGridItemSizes = {
     xs: 60,
