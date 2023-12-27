@@ -8,7 +8,6 @@ export type DisplayState = 'visible' | 'chosen' | 'hidden';
 
 export interface ChosenChampionsState {
   champions: number[];
-  skinLines: number[];
   colors: string[];
   displays: DisplayState[];
   filterBy: FilterBy;
@@ -18,7 +17,6 @@ export interface ChosenChampionsState {
 
 const initialState: ChosenChampionsState = {
   champions: [],
-  skinLines: [],
   colors: [],
   displays: [],
   filterBy: 'skins',
@@ -77,7 +75,6 @@ export const displaySlice = createSlice({
           state.champions = [];
           state.displays = new Array(state.displays.length);
           rootState.champions.ids.forEach((c) => state.displays[+c] = 'visible');
-          state.skinLines = [];
           state.colors = [];
           return;
         }
@@ -94,10 +91,13 @@ export const displaySlice = createSlice({
         state.displays = new Array(state.displays.length);
         state.champions.forEach((c) => state.displays[c] = 'chosen');
 
+        // NEXT STEPS
+        // extract `skinLinesPerChamp` into its own createSelector
+        // and another createSelector for the intersection INPUT(champion ID...) OUTPUT(skin line...)
         if (state.filterBy === 'skins') {
           const skinLinesPerChamp = state.champions.map((id) => rootState.champions.entities[id]!.skinLines);
-          state.skinLines = _.intersection(...skinLinesPerChamp);
-          const commonSkinLines = state.skinLines.map((skinLineId) => rootState.skinLines.entities[skinLineId]!);
+          const skinLines = _.intersection(...skinLinesPerChamp);
+          const commonSkinLines = skinLines.map((skinLineId) => rootState.skinLines.entities[skinLineId]!);
           const visibleChampions = commonSkinLines.flatMap((skinLine) => Object.keys(skinLine.skins)).map((id) => +id);
           rootState.champions.ids.forEach((c) => {
             if (state.displays[+c] !== 'chosen') {
