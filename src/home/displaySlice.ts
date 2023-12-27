@@ -91,21 +91,6 @@ export const displaySlice = createSlice({
         state.displays = new Array(state.displays.length);
         state.champions.forEach((c) => state.displays[c] = 'chosen');
 
-        // NEXT STEPS
-        // extract `skinLinesPerChamp` into its own createSelector
-        // and another createSelector for the intersection INPUT(champion ID...) OUTPUT(skin line...)
-        if (state.filterBy === 'skins') {
-          const skinLinesPerChamp = state.champions.map((id) => rootState.champions.entities[id]!.skinLines);
-          const skinLines = _.intersection(...skinLinesPerChamp);
-          const commonSkinLines = skinLines.map((skinLineId) => rootState.skinLines.entities[skinLineId]!);
-          const visibleChampions = commonSkinLines.flatMap((skinLine) => Object.keys(skinLine.skins)).map((id) => +id);
-          rootState.champions.ids.forEach((c) => {
-            if (state.displays[+c] !== 'chosen') {
-              state.displays[+c] = visibleChampions.includes(+c) ? 'visible' : 'hidden';
-            }
-          });
-        }
-
         if (state.filterBy === 'chromas') {
           const colorsPerChamp = state.champions.map((id) => Object.keys(rootState.champions.entities[id]!.colors));
           state.colors = _.intersection(...colorsPerChamp);

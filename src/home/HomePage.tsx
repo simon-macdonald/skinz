@@ -18,6 +18,7 @@ import PortraitCard from './PortraitCard';
 import { selectChampions } from '../champions/championSlice';
 import ChampionSelectionRow from './ChampionSelectionRow';
 import BrowseDrawer from './BrowseDrawer';
+import { selectChampionDisplayStates } from './selectors';
 
 const HomePage = (props: { filterBy: FilterBy, }) => {
   const { filterBy } = props;
@@ -38,6 +39,12 @@ const HomePage = (props: { filterBy: FilterBy, }) => {
 
   const champions = useAppSelector(selectChampions);
   const display = useAppSelector(selectDisplay);
+  const championDisplayStates = useAppSelector(selectChampionDisplayStates(display.champions));
+
+  const displayStates
+    = display.filterBy === 'chromas'
+      ? display.displays
+      : championDisplayStates;
 
   const champGridItemSizes = {
     xs: 60,
@@ -82,8 +89,8 @@ const HomePage = (props: { filterBy: FilterBy, }) => {
         <Grid container spacing={2} columns={60}>
           {champions.ids
             .filter((id) => id > 0)
-            .filter((id) => display.displays[+id] !== 'hidden')
-            .filter((id) => display.displays[+id] !== 'chosen')
+            .filter((id) => displayStates[+id] !== 'hidden')
+            .filter((id) => displayStates[+id] !== 'chosen')
             .filter((id) => find === '' || champions.entities[id]!.name.toLowerCase().includes(find.toLowerCase()))
             .map((id) => (
               <PortraitCard id={+id} key={id} sizes={champGridItemSizes} setFindChampion={setFind} />

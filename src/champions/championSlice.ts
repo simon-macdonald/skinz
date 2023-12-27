@@ -1,7 +1,6 @@
 import { createEntityAdapter, createSlice } from '@reduxjs/toolkit';
 import fetchEverything from '../home/fetchEverything';
 import { RootState } from '../glue/store';
-import { PRESTIGE_SKIN_LINE_ID } from '../skins/skinLineSlice';
 
 export interface ChampionItem {
   id: number,
@@ -9,7 +8,6 @@ export interface ChampionItem {
   alias: string,
   squarePortraitPath: string,
   roles: string[],
-  skinLines: number[],
   colors: {
     [color: string]: number,
   },
@@ -38,7 +36,6 @@ const championsSlice = createSlice({
           championIndices.set(champions[i].id, i);
         }
         champions.forEach((champion) => {
-          champion.skinLines = [];
           champion.colors = {};
         });
         Object.values(action.payload.skins).forEach((skin) => {
@@ -46,15 +43,6 @@ const championsSlice = createSlice({
           if (!(championIndex in champions)) {
             return;
           }
-          if (skin.name.includes('Prestige')) {
-            skin.skinLines = [{ id: PRESTIGE_SKIN_LINE_ID }];
-          }
-          skin.skinLines?.forEach((skinLine) => {
-            const { skinLines } = champions[championIndex];
-            if (!skinLines.includes(skinLine.id)) {
-              skinLines.push(skinLine.id);
-            }
-          });
           skin.chromas?.forEach((chroma) => {
             const chromas = champions[championIndex].colors;
             chromas[(`${chroma.colors[0]}_${chroma.colors[1]}`).replaceAll('#', '')] = chroma.id;

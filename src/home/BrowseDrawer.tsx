@@ -11,7 +11,7 @@ import {
 } from './displaySlice';
 import { selectColors } from '../chromas/colorSlice';
 import ColorHoverLink from '../chromas/ColorHoverLink';
-import { selectVisibleSkinLines  } from './selectors';
+import { selectVisibleSkinLines } from './selectors';
 
 const BrowseDrawer = (props: { filterBy: FilterBy }) => {
   const { filterBy } = props;

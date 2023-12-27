@@ -3,6 +3,7 @@ import _ from 'lodash';
 import { selectChampions } from '../champions/championSlice';
 import { PRESTIGE_SKIN_LINE_ID, selectSkinLines } from '../skins/skinLineSlice';
 import { selectSkins } from '../skins/skinSlice';
+import { DisplayState } from './displaySlice';
 
 export const selectChampionIdToSkinLinesMap = createSelector(
   selectChampions,
@@ -40,7 +41,32 @@ export const selectVisibleSkinLines = (championIds: number[]) => createSelector(
     if (championIds.length === 0) {
       return skinLines.ids;
     }
-    const skinLinesPerChampion = championIds.map(championId => championSkinLines[championId]);
+    const skinLinesPerChampion = championIds.map((championId) => championSkinLines[championId]);
     return _.intersection(...skinLinesPerChampion);
-  }
-)
+  },
+);
+
+export const selectChampionDisplayStates = (championIds: number[]) => createSelector(
+  selectSkinLines,
+  selectChampions,
+  selectVisibleSkinLines(championIds),
+  (skinLines, champions, visibleSkinLines) => {
+    const max = Math.max(...Object.values(champions.entities).map((c) => c!.id));
+    const displays: DisplayState[] = new Array(max + 1);
+    Object.values(champions).forEach((c) => displays[c.id] = 'visible');
+    if (championIds.length === 0) {
+      return displays;
+    }
+
+    championIds.forEach((championId) => displays[championId] = 'chosen');
+
+    const commonSkinLines = visibleSkinLines.map((skinLineId) => skinLines.entities[skinLineId]!);
+    const visibleChampions = commonSkinLines.flatMap((skinLine) => Object.keys(skinLine.skins)).map((id) => +id);
+    Object.keys(champions.entities).forEach((c) => {
+      if (displays[+c] !== 'chosen') {
+        displays[+c] = visibleChampions.includes(+c) ? 'visible' : 'hidden';
+      }
+    });
+    return displays;
+  },
+);
