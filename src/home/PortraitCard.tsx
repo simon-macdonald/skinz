@@ -38,6 +38,15 @@ const PortraitCard = (props: { id: number, sizes: GridItemSizes, display?: boole
       ? null
       : skinLines.entities[champs.hoverSkinLine]!;
 
+  const skinLineSkins = skinLines.entities[champs.hoverSkinLine];
+  
+  const bgColor = skinLineSkins && (
+    Object.keys(skinLineSkins.skins).includes(id.toString())
+      ? 'secondary.main'
+      : champs.champions.includes(id)
+        ? 'primary.main'
+        : 'transparent') || 'transparent';
+  
   return (
     <Grid item xs={sizes.xs} sm={sizes.sm} md={sizes.md} lg={sizes.lg} xl={sizes.xl}>
       <Card>
@@ -58,7 +67,7 @@ const PortraitCard = (props: { id: number, sizes: GridItemSizes, display?: boole
             alt={champion.name}
           />
           <CardContent sx={{
-            bgcolor: Object.keys(skinLines.entities[champs.hoverSkinLine]!.skins).includes(id.toString()) ? 'secondary.main' : champs.champions.includes(id) ? 'primary.main' : 'transparent',
+            bgcolor: bgColor,
           }}
           >
             <Typography component="div" noWrap align="center">

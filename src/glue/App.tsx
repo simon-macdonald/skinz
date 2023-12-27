@@ -21,6 +21,9 @@ import ColorPage from '../chromas/ColorPage';
 import ChallengePage from '../challenges/ChallengePage';
 import fetchSkins from '../skins/fetchSkins';
 import fetchChampions from '../champions/fetchChampions';
+import { selectSkins } from '../skins/skinSlice';
+import { selectSkinLines } from '../skins/skinLineSlice';
+import { selectColors } from '../chromas/colorSlice';
 
 const App = () => {
   const prefersDarkMode = useMediaQuery('(prefers-color-scheme: dark)');
@@ -34,8 +37,15 @@ const App = () => {
   }, [dispatch]);
 
   const champions = useAppSelector(selectChampions);
+  const skins = useAppSelector(selectSkins);
+  const skinLines = useAppSelector(selectSkinLines);
+  const colors = useAppSelector(selectColors);
 
-  const isLoading = champions.loading !== 'fulfilled';
+  const isLoading =
+    champions.loading !== 'fulfilled' &&
+    skins.loading !== 'fulfilled' &&
+    skinLines.loading !== 'fulfilled' &&
+    colors.loading !== 'fulfilled';
 
   const theme = createTheme({
     palette: {

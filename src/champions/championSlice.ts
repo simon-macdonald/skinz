@@ -1,5 +1,6 @@
 import { createEntityAdapter, createSlice } from '@reduxjs/toolkit';
 import fetchEverything from '../home/fetchEverything';
+import fetchChampions from '../champions/fetchChampions';
 import { RootState } from '../glue/store';
 
 export interface ChampionItem {
@@ -8,9 +9,6 @@ export interface ChampionItem {
   alias: string,
   squarePortraitPath: string,
   roles: string[],
-  colors: {
-    [color: string]: number,
-  },
 }
 
 const championAdapter = createEntityAdapter<ChampionItem>({
@@ -25,30 +23,12 @@ const championsSlice = createSlice({
   reducers: {},
   extraReducers: (builder) => {
     builder
-      .addCase(fetchEverything.pending, (state) => {
+      .addCase(fetchChampions.pending, (state) => {
         state.loading = 'pending';
       })
-      .addCase(fetchEverything.fulfilled, (state, action) => {
+      .addCase(fetchChampions.fulfilled, (state, action) => {
         state.loading = 'fulfilled';
-        const { champions } = action.payload;
-        const championIndices = new Map<number, number>();
-        for (let i = 0; i < champions.length; i++) {
-          championIndices.set(champions[i].id, i);
-        }
-        champions.forEach((champion) => {
-          champion.colors = {};
-        });
-        Object.values(action.payload.skins).forEach((skin) => {
-          const championIndex = championIndices.get(Math.floor(skin.id / 1000))!;
-          if (!(championIndex in champions)) {
-            return;
-          }
-          skin.chromas?.forEach((chroma) => {
-            const chromas = champions[championIndex].colors;
-            chromas[(`${chroma.colors[0]}_${chroma.colors[1]}`).replaceAll('#', '')] = chroma.id;
-          });
-        });
-        championAdapter.upsertMany(state, champions);
+        championAdapter.upsertMany(state, action.payload);
       });
   },
 });
