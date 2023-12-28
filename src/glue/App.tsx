@@ -26,6 +26,7 @@ import { selectSkinLines } from '../skins/skinLineSlice';
 import { selectColors } from '../chromas/colorSlice';
 import fetchChallenges from '../challenges/fetchChallenges';
 import { selectChallenges } from '../challenges/challengeSlice';
+import fetchSkinLines from '../skins/fetchSkinLines';
 
 const App = () => {
   const prefersDarkMode = useMediaQuery('(prefers-color-scheme: dark)');
@@ -35,6 +36,7 @@ const App = () => {
   useEffect(() => {
     dispatch(fetchEverything(0));
     dispatch(fetchSkins(0));
+    dispatch(fetchSkinLines(0));
     dispatch(fetchChampions(0));
     dispatch(fetchChallenges(0));
   }, [dispatch]);
