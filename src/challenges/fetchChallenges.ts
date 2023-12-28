@@ -4,9 +4,9 @@ import { ChallengeItem } from './challengeSlice';
 
 const URL = 'https://raw.communitydragon.org/latest/plugins/rcp-be-lol-game-data/global/default/v1/challenges.json';
 
-const fetchChampions = createAsyncThunk<
+const fetchChallenges = createAsyncThunk<
 // Return type of the payload creator
-ChallengeItem[],
+{challenges: ChallengeItem[]},
 number,
 // First argument to the payload creator
 {
@@ -14,6 +14,6 @@ number,
   dispatch: AppDispatch
   state: RootState
 }
->('fetchChampions', async () => (await fetch(URL)).json());
+>('fetchChallenges', async () => (await fetch(URL)).json());
 
-export default fetchChampions;
+export default fetchChallenges;

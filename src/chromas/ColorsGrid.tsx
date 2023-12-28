@@ -3,13 +3,17 @@ import {
 } from '@mui/material';
 import React from 'react';
 import { Link, useLocation } from 'react-router-dom';
+import { useAppSelector } from '../glue/hooks';
+import { selectSkinLineToColorsMap } from '../home/skinLineSelectors';
 import { SkinLineItem } from '../skins/skinLineSlice';
 import { maybeGetChromaName } from './colorSlice';
 
 const ColorsGrid = (props: { skinLine: SkinLineItem }) => {
   const { skinLine } = props;
 
-  if (skinLine.colors.length === 0) {
+  const skinLineColors = useAppSelector(selectSkinLineToColorsMap);
+
+  if (!(skinLine.id in skinLineColors)) {
     return (
       <Typography variant="h5">
         No chromas.
@@ -25,7 +29,7 @@ const ColorsGrid = (props: { skinLine: SkinLineItem }) => {
         Chromas:
       </Typography>
       <Grid container spacing={5} columns={5}>
-        {skinLine.colors.map((color) => (
+        {skinLineColors[skinLine.id].map((color) => (
           <Grid key={color} item xs={1}>
             <Tooltip title={(
               <Typography>

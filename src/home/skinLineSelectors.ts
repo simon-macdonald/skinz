@@ -5,6 +5,32 @@ import { PRESTIGE_SKIN_LINE_ID, selectSkinLines } from '../skins/skinLineSlice';
 import { selectSkins } from '../skins/skinSlice';
 import { DisplayState } from './displaySlice';
 
+export const selectSkinLineToColorsMap = createSelector(
+  selectSkins,
+  (skins) => {
+    const skinLineColors: { [key: number]: string[] } = {};
+    Object.values(skins.entities)
+      .filter((skin) => skin!.chromas)
+      .filter((skin) => skin!.skinLines)
+      .forEach((skin) => {
+        skin!.skinLines?.forEach((skinLine) => {
+          if (!(skinLine.id in skinLineColors)) {
+            skinLineColors[skinLine.id] = [];
+          }
+          skin!.chromas.forEach((chroma) => {
+            // eg "colors":["#D33528","#D33528"] => 'D33528_D33528'
+            // makes it URL-friendly
+            const chromaId = (`${chroma.colors[0]}_${chroma.colors[1]}`).replaceAll('#', '');
+            if (skinLineColors[skinLine.id].indexOf(chromaId) === -1) {
+              skinLineColors[skinLine.id].push(chromaId);
+            }
+          });
+        });
+      });
+    return skinLineColors;
+  }
+)
+
 export const selectChampionIdToSkinLinesMap = createSelector(
   selectChampions,
   selectSkins,

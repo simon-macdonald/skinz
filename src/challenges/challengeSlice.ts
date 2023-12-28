@@ -66,7 +66,7 @@ const challengeSlice = createSlice({
       })
       .addCase(fetchChallenges.fulfilled, (state, action) => {
         state.loading = 'fulfilled';
-        challengeAdapter.upsertMany(state, Object.values(action.payload));
+        challengeAdapter.upsertMany(state, action.payload.challenges);
       });
   },
 });

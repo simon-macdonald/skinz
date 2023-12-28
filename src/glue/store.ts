@@ -1,5 +1,5 @@
-import { combineReducers, configureStore } from '@reduxjs/toolkit';
-import { createMigrate, persistReducer } from 'redux-persist';
+import { combineReducers, configureStore, getDefaultMiddleware } from '@reduxjs/toolkit';
+import { createMigrate, FLUSH, PAUSE, PERSIST, persistReducer, PURGE, REGISTER, REHYDRATE } from 'redux-persist';
 import storage from 'redux-persist/lib/storage';
 import displayReducer from '../home/displaySlice';
 import whoDidWhatReducer from '../challenges/whoDidWhatSlice';
@@ -36,12 +36,19 @@ const persistConfig = {
   version: 0,
   whitelist: ['whoDidWhat'],
   migrate: createMigrate(migrations, { debug: true }),
+  transients: ['register'],
 };
 
 const persistedReducer = persistReducer(persistConfig, reducers);
 
 export const store = configureStore({
   reducer: persistedReducer,
+  middleware: getDefaultMiddleware({
+    serializableCheck: {
+      // https://stackoverflow.com/questions/61704805/getting-an-error-a-non-serializable-value-was-detected-in-the-state-when-using/62610422#62610422
+      ignoredActions: [FLUSH, REHYDRATE, PAUSE, PERSIST, PURGE, REGISTER],
+    },
+  }),
 });
 
 export type AppDispatch = typeof store.dispatch;

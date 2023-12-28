@@ -91,7 +91,7 @@ const ChallengePage = () => {
         <Table stickyHeader>
           <TableHead>
             <TableRow>
-              <TableCell>
+              <TableCell key="challenges">
                 <Typography variant="h4" gutterBottom>
                   Challenges
                   <Tooltip title={(
@@ -105,7 +105,7 @@ const ChallengePage = () => {
                 </Typography>
               </TableCell>
               {Object.keys(whoDidWhatState).map((challengeName) => (
-                <TableCell>
+                <TableCell key={challengeName}>
                   {data ? (
                     getChallengeHeaderCell(data, challengeName, whoDidWhat)
                   ) : (
@@ -115,7 +115,7 @@ const ChallengePage = () => {
               ))}
             </TableRow>
             <TableRow>
-              <TableCell>
+              <TableCell key="find">
                 <TextField
                   label="Find Champion"
                   variant="outlined"
@@ -135,7 +135,7 @@ const ChallengePage = () => {
                 />
               </TableCell>
               {Object.keys(whoDidWhatState).map((challengeName) => (
-                <TableCell>
+                <TableCell key={challengeName}>
                   <IconButton
                     color="primary"
                     onClick={() => {
@@ -167,11 +167,11 @@ const ChallengePage = () => {
                 key={champion!.name}
                 sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
               >
-                <TableCell>
+                <TableCell key={champion!.name}>
                   <Avatar src={getAssetUrl(champion!.squarePortraitPath)} variant="square" />
                 </TableCell>
                 {Object.keys(whoDidWhatState).map((challenge) => (
-                  <TableCell>
+                  <TableCell key={challenge}>
                     <Tooltip title={(
                       <Typography variant="h4" gutterBottom>
                         {challenge}
