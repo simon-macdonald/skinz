@@ -23,10 +23,10 @@ const ChampionPage = () => {
           {}
         </Toolbar>
         <Typography variant="h3">
-          {champions.entities[+id!]!.name}
+          {champions.entities[+id!]?.name || '...'}
         </Typography>
         <Grid container sx={{ marginTop: 0 }} spacing={5} columns={3}>
-          {championSkins[+id!]
+          {championSkins[+id!] && championSkins[+id!]
             .map((skinId) => (
               <SkinCard id={skinId} key={skinId} />
             ))}

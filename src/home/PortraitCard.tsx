@@ -1,6 +1,6 @@
 import React from 'react';
 import {
-  Box, Card, CardActionArea, CardContent, CardMedia, Grid, Typography,
+  Box, Card, CardActionArea, CardContent, CardMedia, Grid, Skeleton, Typography,
 } from '@mui/material';
 import { clickChamp, selectDisplay } from './displaySlice';
 import { useAppDispatch, useAppSelector } from '../glue/hooks';
@@ -33,6 +33,7 @@ const PortraitCard = (props: { id: number, sizes: GridItemSizes, display?: boole
     id, sizes, display, setFindChampion,
   } = props;
   const champion = champions.entities[id]!;
+  const skeleton = !champion ? <Skeleton variant="rounded" /> : null;
   const skinLine: SkinLineItem | null
     = champs.hoverSkinLine === 0
       ? null
@@ -49,39 +50,40 @@ const PortraitCard = (props: { id: number, sizes: GridItemSizes, display?: boole
   
   return (
     <Grid item xs={sizes.xs} sm={sizes.sm} md={sizes.md} lg={sizes.lg} xl={sizes.xl}>
-      <Card>
-        <CardActionArea
-          disabled={display && id === -1}
-          onClick={() => {
-            dispatch(clickChamp(id));
-            if (setFindChampion) {
-              setFindChampion('');
-            }
-          }}
-        >
-          <CardMedia
-            component="img"
-            image={skinLine === null ? getChampionImage(champion, display)
-              : Object.keys(skinLine.skins).includes(id.toString()) ? getAssetUrl(skins.entities[skinLine.skins[id]]!.tilePath)
-                : getChampionImage(champion)}
-            alt={champion.name}
-          />
-          <CardContent sx={{
-            bgcolor: bgColor,
-          }}
+      {skeleton || (
+        <Card>
+          <CardActionArea
+            disabled={(display && id === -1) || skinLines.loading !== 'fulfilled'}
+            onClick={() => {
+              dispatch(clickChamp(id));
+              if (setFindChampion) {
+                setFindChampion('');
+              }
+            }}
           >
-            <Typography component="div" noWrap align="center">
-              <Box sx={{
-                fontWeight: 'bold',
-                textTransform: 'capitalize',
-              }}
-              >
-                {id === -1 ? getChampionText(champion, display) : skinLine === null ? champions.entities[id]!.name : Object.keys(skinLine.skins).includes(id.toString()) ? skins.entities[skinLine.skins[id]]!.name : champions.entities[id]!.name}
-              </Box>
-            </Typography>
-          </CardContent>
-        </CardActionArea>
-      </Card>
+            <CardMedia
+              component="img"
+              image={skinLine === null ? getChampionImage(champion, display)
+                : Object.keys(skinLine.skins).includes(id.toString()) ? getAssetUrl(skins.entities[skinLine.skins[id]]!.tilePath)
+                  : getChampionImage(champion)}
+              alt={champion.name}
+            />
+            <CardContent sx={{
+              bgcolor: bgColor,
+            }}
+            >
+              <Typography component="div" noWrap align="center">
+                <Box sx={{
+                  fontWeight: 'bold',
+                  textTransform: 'capitalize',
+                }}
+                >
+                  {id === -1 ? getChampionText(champion, display) : skinLine === null ? champions.entities[id]!.name : Object.keys(skinLine.skins).includes(id.toString()) ? skins.entities[skinLine.skins[id]]!.name : champions.entities[id]!.name}
+                </Box>
+              </Typography>
+            </CardContent>
+          </CardActionArea>
+        </Card>)}
     </Grid>
   );
 };

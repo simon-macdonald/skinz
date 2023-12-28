@@ -48,6 +48,9 @@ export const selectColorDisplayStates = (championIds: number[]) => createSelecto
   selectChampions,
   selectVisibleColors(championIds),
   (colors, champions, visibleColors) => {
+    if (champions.loading !== 'fulfilled') {
+      return [];
+    }
     const max = Math.max(...Object.values(champions.entities).map((c) => c!.id));
     const displays: DisplayState[] = new Array(max + 1);
     Object.values(champions).forEach((c) => displays[c.id] = 'visible');

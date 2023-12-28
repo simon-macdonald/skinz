@@ -77,6 +77,9 @@ export const selectSkinLineDisplayStates = (championIds: number[]) => createSele
   selectChampions,
   selectVisibleSkinLines(championIds),
   (skinLines, champions, visibleSkinLines) => {
+    if (champions.loading !== 'fulfilled') {
+      return [];
+    }
     const max = Math.max(...Object.values(champions.entities).map((c) => c!.id));
     const displays: DisplayState[] = new Array(max + 1);
     Object.values(champions).forEach((c) => displays[c.id] = 'visible');

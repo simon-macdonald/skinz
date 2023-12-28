@@ -23,19 +23,6 @@ const SkinLineColorPage = () => {
 
   const [hover, setHover] = React.useState(false);
 
-  if (skinLine === undefined) {
-    return (
-      <Container>
-        <Toolbar>
-          {}
-        </Toolbar>
-        <Typography variant="h2">
-          This is a bug.
-        </Typography>
-      </Container>
-    );
-  }
-
   return (
     <>
       <BrowseDrawer filterBy="skins" />
@@ -45,7 +32,7 @@ const SkinLineColorPage = () => {
         </Toolbar>
         <Breadcrumbs separator={<NavigateNext />}>
           <Link
-            to={`/skinLines/${skinLine.id}`}
+            to={`/skinLines/${skinLine?.id || '...'}`}
             className="button muted-button"
             style={{
               textDecoration: 'none',
@@ -57,7 +44,7 @@ const SkinLineColorPage = () => {
               onMouseLeave={() => setHover(false)}
               color={hover ? 'secondary.main' : 'primary.main'}
             >
-              {skinLine.name}
+              {skinLine?.name || '...'}
             </Typography>
           </Link>
           <Typography variant="h3">
@@ -68,11 +55,11 @@ const SkinLineColorPage = () => {
         <Grid container sx={{ marginTop: 0 }} spacing={5} columns={3}>
           <Grid item xs={1}>
             <Typography variant="h5">
-              Universe: {skinLine.universe}
+              Universe: {skinLine?.universe || '...'}
             </Typography>
             <ColorsGrid skinLine={skinLine} />
           </Grid>
-          {Object.values(skinLine.skins)
+          {skinLine && Object.values(skinLine.skins)
             .filter((skinId) => skins.entities[skinId]!.chromas)
             .flatMap((skinId) => skins.entities[skinId]!.chromas)
             .filter((chroma) => (`${chroma.colors[0]}_${chroma.colors[1]}`).replaceAll('#', '') === color)

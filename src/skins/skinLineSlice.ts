@@ -10,7 +10,6 @@ export interface SkinLineItem {
   skins: {
     [championId: number]: number,
   },
-  colors: string[],
 }
 
 export const PRESTIGE_SKIN_LINE_ID = 9001;
@@ -37,11 +36,9 @@ const skinLinesSlice = createSlice({
           name: 'Prestige',
           universe: '',
           skins: {},
-          colors: [],
         }]);
         skinLines.forEach((skinLine) => {
           skinLine.skins = {};
-          skinLine.colors = [];
           skinLine.universe
               = Object.prototype.hasOwnProperty.call(universes, skinLine.name)
               ? universes[skinLine.name as keyof typeof universes]
@@ -54,24 +51,6 @@ const skinLinesSlice = createSlice({
           .forEach((skin) => {
             skin.skinLines?.forEach((skinLine) => {
               skinLines.find((i) => i.id === skinLine.id)!.skins[Math.floor(skin.id / 1000)] = skin.id;
-            });
-          });
-        Object
-          .values(action.payload.skins)
-          .map((skin) => (skin.name.includes('Prestige') ? { ...skin, skinLines: [{ id: PRESTIGE_SKIN_LINE_ID }] } : skin))
-          .filter((skin) => skin.chromas)
-          .filter((skin) => skin.skinLines)
-          .forEach((skin) => {
-            skin.skinLines?.forEach((skinLine) => {
-              skin.chromas.forEach((chroma) => {
-                const { colors } = skinLines.find((i) => i.id === skinLine.id)!;
-                // eg "colors":["#D33528","#D33528"] => 'D33528_D33528'
-                // makes it URL-friendly
-                const chromaId = (`${chroma.colors[0]}_${chroma.colors[1]}`).replaceAll('#', '');
-                if (colors.indexOf(chromaId) === -1) {
-                  colors.push(chromaId);
-                }
-              });
             });
           });
         skinLineAdapter.upsertMany(state, skinLines);

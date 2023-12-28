@@ -13,7 +13,7 @@ const SkinLinePage = () => {
   const { id } = useParams();
 
   const skinLines = useAppSelector(selectSkinLines);
-  const skinLine = skinLines.entities[+id!]!;
+  const skinLine = skinLines.entities[+id!];
 
   return (
     <>
@@ -23,16 +23,16 @@ const SkinLinePage = () => {
           {}
         </Toolbar>
         <Typography variant="h3">
-          {skinLine.name}
+          {skinLine?.name || '...'}
         </Typography>
         <Grid container sx={{ marginTop: 0 }} spacing={5} columns={3}>
           <Grid item xs={1}>
             <Typography variant="h5">
-              Universe: {skinLine.universe}
+              Universe: {skinLine?.universe || '...'}
             </Typography>
             <ColorsGrid skinLine={skinLine} />
           </Grid>
-          {Object.values(skinLine.skins)
+          {skinLine && Object.values(skinLine.skins)
             .map((skinId) => (
               <SkinCard id={skinId} key={skinId} />
             ))}

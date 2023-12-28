@@ -8,20 +8,20 @@ import { selectSkinLineToColorsMap } from '../home/skinLineSelectors';
 import { SkinLineItem } from '../skins/skinLineSlice';
 import { maybeGetChromaName } from './colorSlice';
 
-const ColorsGrid = (props: { skinLine: SkinLineItem }) => {
+const ColorsGrid = (props: { skinLine: SkinLineItem | undefined }) => {
   const { skinLine } = props;
 
   const skinLineColors = useAppSelector(selectSkinLineToColorsMap);
 
-  if (!(skinLine.id in skinLineColors)) {
+  const { pathname } = useLocation();
+
+  if (!skinLine || !(skinLine.id in skinLineColors)) {
     return (
       <Typography variant="h5">
         No chromas.
       </Typography>
     );
   }
-
-  const { pathname } = useLocation();
 
   return (
     <>

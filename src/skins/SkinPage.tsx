@@ -15,12 +15,12 @@ const SkinPage = () => {
   const { id } = useParams();
 
   const skins = useAppSelector(selectSkins);
-  const skin = skins.entities[+id!]!;
+  const skin = skins.entities[+id!];
 
   const skinLines = useAppSelector(selectSkinLines);
 
   const champions = useAppSelector(selectChampions);
-  const champion = champions.entities[Math.floor(+id! / 1000)]!;
+  const champion = champions.entities[Math.floor(+id! / 1000)];
 
   return (
     <>
@@ -30,18 +30,18 @@ const SkinPage = () => {
           {}
         </Toolbar>
         <Typography variant="h3">
-          {skin.name}
+          {skin?.name || '...'}
         </Typography>
         <Grid container sx={{ marginTop: 0 }} spacing={5} columns={3}>
-          <SkinCard id={skin.id} />
+          {skin && <SkinCard id={skin.id} />}
           <Grid item xs={2}>
             <List>
-              <ListItem disablePadding button component={Link} to={`/champions/${champion.id}`}>
+              <ListItem disablePadding button component={Link} to={`/champions/${champion?.id || '-1'}`}>
                 <ListItemButton>
-                  <ListItemText primary={`Champion: ${champion.name}`} />
+                  <ListItemText primary={`Champion: ${champion?.name || '...'}`} />
                 </ListItemButton>
               </ListItem>
-              {skin.skinLines?.map((skinLine) => (
+              {skin?.skinLines?.map((skinLine) => (
                 <ListItem disablePadding button component={Link} to={`/skinLines/${skinLine.id}`}>
                   <ListItemButton>
                     <ListItemText primary={`Skin Line: ${skinLines.entities[skinLine.id]?.name}`} />
@@ -50,7 +50,7 @@ const SkinPage = () => {
               ))}
             </List>
           </Grid>
-          {skin.chromas && skin.chromas
+          {skin?.chromas && skin.chromas
             .map((chroma) => (
               <ChromaCard
                 skinName={chroma.name}

@@ -12,20 +12,15 @@ import HomePage from '../home/HomePage';
 import AboutPage from '../home/AboutPage';
 import NavBar from '../home/NavBar';
 import SkinPage from '../skins/SkinPage';
-import { useAppDispatch, useAppSelector } from './hooks';
+import { useAppDispatch } from './hooks';
 import fetchEverything from '../home/fetchEverything';
 import ChampionPage from '../champions/ChampionPage';
-import { selectChampions } from '../champions/championSlice';
 import SkinLineColorPage from '../home/SkinLineColorPage';
 import ColorPage from '../chromas/ColorPage';
 import ChallengePage from '../challenges/ChallengePage';
 import fetchSkins from '../skins/fetchSkins';
 import fetchChampions from '../champions/fetchChampions';
-import { selectSkins } from '../skins/skinSlice';
-import { selectSkinLines } from '../skins/skinLineSlice';
-import { selectColors } from '../chromas/colorSlice';
 import fetchChallenges from '../challenges/fetchChallenges';
-import { selectChallenges } from '../challenges/challengeSlice';
 import fetchSkinLines from '../skins/fetchSkinLines';
 
 const App = () => {
@@ -41,28 +36,11 @@ const App = () => {
     dispatch(fetchChallenges(0));
   }, [dispatch]);
 
-  const challenges = useAppSelector(selectChallenges);
-  const champions = useAppSelector(selectChampions);
-  const colors = useAppSelector(selectColors);
-  const skins = useAppSelector(selectSkins);
-  const skinLines = useAppSelector(selectSkinLines);
-
-  const isLoading =
-    challenges.loading !== 'fulfilled' &&
-    champions.loading !== 'fulfilled' &&
-    skins.loading !== 'fulfilled' &&
-    skinLines.loading !== 'fulfilled' &&
-    colors.loading !== 'fulfilled';
-
   const theme = createTheme({
     palette: {
       mode: prefersDarkMode ? 'dark' : 'light',
     },
   });
-
-  if (isLoading) {
-    return null;
-  }
 
   return (
     <ThemeProvider theme={theme}>

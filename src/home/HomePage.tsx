@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import '../glue/App.css';
 import {
   Alert,
-  Container, Grid, IconButton, InputAdornment, TextField, Toolbar,
+  Container, Grid, IconButton, InputAdornment, Skeleton, TextField, Toolbar,
 } from '@mui/material';
 import { useLocation } from 'react-router-dom';
 import { Clear } from '@mui/icons-material';
@@ -89,7 +89,7 @@ const HomePage = (props: { filterBy: FilterBy, }) => {
           </Grid>
         </Grid>
         <Grid container spacing={2} columns={60}>
-          {champions.ids
+          {champions.loading === 'fulfilled' && champions.ids
             .filter((id) => id > 0)
             .filter((id) => displayStates[+id] !== 'hidden')
             .filter((id) => displayStates[+id] !== 'chosen')
