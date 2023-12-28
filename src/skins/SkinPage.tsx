@@ -36,13 +36,13 @@ const SkinPage = () => {
           {skin && <SkinCard id={skin.id} />}
           <Grid item xs={2}>
             <List>
-              <ListItem disablePadding button component={Link} to={`/champions/${champion?.id || '-1'}`}>
+              <ListItem key="champion" disablePadding button component={Link} to={`/champions/${champion?.id || '-1'}`}>
                 <ListItemButton>
                   <ListItemText primary={`Champion: ${champion?.name || '...'}`} />
                 </ListItemButton>
               </ListItem>
               {skin?.skinLines?.map((skinLine) => (
-                <ListItem disablePadding button component={Link} to={`/skinLines/${skinLine.id}`}>
+                <ListItem key={skinLine.id} disablePadding button component={Link} to={`/skinLines/${skinLine.id}`}>
                   <ListItemButton>
                     <ListItemText primary={`Skin Line: ${skinLines.entities[skinLine.id]?.name}`} />
                   </ListItemButton>
