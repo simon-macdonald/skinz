@@ -1,6 +1,6 @@
 import { createEntityAdapter, createSlice } from '@reduxjs/toolkit';
-import fetchEverything from '../home/fetchEverything';
 import { RootState } from '../glue/store';
+import fetchChallenges from './fetchChallenges';
 
 export interface ChallengeItem {
   id: number,
@@ -61,13 +61,12 @@ const challengeSlice = createSlice({
   reducers: {},
   extraReducers: (builder) => {
     builder
-      .addCase(fetchEverything.pending, (state) => {
+      .addCase(fetchChallenges.pending, (state) => {
         state.loading = 'pending';
       })
-      .addCase(fetchEverything.fulfilled, (state, action) => {
+      .addCase(fetchChallenges.fulfilled, (state, action) => {
         state.loading = 'fulfilled';
-        const challenges = Object.values(action.payload.challenges.challenges);
-        challengeAdapter.upsertMany(state, challenges);
+        challengeAdapter.upsertMany(state, Object.values(action.payload));
       });
   },
 });

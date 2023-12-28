@@ -24,6 +24,8 @@ import fetchChampions from '../champions/fetchChampions';
 import { selectSkins } from '../skins/skinSlice';
 import { selectSkinLines } from '../skins/skinLineSlice';
 import { selectColors } from '../chromas/colorSlice';
+import fetchChallenges from '../challenges/fetchChallenges';
+import { selectChallenges } from '../challenges/challengeSlice';
 
 const App = () => {
   const prefersDarkMode = useMediaQuery('(prefers-color-scheme: dark)');
@@ -34,14 +36,17 @@ const App = () => {
     dispatch(fetchEverything(0));
     dispatch(fetchSkins(0));
     dispatch(fetchChampions(0));
+    dispatch(fetchChallenges(0));
   }, [dispatch]);
 
+  const challenges = useAppSelector(selectChallenges);
   const champions = useAppSelector(selectChampions);
+  const colors = useAppSelector(selectColors);
   const skins = useAppSelector(selectSkins);
   const skinLines = useAppSelector(selectSkinLines);
-  const colors = useAppSelector(selectColors);
 
   const isLoading =
+    challenges.loading !== 'fulfilled' &&
     champions.loading !== 'fulfilled' &&
     skins.loading !== 'fulfilled' &&
     skinLines.loading !== 'fulfilled' &&

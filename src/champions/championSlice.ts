@@ -1,5 +1,4 @@
 import { createEntityAdapter, createSlice } from '@reduxjs/toolkit';
-import fetchEverything from '../home/fetchEverything';
 import fetchChampions from '../champions/fetchChampions';
 import { RootState } from '../glue/store';
 
