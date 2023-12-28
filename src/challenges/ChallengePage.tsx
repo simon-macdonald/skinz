@@ -82,6 +82,11 @@ const ChallengePage = () => {
   const handleFindChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     setFind(event.target.value);
   };
+
+  const useTheseChampionIds =
+    champions.loading !== 'fulfilled' ? [] :
+      championIds.length === 0 ? champions.ids : championIds;
+
   return (
     <Container>
       <Toolbar>
@@ -162,7 +167,7 @@ const ChallengePage = () => {
             </TableRow>
           </TableHead>
           <TableBody>
-            {championIds.filter((id) => find === '' || champions.entities[id]!.name.toLowerCase().includes(find.toLowerCase())).map((id) => champions.entities[id]).map((champion) => (
+            {useTheseChampionIds.filter((id) => find === '' || champions.entities[id]!.name.toLowerCase().includes(find.toLowerCase())).map((id) => champions.entities[id]).map((champion) => (
               <TableRow
                 key={champion!.name}
                 sx={{ '&:last-child td, &:last-child th': { border: 0 } }}

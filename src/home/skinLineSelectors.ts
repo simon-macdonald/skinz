@@ -1,6 +1,7 @@
 import { createSelector } from '@reduxjs/toolkit';
 import _ from 'lodash';
 import { selectChampions } from '../champions/championSlice';
+import { selectSkinIdAndChampionIdToSkinIdBiMap } from '../skins/selectors';
 import { PRESTIGE_SKIN_LINE_ID, selectSkinLines } from '../skins/skinLineSlice';
 import { selectSkins } from '../skins/skinSlice';
 import { DisplayState } from './displaySlice';
@@ -76,8 +77,9 @@ export const selectSkinLineDisplayStates = (championIds: number[]) => createSele
   selectSkinLines,
   selectChampions,
   selectVisibleSkinLines(championIds),
-  (skinLines, champions, visibleSkinLines) => {
-    if (champions.loading !== 'fulfilled') {
+  selectSkinIdAndChampionIdToSkinIdBiMap,
+  (skinLines, champions, visibleSkinLines, skinIds) => {
+    if (champions.loading !== 'fulfilled' || skinLines.loading !== 'fulfilled') {
       return [];
     }
     const max = Math.max(...Object.values(champions.entities).map((c) => c!.id));
@@ -90,7 +92,7 @@ export const selectSkinLineDisplayStates = (championIds: number[]) => createSele
     championIds.forEach((championId) => displays[championId] = 'chosen');
 
     const commonSkinLines = visibleSkinLines.map((skinLineId) => skinLines.entities[skinLineId]!);
-    const visibleChampions = commonSkinLines.flatMap((skinLine) => Object.keys(skinLine.skins)).map((id) => +id);
+    const visibleChampions = commonSkinLines.flatMap((skinLine) => Object.keys(skinIds[skinLine.id])).map((id) => +id);
     Object.keys(champions.entities).forEach((c) => {
       if (displays[+c] !== 'chosen') {
         displays[+c] = visibleChampions.includes(+c) ? 'visible' : 'hidden';

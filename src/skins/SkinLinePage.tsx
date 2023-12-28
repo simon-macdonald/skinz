@@ -8,11 +8,13 @@ import BrowseDrawer from '../home/BrowseDrawer';
 import SkinCard from './SkinCard';
 import { selectSkinLines } from './skinLineSlice';
 import ColorsGrid from '../chromas/ColorsGrid';
+import { selectSkinIdAndChampionIdToSkinIdBiMap } from './selectors';
 
 const SkinLinePage = () => {
   const { id } = useParams();
 
   const skinLines = useAppSelector(selectSkinLines);
+  const skinIds = useAppSelector(selectSkinIdAndChampionIdToSkinIdBiMap);
   const skinLine = skinLines.entities[+id!];
 
   return (
@@ -32,7 +34,7 @@ const SkinLinePage = () => {
             </Typography>
             <ColorsGrid skinLine={skinLine} />
           </Grid>
-          {skinLine && Object.values(skinLine.skins)
+          {skinLine && Object.values(skinIds[skinLine.id])
             .map((skinId) => (
               <SkinCard id={skinId} key={skinId} />
             ))}

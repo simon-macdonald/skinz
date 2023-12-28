@@ -13,6 +13,7 @@ import { useAppDispatch, useAppSelector } from '../glue/hooks';
 import { selectSkinLines } from './skinLineSlice';
 import { selectSkins, SkinItem } from './skinSlice';
 import { selectChampions } from '../champions/championSlice';
+import { selectSkinIdAndChampionIdToSkinIdBiMap } from './selectors';
 
 const SkinLineHoverLink = (props: { theme: EntityId }) => {
   const { theme } = props;
@@ -20,6 +21,7 @@ const SkinLineHoverLink = (props: { theme: EntityId }) => {
   const champions = useAppSelector(selectChampions);
   const skins = useAppSelector(selectSkins);
   const skinLines = useAppSelector(selectSkinLines);
+  const skinIds = useAppSelector(selectSkinIdAndChampionIdToSkinIdBiMap);
   const skinLine = skinLines.entities[theme]!;
 
   const dispatch = useAppDispatch();
@@ -89,8 +91,8 @@ const SkinLineHoverLink = (props: { theme: EntityId }) => {
         onClose={handlePopoverClose}
         disableRestoreFocus
       >
-        {Object
-          .values(skinLine.skins)
+        {skinIds[skinLine.id] && Object
+          .values(skinIds[skinLine.id])
           .map((skin) => skins.entities[skin]!)
           .sort((a, b) => {
             try {

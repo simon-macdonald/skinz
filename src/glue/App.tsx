@@ -13,7 +13,6 @@ import AboutPage from '../home/AboutPage';
 import NavBar from '../home/NavBar';
 import SkinPage from '../skins/SkinPage';
 import { useAppDispatch } from './hooks';
-import fetchEverything from '../home/fetchEverything';
 import ChampionPage from '../champions/ChampionPage';
 import SkinLineColorPage from '../home/SkinLineColorPage';
 import ColorPage from '../chromas/ColorPage';
@@ -29,7 +28,6 @@ const App = () => {
   const dispatch = useAppDispatch();
 
   useEffect(() => {
-    dispatch(fetchEverything(0));
     dispatch(fetchSkins(0));
     dispatch(fetchSkinLines(0));
     dispatch(fetchChampions(0));

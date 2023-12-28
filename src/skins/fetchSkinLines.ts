@@ -14,6 +14,6 @@ number,
   dispatch: AppDispatch
   state: RootState
 }
->('fetchSkins', async () => (await fetch(URL)).json());
+>('fetchSkinLines', async () => (await fetch(URL)).json());
 
 export default fetchSkinLines;

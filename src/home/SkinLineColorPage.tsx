@@ -12,11 +12,13 @@ import ChromaCard from '../chromas/ChromaCard';
 import BrowseDrawer from './BrowseDrawer';
 import ColorsGrid from '../chromas/ColorsGrid';
 import chromaNames from '../chromas/chromaNames.json';
+import { selectSkinIdAndChampionIdToSkinIdBiMap } from '../skins/selectors';
 
 const SkinLineColorPage = () => {
   const { id, color } = useParams();
 
   const skinLines = useAppSelector(selectSkinLines);
+  const skinIds = useAppSelector(selectSkinIdAndChampionIdToSkinIdBiMap);
   const skins = useAppSelector(selectSkins);
   const skinLine = skinLines.entities[+id!];
   const urlColor = useParams().color;
@@ -59,7 +61,8 @@ const SkinLineColorPage = () => {
             </Typography>
             <ColorsGrid skinLine={skinLine} />
           </Grid>
-          {skinLine && Object.values(skinLine.skins)
+          {skinLine && skinIds[skinLine.id] && Object
+            .values(skinIds[skinLine.id])
             .filter((skinId) => skins.entities[skinId]!.chromas)
             .flatMap((skinId) => skins.entities[skinId]!.chromas)
             .filter((chroma) => (`${chroma.colors[0]}_${chroma.colors[1]}`).replaceAll('#', '') === color)

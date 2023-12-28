@@ -1,15 +1,12 @@
 import { createEntityAdapter, createSlice } from '@reduxjs/toolkit';
-import fetchEverything from '../home/fetchEverything';
 import { RootState } from '../glue/store';
+import fetchSkinLines from './fetchSkinLines';
 import universes from './skin_line_to_universe.json';
 
 export interface SkinLineItem {
   id: number,
   name: string,
   universe: string,
-  skins: {
-    [championId: number]: number,
-  },
 }
 
 export const PRESTIGE_SKIN_LINE_ID = 9001;
@@ -26,33 +23,22 @@ const skinLinesSlice = createSlice({
   reducers: {},
   extraReducers: (builder) => {
     builder
-      .addCase(fetchEverything.pending, (state) => {
+      .addCase(fetchSkinLines.pending, (state) => {
         state.loading = 'pending';
       })
-      .addCase(fetchEverything.fulfilled, (state, action) => {
+      .addCase(fetchSkinLines.fulfilled, (state, action) => {
         state.loading = 'fulfilled';
-        const skinLines = action.payload.skinLines.concat([{
+        const skinLines = Object.values(action.payload).concat([{
           id: PRESTIGE_SKIN_LINE_ID,
           name: 'Prestige',
           universe: '',
-          skins: {},
         }]);
         skinLines.forEach((skinLine) => {
-          skinLine.skins = {};
           skinLine.universe
               = Object.prototype.hasOwnProperty.call(universes, skinLine.name)
               ? universes[skinLine.name as keyof typeof universes]
               : 'unknown';
         });
-        Object
-          .values(action.payload.skins)
-          .map((skin) => (skin.name.includes('Prestige') ? { ...skin, skinLines: [{ id: PRESTIGE_SKIN_LINE_ID }] } : skin))
-          .filter((skin) => skin.skinLines)
-          .forEach((skin) => {
-            skin.skinLines?.forEach((skinLine) => {
-              skinLines.find((i) => i.id === skinLine.id)!.skins[Math.floor(skin.id / 1000)] = skin.id;
-            });
-          });
         skinLineAdapter.upsertMany(state, skinLines);
       });
   },
