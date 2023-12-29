@@ -1,7 +1,6 @@
 import {
-  Container, Grid, Toolbar, Typography,
+  Container, Grid, Toolbar, Typography
 } from '@mui/material';
-import React from 'react';
 import { useParams } from 'react-router-dom';
 import { useAppSelector } from '../glue/hooks';
 import BrowseDrawer from '../home/BrowseDrawer';
@@ -31,14 +30,14 @@ const ColorPage = () => {
       });
       return skins.entities[id]!.chromas;
     })
-    .filter((chroma) => (`${chroma.colors[0]}_${chroma.colors[1]}`).replaceAll('#', '') === color);
+    .filter((chroma) => chroma.colorsKey === color);
 
   return (
     <>
       <BrowseDrawer filterBy="chromas" />
       <Container>
         <Toolbar>
-          {}
+          { }
         </Toolbar>
         {champs.champions.length > 0 && <ChampionSelectionRow />}
         <Typography variant="h2">
@@ -50,7 +49,7 @@ const ColorPage = () => {
               skinName={chroma.name}
               chromaPath={chroma.chromaPath}
               skinLineId={skinLineIds.get(chroma.id)!}
-              color={(`${chroma.colors[0]}_${chroma.colors[1]}`).replaceAll('#', '')}
+              color={chroma.colorsKey}
               displayText="skinName"
               key={chroma.id}
             />

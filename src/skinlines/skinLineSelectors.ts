@@ -19,11 +19,8 @@ export const selectSkinLineToColorsMap = createSelector(
             skinLineColors[skinLine.id] = [];
           }
           skin!.chromas.forEach((chroma) => {
-            // eg "colors":["#D33528","#D33528"] => 'D33528_D33528'
-            // makes it URL-friendly
-            const chromaId = (`${chroma.colors[0]}_${chroma.colors[1]}`).replaceAll('#', '');
-            if (skinLineColors[skinLine.id].indexOf(chromaId) === -1) {
-              skinLineColors[skinLine.id].push(chromaId);
+            if (skinLineColors[skinLine.id].indexOf(chroma.colorsKey) === -1) {
+              skinLineColors[skinLine.id].push(chroma.colorsKey);
             }
           });
         });

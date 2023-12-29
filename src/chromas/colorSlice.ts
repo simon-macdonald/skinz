@@ -1,7 +1,6 @@
 import { createEntityAdapter, createSlice } from '@reduxjs/toolkit';
 import _ from 'lodash';
 import { RootState } from '../glue/store';
-import chromaNames from './chromaNames.json';
 import fetchSkins from '../skins/fetchSkins';
 
 export interface ColorItem {
@@ -28,7 +27,7 @@ const colorSlice = createSlice({
       })
       .addCase(fetchSkins.fulfilled, (state, action) => {
         state.loading = 'fulfilled';
-        const getChromaId = (colors: string[]) => (`${colors[0]}_${colors[1]}`).replaceAll('#', '');
+        const getChromaId = (colors: string[]) => (`${colors[0]}_${colors[1]}`);
         const allColors = Object.values(action.payload)
           .filter((skin) => skin.chromas)
           .flatMap((skin) => skin.chromas)
@@ -51,7 +50,5 @@ const colorSlice = createSlice({
 });
 
 export const selectColors = (state: RootState) => state.colors;
-
-export const maybeGetChromaName = (color: string) => chromaNames[color as keyof typeof chromaNames];
 
 export default colorSlice.reducer;

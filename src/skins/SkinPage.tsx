@@ -56,7 +56,7 @@ const SkinPage = () => {
                 skinName={chroma.name}
                 chromaPath={chroma.chromaPath}
                 skinLineId={(skin.skinLines && skin.skinLines.length > 0 && skin.skinLines[0].id) || -1}
-                color={(`${chroma.colors[0]}_${chroma.colors[1]}`).replaceAll('#', '')}
+                color={chroma.colorsKey}
                 displayText="chromaName"
                 key={chroma.id}
               />

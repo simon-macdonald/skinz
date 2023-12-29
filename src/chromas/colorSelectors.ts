@@ -23,8 +23,7 @@ export const selectChampionIdToColorsMap = createSelector(
         if (!(championId in championColors)) {
           championColors[championId] = [];
         }
-        const color = (`${chroma.colors[0]}_${chroma.colors[1]}`).replaceAll('#', '');
-        championColors[championId] = championColors[championId].concat(color);
+        championColors[championId] = championColors[championId].concat(chroma.colorsKey);
       });
     });
     return championColors;

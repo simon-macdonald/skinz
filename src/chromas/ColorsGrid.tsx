@@ -6,7 +6,9 @@ import { Link, useLocation } from 'react-router-dom';
 import { useAppSelector } from '../glue/hooks';
 import { selectSkinLineToColorsMap } from '../skinlines/skinLineSelectors';
 import { SkinLineItem } from '../skinlines/skinLineSlice';
-import { maybeGetChromaName } from './colorSlice';
+import chromaNames from './chromaNames.json';
+
+const maybeGetChromaName = (color: string) => chromaNames[color as keyof typeof chromaNames];
 
 const ColorsGrid = (props: { skinLine: SkinLineItem | undefined }) => {
   const { skinLine } = props;

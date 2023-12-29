@@ -1,7 +1,7 @@
 import { createEntityAdapter, createSlice } from '@reduxjs/toolkit';
 import { RootState } from '../glue/store';
-import fetchSkins from './fetchSkins';
 import { PRESTIGE_SKIN_LINE_ID, STAR_GUARDIAN_SKIN_LINE_ID } from '../skinlines/skinLineSlice';
+import fetchSkins from './fetchSkins';
 
 export interface SkinItem {
   id: number,
@@ -14,6 +14,7 @@ export interface SkinItem {
     name: string, // this is actually awkwardly the skin name
     chromaPath: string,
     colors: string[],
+    colorsKey: string, // added for URL-friendly navigation
   }[],
   skinLines: {
     id: number;
@@ -38,6 +39,12 @@ const skinsSlice = createSlice({
       .addCase(fetchSkins.fulfilled, (state, action) => {
         state.loading = 'fulfilled';
         Object.values(action.payload).forEach((skin) => {
+          skin.chromas?.forEach(chroma => {
+            const color1 = chroma.colors[0].replace('#', '');
+            const color2 = chroma.colors[1].replace('#', '');
+            chroma.colorsKey = `${color1}_${color2}`;
+          })
+
           // stopgap solution to consolidate star guardians
           // update scripts to include skin line IDs
           // move skin and skin-line logic to selectors
