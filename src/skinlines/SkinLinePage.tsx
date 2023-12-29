@@ -1,20 +1,19 @@
 import {
-  Container, Grid, Toolbar, Typography,
+  Container, Grid, Toolbar, Typography
 } from '@mui/material';
-import React from 'react';
 import { useParams } from 'react-router-dom';
+import ColorsGrid from '../chromas/ColorsGrid';
 import { useAppSelector } from '../glue/hooks';
 import BrowseDrawer from '../home/BrowseDrawer';
-import SkinCard from './SkinCard';
+import { selectSkinLineIdAndChampionIdToSkinIdBiMap } from '../skins/selectors';
+import SkinCard from '../skins/SkinCard';
 import { selectSkinLines } from './skinLineSlice';
-import ColorsGrid from '../chromas/ColorsGrid';
-import { selectSkinIdAndChampionIdToSkinIdBiMap } from './selectors';
 
 const SkinLinePage = () => {
   const { id } = useParams();
 
   const skinLines = useAppSelector(selectSkinLines);
-  const skinIds = useAppSelector(selectSkinIdAndChampionIdToSkinIdBiMap);
+  const skinIds = useAppSelector(selectSkinLineIdAndChampionIdToSkinIdBiMap);
   const skinLine = skinLines.entities[+id!];
 
   return (
@@ -22,7 +21,7 @@ const SkinLinePage = () => {
       <BrowseDrawer filterBy="skins" />
       <Container>
         <Toolbar>
-          {}
+          { }
         </Toolbar>
         <Typography variant="h3">
           {skinLine?.name || '...'}

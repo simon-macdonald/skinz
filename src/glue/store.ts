@@ -4,7 +4,7 @@ import storage from 'redux-persist/lib/storage';
 import displayReducer from '../home/displaySlice';
 import whoDidWhatReducer from '../challenges/whoDidWhatSlice';
 import championsReducer from '../champions/championSlice';
-import skinLinesReducer from '../skins/skinLineSlice';
+import skinLinesReducer from '../skinlines/skinLineSlice';
 import skinsReducer from '../skins/skinSlice';
 import colorsReducer from '../chromas/colorSlice';
 import challengesReducer from '../challenges/challengeSlice';

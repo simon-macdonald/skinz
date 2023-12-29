@@ -1,14 +1,14 @@
-import React from 'react';
 import {
-  Box, Card, CardActionArea, CardContent, CardMedia, Grid, Skeleton, Typography,
+  Box, Card, CardActionArea, CardContent, CardMedia, Grid, Skeleton, Typography
 } from '@mui/material';
-import { clickChamp, selectDisplay } from './displaySlice';
-import { useAppDispatch, useAppSelector } from '../glue/hooks';
-import { selectSkinLines, SkinLineItem } from '../skins/skinLineSlice';
+import React from 'react';
 import { ChampionItem, selectChampions } from '../champions/championSlice';
+import { useAppDispatch, useAppSelector } from '../glue/hooks';
+import { selectSkinLines, SkinLineItem } from '../skinlines/skinLineSlice';
+import { selectSkinLineIdAndChampionIdToSkinIdBiMap } from '../skins/selectors';
 import { selectSkins } from '../skins/skinSlice';
 import getAssetUrl, { getChampionTileUrl } from '../urls';
-import { selectSkinIdAndChampionIdToSkinIdBiMap } from '../skins/selectors';
+import { clickChamp, selectDisplay } from './displaySlice';
 
 export interface GridItemSizes {
   xs: number,
@@ -25,7 +25,7 @@ const getChampionText = (champion: ChampionItem, display?: boolean) => (display 
 const PortraitCard = (props: { id: number, sizes: GridItemSizes, display?: boolean, setFindChampion?: React.Dispatch<React.SetStateAction<string>> }) => {
   const champions = useAppSelector(selectChampions);
   const skinLines = useAppSelector(selectSkinLines);
-  const skinIds = useAppSelector(selectSkinIdAndChampionIdToSkinIdBiMap);
+  const skinIds = useAppSelector(selectSkinLineIdAndChampionIdToSkinIdBiMap);
   const skins = useAppSelector(selectSkins);
 
   const champs = useAppSelector(selectDisplay);
@@ -46,13 +46,13 @@ const PortraitCard = (props: { id: number, sizes: GridItemSizes, display?: boole
     skinLineSkins &&
     skinIds[skinLineSkins.id] &&
     Object.keys(skinIds[skinLineSkins.id]).includes(id.toString());
-  
+
   const bgColor = skinLineSkins && (skinLineSkinsIncludesChampion
-      ? 'secondary.main'
-      : champs.champions.includes(id)
-        ? 'primary.main'
-        : 'transparent') || 'transparent';
-  
+    ? 'secondary.main'
+    : champs.champions.includes(id)
+      ? 'primary.main'
+      : 'transparent') || 'transparent';
+
   return (
     <Grid item xs={sizes.xs} sm={sizes.sm} md={sizes.md} lg={sizes.lg} xl={sizes.xl}>
       {skeleton || (

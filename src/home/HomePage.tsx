@@ -18,8 +18,8 @@ import PortraitCard from './PortraitCard';
 import { selectChampions } from '../champions/championSlice';
 import ChampionSelectionRow from './ChampionSelectionRow';
 import BrowseDrawer from './BrowseDrawer';
-import { selectSkinLineDisplayStates } from './skinLineSelectors';
-import { selectColorDisplayStates } from './colorSelectors';
+import { selectSkinLineDisplayStates } from '../skinlines/skinLineSelectors';
+import { selectColorDisplayStates } from '../chromas/colorSelectors';
 
 const HomePage = (props: { filterBy: FilterBy, }) => {
   const { filterBy } = props;

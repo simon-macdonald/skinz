@@ -1,9 +1,9 @@
 import { createSelector } from '@reduxjs/toolkit';
 import _ from 'lodash';
 import { selectChampions } from '../champions/championSlice';
-import { selectColors } from '../chromas/colorSlice';
+import { selectColors } from './colorSlice';
 import { selectSkins } from '../skins/skinSlice';
-import { DisplayState } from './displaySlice';
+import { DisplayState } from '../home/displaySlice';
 
 export const selectChampionIdToColorsMap = createSelector(
   selectChampions,

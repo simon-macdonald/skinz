@@ -1,24 +1,24 @@
+import { NavigateNext } from '@mui/icons-material';
 import {
   Breadcrumbs,
-  Container, Grid, Toolbar, Typography,
+  Container, Grid, Toolbar, Typography
 } from '@mui/material';
 import React from 'react';
 import { Link, useParams } from 'react-router-dom';
-import { NavigateNext } from '@mui/icons-material';
-import { useAppSelector } from '../glue/hooks';
-import { selectSkinLines } from '../skins/skinLineSlice';
-import { selectSkins } from '../skins/skinSlice';
 import ChromaCard from '../chromas/ChromaCard';
-import BrowseDrawer from './BrowseDrawer';
-import ColorsGrid from '../chromas/ColorsGrid';
 import chromaNames from '../chromas/chromaNames.json';
-import { selectSkinIdAndChampionIdToSkinIdBiMap } from '../skins/selectors';
+import ColorsGrid from '../chromas/ColorsGrid';
+import { useAppSelector } from '../glue/hooks';
+import { selectSkinLines } from '../skinlines/skinLineSlice';
+import { selectSkinLineIdAndChampionIdToSkinIdBiMap } from '../skins/selectors';
+import { selectSkins } from '../skins/skinSlice';
+import BrowseDrawer from './BrowseDrawer';
 
 const SkinLineColorPage = () => {
   const { id, color } = useParams();
 
   const skinLines = useAppSelector(selectSkinLines);
-  const skinIds = useAppSelector(selectSkinIdAndChampionIdToSkinIdBiMap);
+  const skinIds = useAppSelector(selectSkinLineIdAndChampionIdToSkinIdBiMap);
   const skins = useAppSelector(selectSkins);
   const skinLine = skinLines.entities[+id!];
   const urlColor = useParams().color;
@@ -30,7 +30,7 @@ const SkinLineColorPage = () => {
       <BrowseDrawer filterBy="skins" />
       <Container>
         <Toolbar>
-          {}
+          { }
         </Toolbar>
         <Breadcrumbs separator={<NavigateNext />}>
           <Link

@@ -1,19 +1,19 @@
 import {
   Box,
-  Popover, Typography, useMediaQuery,
+  Popover, Typography, useMediaQuery
 } from '@mui/material';
+import {
+  blue, green, indigo, orange, purple, red, yellow
+} from '@mui/material/colors';
 import { EntityId } from '@reduxjs/toolkit';
 import React from 'react';
 import { Link } from 'react-router-dom';
-import {
-  blue, green, indigo, orange, purple, red, yellow,
-} from '@mui/material/colors';
-import { hoverAway, hoverOver } from '../home/displaySlice';
-import { useAppDispatch, useAppSelector } from '../glue/hooks';
-import { selectSkinLines } from './skinLineSlice';
-import { selectSkins, SkinItem } from './skinSlice';
 import { selectChampions } from '../champions/championSlice';
-import { selectSkinIdAndChampionIdToSkinIdBiMap } from './selectors';
+import { useAppDispatch, useAppSelector } from '../glue/hooks';
+import { hoverAway, hoverOver } from '../home/displaySlice';
+import { selectSkinLineIdAndChampionIdToSkinIdBiMap } from '../skins/selectors';
+import { selectSkins, SkinItem } from '../skins/skinSlice';
+import { selectSkinLines } from './skinLineSlice';
 
 const SkinLineHoverLink = (props: { theme: EntityId }) => {
   const { theme } = props;
@@ -21,7 +21,7 @@ const SkinLineHoverLink = (props: { theme: EntityId }) => {
   const champions = useAppSelector(selectChampions);
   const skins = useAppSelector(selectSkins);
   const skinLines = useAppSelector(selectSkinLines);
-  const skinIds = useAppSelector(selectSkinIdAndChampionIdToSkinIdBiMap);
+  const skinIds = useAppSelector(selectSkinLineIdAndChampionIdToSkinIdBiMap);
   const skinLine = skinLines.entities[theme]!;
 
   const dispatch = useAppDispatch();

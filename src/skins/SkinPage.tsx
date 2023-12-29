@@ -9,7 +9,7 @@ import { useAppSelector } from '../glue/hooks';
 import { selectChampions } from '../champions/championSlice';
 import { selectSkins } from './skinSlice';
 import BrowseDrawer from '../home/BrowseDrawer';
-import { selectSkinLines } from './skinLineSlice';
+import { selectSkinLines } from '../skinlines/skinLineSlice';
 
 const SkinPage = () => {
   const { id } = useParams();

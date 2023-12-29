@@ -1,10 +1,10 @@
 import { createSelector } from '@reduxjs/toolkit';
 import _ from 'lodash';
 import { selectChampions } from '../champions/championSlice';
-import { selectSkinIdAndChampionIdToSkinIdBiMap } from '../skins/selectors';
-import { selectSkinLines } from '../skins/skinLineSlice';
+import { selectSkinLines } from './skinLineSlice';
+import { selectSkinLineIdAndChampionIdToSkinIdBiMap } from '../skins/selectors';
 import { selectSkins } from '../skins/skinSlice';
-import { DisplayState } from './displaySlice';
+import { DisplayState } from '../home/displaySlice';
 
 export const selectSkinLineToColorsMap = createSelector(
   selectSkins,
@@ -73,7 +73,7 @@ export const selectSkinLineDisplayStates = (championIds: number[]) => createSele
   selectSkinLines,
   selectChampions,
   selectVisibleSkinLines(championIds),
-  selectSkinIdAndChampionIdToSkinIdBiMap,
+  selectSkinLineIdAndChampionIdToSkinIdBiMap,
   (skinLines, champions, visibleSkinLines, skinIds) => {
     if (champions.loading !== 'fulfilled' || skinLines.loading !== 'fulfilled') {
       return [];

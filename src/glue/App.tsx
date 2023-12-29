@@ -7,7 +7,7 @@ import {
 import {
   BrowserRouter, Route, Routes,
 } from 'react-router-dom';
-import SkinLinePage from '../skins/SkinLinePage';
+import SkinLinePage from '../skinlines/SkinLinePage';
 import HomePage from '../home/HomePage';
 import AboutPage from '../home/AboutPage';
 import NavBar from '../home/NavBar';
@@ -20,7 +20,7 @@ import ChallengePage from '../challenges/ChallengePage';
 import fetchSkins from '../skins/fetchSkins';
 import fetchChampions from '../champions/fetchChampions';
 import fetchChallenges from '../challenges/fetchChallenges';
-import fetchSkinLines from '../skins/fetchSkinLines';
+import fetchSkinLines from '../skinlines/fetchSkinLines';
 
 const App = () => {
   const prefersDarkMode = useMediaQuery('(prefers-color-scheme: dark)');

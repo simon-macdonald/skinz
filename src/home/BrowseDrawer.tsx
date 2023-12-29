@@ -3,15 +3,15 @@ import '../glue/App.css';
 import {
   Drawer, Toolbar,
 } from '@mui/material';
-import SkinLineHoverLink from '../skins/SkinLineHoverLink';
+import SkinLineHoverLink from '../skinlines/SkinLineHoverLink';
 import { useAppSelector } from '../glue/hooks';
 import {
   FilterBy,
   selectDisplay,
 } from './displaySlice';
 import ColorHoverLink from '../chromas/ColorHoverLink';
-import { selectVisibleSkinLines } from './skinLineSelectors';
-import { selectVisibleColors } from './colorSelectors';
+import { selectVisibleSkinLines } from '../skinlines/skinLineSelectors';
+import { selectVisibleColors } from '../chromas/colorSelectors';
 
 const BrowseDrawer = (props: { filterBy: FilterBy }) => {
   const { filterBy } = props;

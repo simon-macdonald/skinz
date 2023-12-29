@@ -4,8 +4,8 @@ import {
 import React from 'react';
 import { Link, useLocation } from 'react-router-dom';
 import { useAppSelector } from '../glue/hooks';
-import { selectSkinLineToColorsMap } from '../home/skinLineSelectors';
-import { SkinLineItem } from '../skins/skinLineSlice';
+import { selectSkinLineToColorsMap } from '../skinlines/skinLineSelectors';
+import { SkinLineItem } from '../skinlines/skinLineSlice';
 import { maybeGetChromaName } from './colorSlice';
 
 const ColorsGrid = (props: { skinLine: SkinLineItem | undefined }) => {

@@ -1,7 +1,7 @@
 import { createEntityAdapter, createSlice } from '@reduxjs/toolkit';
 import { RootState } from '../glue/store';
 import fetchSkins from './fetchSkins';
-import { PRESTIGE_SKIN_LINE_ID, STAR_GUARDIAN_SKIN_LINE_ID } from './skinLineSlice';
+import { PRESTIGE_SKIN_LINE_ID, STAR_GUARDIAN_SKIN_LINE_ID } from '../skinlines/skinLineSlice';
 
 export interface SkinItem {
   id: number,

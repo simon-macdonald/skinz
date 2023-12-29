@@ -1,9 +1,8 @@
 import { createSelector } from '@reduxjs/toolkit';
-import _ from 'lodash';
-import { selectSkinLines } from '../skins/skinLineSlice';
+import { selectSkinLines } from '../skinlines/skinLineSlice';
 import { selectSkins } from '../skins/skinSlice';
 
-export const selectSkinIdAndChampionIdToSkinIdBiMap = createSelector(
+export const selectSkinLineIdAndChampionIdToSkinIdBiMap = createSelector(
   selectSkins,
   selectSkinLines,
   (skins, skinLines) => {
