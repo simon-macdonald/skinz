@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import {
   Card, CardActionArea, CardContent, CardMedia, Grid, Typography, useMediaQuery,
 } from '@mui/material';
@@ -20,13 +20,20 @@ const SkinCard = (props: any) => {
   const prefersDarkMode = useMediaQuery('(prefers-color-scheme: dark)');
   const rainbowShade = prefersDarkMode ? 200 : 900;
 
+  const [imageLoaded, setImageLoaded] = useState(false);
+
+  const handleImageLoad = () => {
+    setImageLoaded(true);
+  };
+
   return (
     <Grid item xs={1}>
-      <Card>
+      <Card sx={{visibility: imageLoaded ? 'visible' : 'hidden'}}>
         <CardActionArea onClick={() => navigate(`/skins/${id}`)}>
           <CardMedia
             component="img"
             image={getAssetUrl(skin.tilePath)}
+            onLoad={handleImageLoad}
           />
           <CardContent>
             <Typography
