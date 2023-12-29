@@ -34,7 +34,7 @@ const SkinLinePage = () => {
             </Typography>
             <ColorsGrid skinLine={skinLine} />
           </Grid>
-          {skinLine && Object.values(skinIds[skinLine.id])
+          {skinLine && skinIds && skinIds[skinLine.id] && Object.values(skinIds[skinLine.id])
             .map((skinId) => (
               <SkinCard id={skinId} key={skinId} />
             ))}
