@@ -1,5 +1,4 @@
 import React, { useEffect, useState } from 'react';
-import '../glue/App.css';
 import {
   Alert,
   Container, Grid, IconButton, InputAdornment, Link, Skeleton, TextField, Toolbar, Typography,

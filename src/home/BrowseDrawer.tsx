@@ -1,5 +1,4 @@
 import React from 'react';
-import '../glue/App.css';
 import {
   Drawer, Toolbar,
 } from '@mui/material';

@@ -1,5 +1,4 @@
 import React, { useState } from 'react';
-import '../glue/App.css';
 import {
   Avatar,
   Checkbox,

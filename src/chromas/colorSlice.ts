@@ -27,7 +27,7 @@ const colorSlice = createSlice({
       })
       .addCase(fetchSkins.fulfilled, (state, action) => {
         state.loading = 'fulfilled';
-        const getChromaId = (colors: string[]) => (`${colors[0]}_${colors[1]}`);
+        const getChromaId = (colors: string[]) => (`${colors[0]}_${colors[1]}`).replaceAll('#', '');
         const allColors = Object.values(action.payload)
           .filter((skin) => skin.chromas)
           .flatMap((skin) => skin.chromas)
