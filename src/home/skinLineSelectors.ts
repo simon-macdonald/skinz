@@ -2,7 +2,7 @@ import { createSelector } from '@reduxjs/toolkit';
 import _ from 'lodash';
 import { selectChampions } from '../champions/championSlice';
 import { selectSkinIdAndChampionIdToSkinIdBiMap } from '../skins/selectors';
-import { PRESTIGE_SKIN_LINE_ID, selectSkinLines } from '../skins/skinLineSlice';
+import { selectSkinLines } from '../skins/skinLineSlice';
 import { selectSkins } from '../skins/skinSlice';
 import { DisplayState } from './displaySlice';
 
@@ -46,11 +46,7 @@ export const selectChampionIdToSkinLinesMap = createSelector(
         return;
       }
 
-      const skinLines
-        = skin.name.includes('Prestige')
-          ? [{ id: PRESTIGE_SKIN_LINE_ID }]
-          : skin.skinLines;
-      skinLines.forEach((skinLine) => {
+      skin.skinLines.forEach((skinLine) => {
         if (!(championId in championSkinLines)) {
           championSkinLines[championId] = [];
         }

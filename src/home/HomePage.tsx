@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import '../glue/App.css';
 import {
   Alert,
-  Container, Grid, IconButton, InputAdornment, Skeleton, TextField, Toolbar,
+  Container, Grid, IconButton, InputAdornment, Link, Skeleton, TextField, Toolbar, Typography,
 } from '@mui/material';
 import { useLocation } from 'react-router-dom';
 import { Clear } from '@mui/icons-material';
@@ -85,7 +85,13 @@ const HomePage = (props: { filterBy: FilterBy, }) => {
             />
           </Grid>
           <Grid item>
-            <Alert severity="info">{'Prestige skin line added. Let me know if you find any bugs. Merry Christmas y\'all.'}</Alert>
+            <Alert severity="info">
+              <Link href="https://discord.gg/psgphuFnhe" target="_blank">
+                <Typography color="white">
+                  Prestige and Star Guardian "universes" added. Let me know if you have suggestions.
+                </Typography>
+              </Link>
+            </Alert>
           </Grid>
         </Grid>
         <Grid container spacing={2} columns={60}>

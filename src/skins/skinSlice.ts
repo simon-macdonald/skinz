@@ -1,7 +1,7 @@
 import { createEntityAdapter, createSlice } from '@reduxjs/toolkit';
 import { RootState } from '../glue/store';
 import fetchSkins from './fetchSkins';
-import { PRESTIGE_SKIN_LINE_ID } from './skinLineSlice';
+import { PRESTIGE_SKIN_LINE_ID, STAR_GUARDIAN_SKIN_LINE_ID } from './skinLineSlice';
 
 export interface SkinItem {
   id: number,
@@ -38,6 +38,13 @@ const skinsSlice = createSlice({
       .addCase(fetchSkins.fulfilled, (state, action) => {
         state.loading = 'fulfilled';
         Object.values(action.payload).forEach((skin) => {
+          // stopgap solution to consolidate star guardians
+          // update scripts to include skin line IDs
+          // move skin and skin-line logic to selectors
+          // migrate off of `selectSkins` and `selectSkinLines`
+          if (skin.skinLines && [19, 20, 119, 161].includes(skin.skinLines[0].id)) {
+            skin.skinLines = [{ id: STAR_GUARDIAN_SKIN_LINE_ID }];
+          }
           if (skin.name.includes('Prestige')) {
             skin.skinLines = [{ id: PRESTIGE_SKIN_LINE_ID }];
           }

@@ -10,6 +10,7 @@ export interface SkinLineItem {
 }
 
 export const PRESTIGE_SKIN_LINE_ID = 9001;
+export const STAR_GUARDIAN_SKIN_LINE_ID = 1337;
 
 const skinLineAdapter = createEntityAdapter<SkinLineItem>({
   sortComparer: (a, b) => a.name.localeCompare(b.name),
@@ -32,6 +33,10 @@ const skinLinesSlice = createSlice({
           id: PRESTIGE_SKIN_LINE_ID,
           name: 'Prestige',
           universe: '',
+        }, {
+          id: STAR_GUARDIAN_SKIN_LINE_ID,
+          name: 'Star Guardian',
+          universe: '',
         }]);
         skinLines.forEach((skinLine) => {
           skinLine.universe
@@ -39,7 +44,7 @@ const skinLinesSlice = createSlice({
               ? universes[skinLine.name as keyof typeof universes]
               : 'unknown';
         });
-        skinLineAdapter.upsertMany(state, skinLines);
+        skinLineAdapter.upsertMany(state, skinLines.filter(skinLine => !skinLine.name.includes("Star Guardian ")));
       });
   },
 });
