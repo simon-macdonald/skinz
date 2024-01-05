@@ -10,12 +10,12 @@ export const selectChampionIdToSkinsMap = createSelector(
     if (skins.loading !== 'fulfilled' || champions.loading !== 'fulfilled') {
       return championSkins;
     }
-    Object.values(skins.entities).forEach((skin) => {
-      const championId = Math.floor(skin!.id / 1000);
+    Object.values(skins.ids).forEach((skinId) => {
+      const championId = Math.floor(+skinId / 1000);
       if (!(championId in championSkins)) {
         championSkins[championId] = [];
       }
-      championSkins[championId] = championSkins[championId].concat(skin!.id);
+      championSkins[championId] = championSkins[championId].concat(+skinId);
     });
     return championSkins;
   },

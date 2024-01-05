@@ -2,6 +2,7 @@ import { createEntityAdapter, createSlice } from '@reduxjs/toolkit';
 import { RootState } from '../glue/store';
 import { PRESTIGE_SKIN_LINE_ID, STAR_GUARDIAN_SKIN_LINE_ID } from '../skinlines/skinLineSlice';
 import fetchSkins from './fetchSkins';
+import releaseDates from './releaseDates.json';
 
 export interface SkinItem {
   id: number,
@@ -22,7 +23,16 @@ export interface SkinItem {
 }
 
 const skinAdapter = createEntityAdapter<SkinItem>({
-  sortComparer: (a, b) => a.name.localeCompare(b.name),
+  sortComparer: (a, b) => {
+    // while skins are already sorted chronologically
+    // I'd rather not rely on that assumption
+    const dateA = releaseDates[a.id.toString() as keyof typeof releaseDates];
+    const dateB = releaseDates[b.id.toString() as keyof typeof releaseDates];
+    if (!(dateA && dateB)) {
+      return -1;
+    }
+    return dateB.localeCompare(dateA);
+  },
 });
 
 const initialState = skinAdapter.getInitialState({ loading: 'idle' });
