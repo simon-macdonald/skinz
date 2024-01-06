@@ -1,13 +1,13 @@
 import { createSelector } from '@reduxjs/toolkit';
 import { selectSkinLines } from '../skinlines/skinLineSlice';
-import { selectSkins } from '../skins/skinSlice';
+import { selectSkins, SkinItem } from '../skins/skinSlice';
 
 export const selectSkinLineIdAndChampionIdToSkinIdBiMap = createSelector(
   selectSkins,
   selectSkinLines,
   (skins, skinLines) => {
     const skinIds: {
-      [skinId: number]: {
+      [skinLineId: number]: {
         [championId: number]: number
       }
     } = {};
@@ -25,5 +25,25 @@ export const selectSkinLineIdAndChampionIdToSkinIdBiMap = createSelector(
         });
       });
     return skinIds;
+  }
+);
+
+export const selectChronologicalSkinIds = (skinLineId: number) => createSelector(
+  selectSkins,
+  selectSkinLineIdAndChampionIdToSkinIdBiMap,
+  (skins, skinIdsMap) => {
+    if (skins.loading !== 'fulfilled' || Object.keys(skinIdsMap).length === 0) {
+      return [];
+    }
+    const skinIds = Object.values(skinIdsMap[skinLineId]);
+    // identical to sorting that happens in skinSlice.ts
+    return skinIds.sort((a, b) => {
+      const skinA = skins.entities[a];
+      const skinB = skins.entities[b];
+      if (!skinA || !skinB) {
+        return -1;
+      }
+      return skinB.releaseDate.localeCompare(skinA.releaseDate);
+    });
   }
 );

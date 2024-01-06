@@ -48,6 +48,11 @@ const SkinPage = () => {
                   </ListItemButton>
                 </ListItem>
               ))}
+              <ListItem key="release" disablePadding>
+                <ListItemButton disabled>
+                  <ListItemText primary={skin?.releaseDate} />
+                </ListItemButton>
+              </ListItem>
             </List>
           </Grid>
           {skin?.chromas && skin.chromas

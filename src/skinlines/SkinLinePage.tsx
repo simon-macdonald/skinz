@@ -5,7 +5,7 @@ import { useParams } from 'react-router-dom';
 import ColorsGrid from '../chromas/ColorsGrid';
 import { useAppSelector } from '../glue/hooks';
 import BrowseDrawer from '../home/BrowseDrawer';
-import { selectSkinLineIdAndChampionIdToSkinIdBiMap } from '../skins/selectors';
+import { selectChronologicalSkinIds } from '../skins/selectors';
 import SkinCard from '../skins/SkinCard';
 import { selectSkinLines } from './skinLineSlice';
 
@@ -13,7 +13,7 @@ const SkinLinePage = () => {
   const { id } = useParams();
 
   const skinLines = useAppSelector(selectSkinLines);
-  const skinIds = useAppSelector(selectSkinLineIdAndChampionIdToSkinIdBiMap);
+  const skinIds = useAppSelector(selectChronologicalSkinIds(+id!));
   const skinLine = skinLines.entities[+id!];
 
   return (
@@ -33,7 +33,7 @@ const SkinLinePage = () => {
             </Typography>
             <ColorsGrid skinLine={skinLine} />
           </Grid>
-          {skinLine && skinIds && skinIds[skinLine.id] && Object.values(skinIds[skinLine.id])
+          {skinLine && skinIds && skinIds
             .map((skinId) => (
               <SkinCard id={skinId} key={skinId} />
             ))}
