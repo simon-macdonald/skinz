@@ -44,7 +44,7 @@ const skinLinesSlice = createSlice({
               ? universes[skinLine.name as keyof typeof universes]
               : 'unknown';
         });
-        skinLineAdapter.upsertMany(state, skinLines.filter(skinLine => !skinLine.name.includes("Star Guardian ")));
+        skinLineAdapter.upsertMany(state, skinLines.filter((skinLine) => !skinLine.name.includes('Star Guardian ')));
       });
   },
 });

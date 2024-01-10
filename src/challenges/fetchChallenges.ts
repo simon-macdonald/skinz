@@ -6,7 +6,7 @@ const URL = 'https://raw.communitydragon.org/latest/plugins/rcp-be-lol-game-data
 
 const fetchChallenges = createAsyncThunk<
 // Return type of the payload creator
-{challenges: ChallengeItem[]},
+{ challenges: ChallengeItem[] },
 number,
 // First argument to the payload creator
 {

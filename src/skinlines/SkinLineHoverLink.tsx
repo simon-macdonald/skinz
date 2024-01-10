@@ -1,9 +1,9 @@
 import {
   Box,
-  Popover, Typography, useMediaQuery
+  Popover, Typography, useMediaQuery,
 } from '@mui/material';
 import {
-  blue, green, indigo, orange, purple, red, yellow
+  blue, green, indigo, orange, purple, red, yellow,
 } from '@mui/material/colors';
 import { EntityId } from '@reduxjs/toolkit';
 import React from 'react';

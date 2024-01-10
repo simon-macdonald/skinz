@@ -1,5 +1,7 @@
 import { combineReducers, configureStore, getDefaultMiddleware } from '@reduxjs/toolkit';
-import { createMigrate, FLUSH, PAUSE, PERSIST, persistReducer, PURGE, REGISTER, REHYDRATE } from 'redux-persist';
+import {
+  createMigrate, FLUSH, PAUSE, PERSIST, persistReducer, PURGE, REGISTER, REHYDRATE,
+} from 'redux-persist';
 import storage from 'redux-persist/lib/storage';
 import displayReducer from '../home/displaySlice';
 import whoDidWhatReducer from '../challenges/whoDidWhatSlice';

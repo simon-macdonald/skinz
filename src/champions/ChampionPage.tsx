@@ -33,7 +33,7 @@ const ChampionPage = () => {
               <SkinCard id={baseSkinId} key={baseSkinId} />
               {
                 championSkins[+id!]
-                  .filter(skinId => skinId !== baseSkinId)
+                  .filter((skinId) => skinId !== baseSkinId)
                   .map((skinId) => (
                     <SkinCard id={skinId} key={skinId} />
                   ))

@@ -24,11 +24,9 @@ export interface SkinItem {
 }
 
 const skinAdapter = createEntityAdapter<SkinItem>({
-  sortComparer: (a, b) => {
-    // while skins are already sorted chronologically
-    // I'd rather not rely on that assumption
-    return b.releaseDate.localeCompare(a.releaseDate);
-  },
+  // while skins are already sorted chronologically
+  // I'd rather not rely on that assumption
+  sortComparer: (a, b) => b.releaseDate.localeCompare(a.releaseDate),
 });
 
 const initialState = skinAdapter.getInitialState({ loading: 'idle' });
@@ -45,13 +43,13 @@ const skinsSlice = createSlice({
       .addCase(fetchSkins.fulfilled, (state, action) => {
         state.loading = 'fulfilled';
         Object.values(action.payload).forEach((skin) => {
-          skin.chromas?.forEach(chroma => {
+          skin.chromas?.forEach((chroma) => {
             const color1 = chroma.colors[0].replace('#', '');
             const color2 = chroma.colors[1].replace('#', '');
             chroma.colorsKey = `${color1}_${color2}`;
-          })
+          });
 
-          const veryFarInTheFuture = "2099-01-01";
+          const veryFarInTheFuture = '2099-01-01';
           skin.releaseDate = releaseDates[skin.id.toString() as keyof typeof releaseDates] || veryFarInTheFuture;
 
           // stopgap solution to consolidate star guardians

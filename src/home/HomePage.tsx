@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import {
   Alert,
-  Container, Grid, IconButton, InputAdornment, Link, Skeleton, TextField, Toolbar, Typography,
+  Container, Grid, IconButton, InputAdornment, Link, TextField, Toolbar, Typography,
 } from '@mui/material';
 import { useLocation } from 'react-router-dom';
 import { Clear } from '@mui/icons-material';
@@ -19,6 +19,8 @@ import ChampionSelectionRow from './ChampionSelectionRow';
 import BrowseDrawer from './BrowseDrawer';
 import { selectSkinLineDisplayStates } from '../skinlines/skinLineSelectors';
 import { selectColorDisplayStates } from '../chromas/colorSelectors';
+
+const SHOW_MESSAGE = false;
 
 const HomePage = (props: { filterBy: FilterBy, }) => {
   const { filterBy } = props;
@@ -63,36 +65,41 @@ const HomePage = (props: { filterBy: FilterBy, }) => {
           {}
         </Toolbar>
         <ChampionSelectionRow />
-        <Grid container columns={2}>
-          <Grid item>
-            <TextField
-              label="Find Champion"
-              variant="outlined"
-              value={find}
-              onChange={handleFindChange}
-              InputProps={{
-                spellCheck: false,
-                endAdornment:
-  <InputAdornment position="end">
-    {find !== '' && (
-    <IconButton onClick={() => setFind('')}>
-      <Clear />
-    </IconButton>
-    )}
-  </InputAdornment>,
-              }}
-            />
+        {champions.entities[-1] && (
+          <Grid container columns={2}>
+            <Grid item>
+              <TextField
+                label="Find Champion"
+                variant="outlined"
+                value={find}
+                onChange={handleFindChange}
+                InputProps={{
+                  spellCheck: false,
+                  endAdornment: (
+                    <InputAdornment position="end">
+                      {find !== '' && (
+                        <IconButton onClick={() => setFind('')}>
+                          <Clear />
+                        </IconButton>
+                      )}
+                    </InputAdornment>
+                  ),
+                }}
+              />
+            </Grid>
+            {SHOW_MESSAGE && (
+              <Grid item>
+                <Alert severity="info">
+                  <Link href="https://discord.gg/psgphuFnhe" target="_blank">
+                    <Typography color="white">
+                      Prestige and Star Guardian universes added. Let me know if you have suggestions.
+                    </Typography>
+                  </Link>
+                </Alert>
+              </Grid>
+            )}
           </Grid>
-          <Grid item>
-            <Alert severity="info">
-              <Link href="https://discord.gg/psgphuFnhe" target="_blank">
-                <Typography color="white">
-                  Prestige and Star Guardian "universes" added. Let me know if you have suggestions.
-                </Typography>
-              </Link>
-            </Alert>
-          </Grid>
-        </Grid>
+        )}
         <Grid container spacing={2} columns={60}>
           {champions.loading === 'fulfilled' && champions.ids
             .filter((id) => id > 0)

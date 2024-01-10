@@ -28,7 +28,7 @@ const SkinCard = (props: any) => {
 
   return (
     <Grid item xs={1}>
-      <Card sx={{visibility: imageLoaded ? 'visible' : 'hidden'}}>
+      <Card sx={{ visibility: imageLoaded ? 'visible' : 'hidden' }}>
         <CardActionArea onClick={() => navigate(`/skins/${id}`)}>
           <CardMedia
             component="img"

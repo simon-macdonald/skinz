@@ -1,6 +1,6 @@
 import { createSelector } from '@reduxjs/toolkit';
 import { selectSkinLines } from '../skinlines/skinLineSlice';
-import { selectSkins, SkinItem } from '../skins/skinSlice';
+import { selectSkins } from './skinSlice';
 
 export const selectSkinLineIdAndChampionIdToSkinIdBiMap = createSelector(
   selectSkins,
@@ -19,13 +19,13 @@ export const selectSkinLineIdAndChampionIdToSkinIdBiMap = createSelector(
       .forEach((skin) => {
         skin?.skinLines?.forEach((skinLine) => {
           if (!(skinLine.id in skinIds)) {
-            skinIds[skinLine.id] = {}
+            skinIds[skinLine.id] = {};
           }
           skinIds[skinLine.id][Math.floor(skin.id / 1000)] = skin.id;
         });
       });
     return skinIds;
-  }
+  },
 );
 
 export const selectChronologicalSkinIds = (skinLineId: number) => createSelector(
@@ -45,5 +45,5 @@ export const selectChronologicalSkinIds = (skinLineId: number) => createSelector
       }
       return skinB.releaseDate.localeCompare(skinA.releaseDate);
     });
-  }
+  },
 );

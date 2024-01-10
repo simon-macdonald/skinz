@@ -26,8 +26,8 @@ export const selectSkinLineToColorsMap = createSelector(
         });
       });
     return skinLineColors;
-  }
-)
+  },
+);
 
 export const selectChampionIdToSkinLinesMap = createSelector(
   selectChampions,

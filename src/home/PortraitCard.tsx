@@ -1,7 +1,7 @@
 import {
-  Box, Card, CardActionArea, CardContent, CardMedia, Grid, Skeleton, Typography
+  Box, Card, CardActionArea, CardContent, CardMedia, Grid, Typography,
 } from '@mui/material';
-import React from 'react';
+import React, { useState } from 'react';
 import { ChampionItem, selectChampions } from '../champions/championSlice';
 import { useAppDispatch, useAppSelector } from '../glue/hooks';
 import { selectSkinLines, SkinLineItem } from '../skinlines/skinLineSlice';
@@ -31,11 +31,16 @@ const PortraitCard = (props: { id: number, sizes: GridItemSizes, display?: boole
   const champs = useAppSelector(selectDisplay);
   const dispatch = useAppDispatch();
 
+  const [imageLoaded, setImageLoaded] = useState(false);
+
+  const handleImageLoad = () => {
+    setImageLoaded(true);
+  };
+
   const {
     id, sizes, display, setFindChampion,
   } = props;
   const champion = champions.entities[id]!;
-  const skeleton = !champion ? <Skeleton variant="rounded" /> : null;
   const skinLine: SkinLineItem | null
     = champs.hoverSkinLine === 0
       ? null
@@ -47,16 +52,16 @@ const PortraitCard = (props: { id: number, sizes: GridItemSizes, display?: boole
     skinIds[skinLineSkins.id] &&
     Object.keys(skinIds[skinLineSkins.id]).includes(id.toString());
 
-  const bgColor = skinLineSkins && (skinLineSkinsIncludesChampion
+  const bgColor = (skinLineSkins && (skinLineSkinsIncludesChampion
     ? 'secondary.main'
     : champs.champions.includes(id)
       ? 'primary.main'
-      : 'transparent') || 'transparent';
+      : 'transparent')) || 'transparent';
 
   return (
     <Grid item xs={sizes.xs} sm={sizes.sm} md={sizes.md} lg={sizes.lg} xl={sizes.xl}>
-      {skeleton || (
-        <Card>
+      {champion && (
+        <Card sx={{ visibility: imageLoaded ? 'visible' : 'hidden' }}>
           <CardActionArea
             disabled={(display && id === -1) || skinLines.loading !== 'fulfilled'}
             onClick={() => {
@@ -72,6 +77,7 @@ const PortraitCard = (props: { id: number, sizes: GridItemSizes, display?: boole
                 : skinLineSkinsIncludesChampion ? getAssetUrl(skins.entities[skinIds[skinLine.id][id]]!.tilePath)
                   : getChampionImage(champion)}
               alt={champion.name}
+              onLoad={handleImageLoad}
             />
             <CardContent sx={{
               bgcolor: bgColor,
@@ -88,7 +94,8 @@ const PortraitCard = (props: { id: number, sizes: GridItemSizes, display?: boole
               </Typography>
             </CardContent>
           </CardActionArea>
-        </Card>)}
+        </Card>
+      )}
     </Grid>
   );
 };

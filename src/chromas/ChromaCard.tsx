@@ -32,7 +32,7 @@ const ChromaCard = (props: {
 
   return (
     <Grid item xs={1}>
-      <Card sx={{visibility: imageLoaded ? 'visible' : 'hidden'}}>
+      <Card sx={{ visibility: imageLoaded ? 'visible' : 'hidden' }}>
         <CardActionArea onClick={() => {
           if (skinLineId) {
             navigate(`/skinLines/${skinLineId}/colors/${color}`);

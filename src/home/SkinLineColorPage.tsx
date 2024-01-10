@@ -1,7 +1,7 @@
 import { NavigateNext } from '@mui/icons-material';
 import {
   Breadcrumbs,
-  Container, Grid, Toolbar, Typography
+  Container, Grid, Toolbar, Typography,
 } from '@mui/material';
 import React from 'react';
 import { Link, useParams } from 'react-router-dom';
