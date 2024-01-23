@@ -6,6 +6,7 @@ import universes from './skin_line_to_universe.json';
 export interface SkinLineItem {
   id: number,
   name: string,
+  description: string,
   universe: string,
 }
 
@@ -32,10 +33,12 @@ const skinLinesSlice = createSlice({
         const skinLines = Object.values(action.payload).concat([{
           id: PRESTIGE_SKIN_LINE_ID,
           name: 'Prestige',
+          description: '',
           universe: '',
         }, {
           id: STAR_GUARDIAN_SKIN_LINE_ID,
           name: 'Star Guardian',
+          description: '',
           universe: '',
         }]);
         skinLines.forEach((skinLine) => {

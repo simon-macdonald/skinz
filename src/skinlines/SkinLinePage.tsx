@@ -27,6 +27,11 @@ const SkinLinePage = () => {
         <Typography variant="h3">
           {skinLine?.name || '...'}
         </Typography>
+        {skinLine?.description && (
+          <Typography>
+            {skinLine?.description || '...'}
+          </Typography>
+        )}
         <Grid container sx={{ marginTop: 0 }} spacing={5} columns={3}>
           <Grid item xs={1}>
             <Typography variant="h5">
