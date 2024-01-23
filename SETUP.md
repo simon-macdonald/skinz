@@ -30,15 +30,6 @@ Notes from https://aws.amazon.com/getting-started/hands-on/host-static-website/.
 
 Now you can `npm run start` and it will spin up a local instance of the web app.
 
-# Add Jest Testing
-
-Run a global install of Jest: `npm install --save-dev -g jest`
-
-Add Jest to your package.json in scripts:
-  `"scripts": {
-    "jest": "jest",
-  },`
-
 # Deploy
 
 Same as any other `git` repo. Push and it will automatically deploy to skinz.lol.
