@@ -21,6 +21,7 @@ import { selectSkinLineDisplayStates } from '../skinlines/skinLineSelectors';
 import { selectColorDisplayStates } from '../chromas/colorSelectors';
 
 const SHOW_MESSAGE = false;
+const MESSAGE = 'Prestige and Star Guardian universes added. Let me know if you have suggestions.';
 
 const HomePage = (props: { filterBy: FilterBy, }) => {
   const { filterBy } = props;
@@ -92,7 +93,7 @@ const HomePage = (props: { filterBy: FilterBy, }) => {
                 <Alert severity="info">
                   <Link href="https://discord.gg/psgphuFnhe" target="_blank">
                     <Typography color="white">
-                      Prestige and Star Guardian universes added. Let me know if you have suggestions.
+                      {MESSAGE}
                     </Typography>
                   </Link>
                 </Alert>
