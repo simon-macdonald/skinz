@@ -20,7 +20,7 @@ export interface GridItemSizes {
 
 const getChampionImage = (champion: ChampionItem, display?: boolean) => (champion.id !== -1 ? getChampionTileUrl(champion.id) : getAssetUrl(champion.squarePortraitPath));
 
-const getChampionText = (champion: ChampionItem, display?: boolean) => (display ? 'Champion Selection' : 'Clear');
+const getChampionText = (champion: ChampionItem, display?: boolean) => (display ? 'Click a Champ' : 'Clear');
 
 const PortraitCard = (props: { id: number, sizes: GridItemSizes, display?: boolean, setFindChampion?: React.Dispatch<React.SetStateAction<string>> }) => {
   const champions = useAppSelector(selectChampions);
@@ -57,11 +57,16 @@ const PortraitCard = (props: { id: number, sizes: GridItemSizes, display?: boole
     : champs.champions.includes(id)
       ? 'primary.main'
       : 'transparent')) || 'transparent';
+  
+  const isChampionSelectionRow = display && id == -1;
 
   return (
     <Grid item xs={sizes.xs} sm={sizes.sm} md={sizes.md} lg={sizes.lg} xl={sizes.xl}>
       {champion && (
-        <Card sx={{ visibility: imageLoaded ? 'visible' : 'hidden' }}>
+        <Card sx={{
+          visibility: imageLoaded ? 'visible' : 'hidden',
+          border: isChampionSelectionRow ? '1px dashed grey' : '',
+        }}>
           <CardActionArea
             disabled={(display && id === -1) || skinLines.loading !== 'fulfilled'}
             onClick={() => {
@@ -78,6 +83,9 @@ const PortraitCard = (props: { id: number, sizes: GridItemSizes, display?: boole
                   : getChampionImage(champion)}
               alt={champion.name}
               onLoad={handleImageLoad}
+              sx={{
+                visibility: isChampionSelectionRow ? 'hidden' : 'visible',
+              }}
             />
             <CardContent sx={{
               bgcolor: bgColor,
