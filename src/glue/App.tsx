@@ -37,6 +37,15 @@ const App = () => {
     palette: {
       mode: prefersDarkMode ? 'dark' : 'light',
     },
+    breakpoints: {
+      values: {
+        xs: 0,
+        sm: 1200,
+        md: 1800,
+        lg: 2400,
+        xl: 3200,
+      },
+    },
   });
 
   return (

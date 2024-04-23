@@ -22,9 +22,8 @@ import { selectSkinLineDisplayStates } from '../skinlines/skinLineSelectors';
 import { selectColorDisplayStates } from '../chromas/colorSelectors';
 
 const SHOW_MESSAGE = true;
-const MESSAGE = 'Added some role filtering. Lemme know how useful it is.';
+const MESSAGE = 'Added some role filtering. Playing around with grid size breakpoints. Lemme know how it looks on wide screens; I only have a laptop.';
 
-// https://mui.com/material-ui/react-select/
 const HomePage = (props: { filterBy: FilterBy, }) => {
   const { filterBy } = props;
   const dispatch = useAppDispatch();
@@ -62,17 +61,17 @@ const HomePage = (props: { filterBy: FilterBy, }) => {
       : skinLineDisplayStates;
 
   const champGridItemSizes = {
-    xs: 60,
+    xs: 120,
     sm: 12,
     md: 10,
-    lg: 6,
+    lg: 8,
     xl: 5,
   };
 
   return (
     <>
       <BrowseDrawer filterBy={filterBy} />
-      <Container>
+      <Container maxWidth={false}>
         <Toolbar>
           {}
         </Toolbar>
@@ -125,7 +124,7 @@ const HomePage = (props: { filterBy: FilterBy, }) => {
             )}
           </Grid>
         )}
-        <Grid container spacing={2} columns={60}>
+        <Grid container spacing={2} columns={120}>
           {champions.loading === 'fulfilled' && champions.ids
             .filter((id) => id > 0)
             .filter((id) => displayStates[+id] !== 'hidden')
