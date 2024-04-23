@@ -36,12 +36,13 @@ const HomePage = (props: { filterBy: FilterBy, }) => {
     setFind(event.target.value);
   };
 
-  const [roles, setRoles] = React.useState(() => ['assassin', 'fighter', 'mage', 'marksman', 'support', 'tank']);
+  // const [roles, setRoles] = React.useState(() => ['assassin', 'fighter', 'mage', 'marksman', 'support', 'tank']);
+  const [roles, setRoles] = React.useState(() => [] as string[]);
   const handleRole = (
     event: React.MouseEvent<HTMLElement>,
     newRoles: string[],
   ) => {
-    setRoles(newRoles);
+    setRoles(newRoles === null ? [] : newRoles);
   };
 
   useEffect(() => {
@@ -101,6 +102,7 @@ const HomePage = (props: { filterBy: FilterBy, }) => {
             <Grid item>
               <ToggleButtonGroup
                 value={roles}
+                exclusive
                 onChange={handleRole}
               >
                 {['assassin', 'fighter', 'mage', 'marksman', 'support', 'tank'].map(((role) => (
@@ -129,7 +131,7 @@ const HomePage = (props: { filterBy: FilterBy, }) => {
             .filter((id) => displayStates[+id] !== 'hidden')
             .filter((id) => displayStates[+id] !== 'chosen')
             .filter((id) => find === '' || champions.entities[id]!.name.toLowerCase().includes(find.toLowerCase()))
-            .filter((id) => _.some(champions.entities[id]!.roles, (r) => roles.includes(r)))
+            .filter((id) => roles.length === 0 || _.some(champions.entities[id]!.roles, (r) => roles.includes(r)))
             .map((id) => (
               <PortraitCard id={+id} key={id} sizes={champGridItemSizes} setFindChampion={setFind} />
             ))}
