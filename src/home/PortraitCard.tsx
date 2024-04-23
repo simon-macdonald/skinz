@@ -18,7 +18,7 @@ export interface GridItemSizes {
   xl: number,
 }
 
-const getChampionImage = (champion: ChampionItem, display?: boolean) => (champion.id !== -1 ? getChampionTileUrl(champion.id) : getAssetUrl(champion.squarePortraitPath));
+const getChampionImage = (champion: ChampionItem) => (champion.id !== -1 ? getChampionTileUrl(champion.id) : getAssetUrl(champion.squarePortraitPath));
 
 const getChampionText = (champion: ChampionItem, display?: boolean) => (display ? 'Click a Champ' : 'Clear');
 
@@ -57,8 +57,8 @@ const PortraitCard = (props: { id: number, sizes: GridItemSizes, display?: boole
     : champs.champions.includes(id)
       ? 'primary.main'
       : 'transparent')) || 'transparent';
-  
-  const isChampionSelectionRow = display && id == -1;
+
+  const isChampionSelectionRow = display && id === -1;
 
   return (
     <Grid item xs={sizes.xs} sm={sizes.sm} md={sizes.md} lg={sizes.lg} xl={sizes.xl}>
@@ -66,7 +66,8 @@ const PortraitCard = (props: { id: number, sizes: GridItemSizes, display?: boole
         <Card sx={{
           visibility: imageLoaded ? 'visible' : 'hidden',
           border: isChampionSelectionRow ? '1px dashed grey' : '',
-        }}>
+        }}
+        >
           <CardActionArea
             disabled={(display && id === -1) || skinLines.loading !== 'fulfilled'}
             onClick={() => {
@@ -78,7 +79,7 @@ const PortraitCard = (props: { id: number, sizes: GridItemSizes, display?: boole
           >
             <CardMedia
               component="img"
-              image={skinLine === null ? getChampionImage(champion, display)
+              image={skinLine === null ? getChampionImage(champion)
                 : skinLineSkinsIncludesChampion ? getAssetUrl(skins.entities[skinIds[skinLine.id][id]]!.tilePath)
                   : getChampionImage(champion)}
               alt={champion.name}

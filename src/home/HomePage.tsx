@@ -1,10 +1,11 @@
 import React, { useEffect, useState } from 'react';
 import {
   Alert,
-  Container, Grid, IconButton, InputAdornment, Link, TextField, Toolbar, Typography,
+  Container, Grid, IconButton, InputAdornment, Link, TextField, ToggleButton, ToggleButtonGroup, Toolbar, Typography,
 } from '@mui/material';
 import { useLocation } from 'react-router-dom';
 import { Clear } from '@mui/icons-material';
+import _ from 'lodash';
 import { useAppDispatch, useAppSelector } from '../glue/hooks';
 import {
   clickChamp,
@@ -23,6 +24,7 @@ import { selectColorDisplayStates } from '../chromas/colorSelectors';
 const SHOW_MESSAGE = false;
 const MESSAGE = 'Prestige and Star Guardian universes added. Let me know if you have suggestions.';
 
+// https://mui.com/material-ui/react-select/
 const HomePage = (props: { filterBy: FilterBy, }) => {
   const { filterBy } = props;
   const dispatch = useAppDispatch();
@@ -32,6 +34,14 @@ const HomePage = (props: { filterBy: FilterBy, }) => {
 
   const handleFindChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     setFind(event.target.value);
+  };
+
+  const [roles, setRoles] = React.useState(() => ['assassin', 'fighter', 'mage', 'marksman', 'support', 'tank']);
+  const handleRole = (
+    event: React.MouseEvent<HTMLElement>,
+    newRoles: string[],
+  ) => {
+    setRoles(newRoles);
   };
 
   useEffect(() => {
@@ -88,6 +98,18 @@ const HomePage = (props: { filterBy: FilterBy, }) => {
                 }}
               />
             </Grid>
+            <Grid item>
+              <ToggleButtonGroup
+                value={roles}
+                onChange={handleRole}
+              >
+                {['assassin', 'fighter', 'mage', 'marksman', 'support', 'tank'].map(((role) => (
+                  <ToggleButton value={role}>
+                    {role}
+                  </ToggleButton>
+                )))}
+              </ToggleButtonGroup>
+            </Grid>
             {SHOW_MESSAGE && (
               <Grid item>
                 <Alert severity="info">
@@ -107,6 +129,7 @@ const HomePage = (props: { filterBy: FilterBy, }) => {
             .filter((id) => displayStates[+id] !== 'hidden')
             .filter((id) => displayStates[+id] !== 'chosen')
             .filter((id) => find === '' || champions.entities[id]!.name.toLowerCase().includes(find.toLowerCase()))
+            .filter((id) => _.some(champions.entities[id]!.roles, (r) => roles.includes(r)))
             .map((id) => (
               <PortraitCard id={+id} key={id} sizes={champGridItemSizes} setFindChampion={setFind} />
             ))}
