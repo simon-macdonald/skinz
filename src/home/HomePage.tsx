@@ -21,8 +21,8 @@ import BrowseDrawer from './BrowseDrawer';
 import { selectSkinLineDisplayStates } from '../skinlines/skinLineSelectors';
 import { selectColorDisplayStates } from '../chromas/colorSelectors';
 
-const SHOW_MESSAGE = false;
-const MESSAGE = 'Prestige and Star Guardian universes added. Let me know if you have suggestions.';
+const SHOW_MESSAGE = true;
+const MESSAGE = 'Added some role filtering. Lemme know how useful it is.';
 
 // https://mui.com/material-ui/react-select/
 const HomePage = (props: { filterBy: FilterBy, }) => {
