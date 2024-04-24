@@ -4,7 +4,7 @@ import {
   Container, Grid, IconButton, InputAdornment, Link, TextField, ToggleButton, ToggleButtonGroup, Toolbar, Typography,
 } from '@mui/material';
 import { useLocation } from 'react-router-dom';
-import { Clear } from '@mui/icons-material';
+import { CalendarMonth, Clear, SortByAlpha } from '@mui/icons-material';
 import _ from 'lodash';
 import { useAppDispatch, useAppSelector } from '../glue/hooks';
 import {
@@ -21,9 +21,10 @@ import BrowseDrawer from './BrowseDrawer';
 import { selectSkinLineDisplayStates } from '../skinlines/skinLineSelectors';
 import { selectColorDisplayStates } from '../chromas/colorSelectors';
 import draftPositions from './draftPositions.json';
+import releaseDates from '../champions/releaseDates.json';
 
 const SHOW_MESSAGE = true;
-const MESSAGE = 'Added draft position filtering. Playing around with grid size breakpoints. Lemme know how it looks on wide screens; I only have a laptop.';
+const MESSAGE = 'Join the Discord here.';
 
 const HomePage = (props: { filterBy: FilterBy, }) => {
   const { filterBy } = props;
@@ -31,18 +32,31 @@ const HomePage = (props: { filterBy: FilterBy, }) => {
   const { pathname } = useLocation();
 
   const [find, setFind] = useState('');
-
   const handleFindChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     setFind(event.target.value);
   };
 
   const DRAFT_POSITIONS = ['TOP', 'JUNGLE', 'MIDDLE', 'BOTTOM', 'SUPPORT'];
   const [draftPosition, setDraftPosition] = useState('');
-  const handleRole = (
+  const handleRoleChange = (
     event: React.MouseEvent<HTMLElement>,
     newDraftPosition: string,
   ) => {
     setDraftPosition(newDraftPosition === null ? '' : newDraftPosition);
+  };
+
+  enum SortBy {
+    Alphabet,
+    ReleaseDate,
+  }
+  const [sortBy, setSortBy] = useState(SortBy.Alphabet);
+  const handleSortByChange = (
+    event: React.MouseEvent<HTMLElement>,
+    newSortBy: SortBy,
+  ) => {
+    if (newSortBy !== null) {
+      setSortBy(newSortBy);
+    }
   };
 
   useEffect(() => {
@@ -78,7 +92,7 @@ const HomePage = (props: { filterBy: FilterBy, }) => {
         </Toolbar>
         <ChampionSelectionRow />
         {champions.entities[-1] && (
-          <Grid container columns={2}>
+          <Grid container columns={2} spacing={5} padding={2}>
             <Grid item>
               <TextField
                 label="Find Champion"
@@ -103,13 +117,27 @@ const HomePage = (props: { filterBy: FilterBy, }) => {
               <ToggleButtonGroup
                 value={draftPosition}
                 exclusive
-                onChange={handleRole}
+                onChange={handleRoleChange}
               >
                 {DRAFT_POSITIONS.map(((role) => (
                   <ToggleButton value={role}>
                     {role}
                   </ToggleButton>
                 )))}
+              </ToggleButtonGroup>
+            </Grid>
+            <Grid item>
+              <ToggleButtonGroup
+                value={sortBy}
+                exclusive
+                onChange={handleSortByChange}
+              >
+                <ToggleButton value={SortBy.Alphabet}>
+                  <SortByAlpha />
+                </ToggleButton>
+                <ToggleButton value={SortBy.ReleaseDate}>
+                  <CalendarMonth />
+                </ToggleButton>
               </ToggleButtonGroup>
             </Grid>
             {SHOW_MESSAGE && (
@@ -132,6 +160,7 @@ const HomePage = (props: { filterBy: FilterBy, }) => {
             .filter((id) => displayStates[+id] !== 'chosen')
             .filter((id) => find === '' || champions.entities[id]!.name.toLowerCase().includes(find.toLowerCase()))
             .filter((id) => draftPosition === '' || _.some(draftPositions[champions.entities[id]!.alias as keyof typeof draftPositions], (r) => draftPosition === r))
+            .sort((a, b) => (sortBy === SortBy.Alphabet ? champions.entities[a]!.name.localeCompare(champions.entities[b]!.name) : releaseDates[b as keyof typeof releaseDates].localeCompare(releaseDates[a as keyof typeof releaseDates])))
             .map((id) => (
               <PortraitCard id={+id} key={id} sizes={champGridItemSizes} setFindChampion={setFind} />
             ))}
