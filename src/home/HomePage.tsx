@@ -24,7 +24,7 @@ import draftPositions from './draftPositions.json';
 import releaseDates from '../champions/releaseDates.json';
 
 const SHOW_MESSAGE = true;
-const MESSAGE = 'Join the Discord here.';
+const MESSAGE = 'Join the Discord.';
 
 const HomePage = (props: { filterBy: FilterBy, }) => {
   const { filterBy } = props;
@@ -92,7 +92,7 @@ const HomePage = (props: { filterBy: FilterBy, }) => {
         </Toolbar>
         <ChampionSelectionRow />
         {champions.entities[-1] && (
-          <Grid container columns={2} spacing={5} padding={2}>
+          <Grid container spacing={2} padding={2}>
             <Grid item>
               <TextField
                 label="Find Champion"
@@ -142,9 +142,9 @@ const HomePage = (props: { filterBy: FilterBy, }) => {
             </Grid>
             {SHOW_MESSAGE && (
               <Grid item>
-                <Alert severity="info">
+                <Alert severity="info" variant="filled">
                   <Link href="https://discord.gg/psgphuFnhe" target="_blank">
-                    <Typography color="white">
+                    <Typography>
                       {MESSAGE}
                     </Typography>
                   </Link>
