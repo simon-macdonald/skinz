@@ -20,9 +20,10 @@ import ChampionSelectionRow from './ChampionSelectionRow';
 import BrowseDrawer from './BrowseDrawer';
 import { selectSkinLineDisplayStates } from '../skinlines/skinLineSelectors';
 import { selectColorDisplayStates } from '../chromas/colorSelectors';
+import draftPositions from './draftPositions.json';
 
 const SHOW_MESSAGE = true;
-const MESSAGE = 'Added some role filtering. Playing around with grid size breakpoints. Lemme know how it looks on wide screens; I only have a laptop.';
+const MESSAGE = 'Added draft position filtering. Playing around with grid size breakpoints. Lemme know how it looks on wide screens; I only have a laptop.';
 
 const HomePage = (props: { filterBy: FilterBy, }) => {
   const { filterBy } = props;
@@ -35,7 +36,6 @@ const HomePage = (props: { filterBy: FilterBy, }) => {
     setFind(event.target.value);
   };
 
-  // const [roles, setRoles] = React.useState(() => ['assassin', 'fighter', 'mage', 'marksman', 'support', 'tank']);
   const [roles, setRoles] = React.useState(() => [] as string[]);
   const handleRole = (
     event: React.MouseEvent<HTMLElement>,
@@ -104,7 +104,7 @@ const HomePage = (props: { filterBy: FilterBy, }) => {
                 exclusive
                 onChange={handleRole}
               >
-                {['assassin', 'fighter', 'mage', 'marksman', 'support', 'tank'].map(((role) => (
+                {['TOP', 'JUNGLE', 'MIDDLE', 'BOTTOM', 'SUPPORT'].map(((role) => (
                   <ToggleButton value={role}>
                     {role}
                   </ToggleButton>
@@ -130,7 +130,7 @@ const HomePage = (props: { filterBy: FilterBy, }) => {
             .filter((id) => displayStates[+id] !== 'hidden')
             .filter((id) => displayStates[+id] !== 'chosen')
             .filter((id) => find === '' || champions.entities[id]!.name.toLowerCase().includes(find.toLowerCase()))
-            .filter((id) => roles.length === 0 || _.some(champions.entities[id]!.roles, (r) => roles.includes(r)))
+            .filter((id) => roles.length === 0 || _.some(draftPositions[champions.entities[id]!.alias as keyof typeof draftPositions], (r) => roles.includes(r)))
             .map((id) => (
               <PortraitCard id={+id} key={id} sizes={champGridItemSizes} setFindChampion={setFind} />
             ))}
