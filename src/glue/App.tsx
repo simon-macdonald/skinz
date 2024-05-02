@@ -20,6 +20,7 @@ import fetchSkins from '../skins/fetchSkins';
 import fetchChampions from '../champions/fetchChampions';
 import fetchChallenges from '../challenges/fetchChallenges';
 import fetchSkinLines from '../skinlines/fetchSkinLines';
+import TitbitsPage from '../titbits/TitbitsPage';
 
 const App = () => {
   const prefersDarkMode = useMediaQuery('(prefers-color-scheme: dark)');
@@ -64,6 +65,7 @@ const App = () => {
             <Route path="/colors/:color/champions/:champions" element={<ColorPage />} />
             <Route path="/skinLines/:id/colors/:color" element={<SkinLineColorPage />} />
             <Route path="/skins/:id" element={<SkinPage />} />
+            <Route path="/titbits" element={<TitbitsPage />} />
           </Routes>
         </BrowserRouter>
       </Box>

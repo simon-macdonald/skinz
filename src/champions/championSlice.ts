@@ -1,6 +1,7 @@
-import { createEntityAdapter, createSlice } from '@reduxjs/toolkit';
+import { createEntityAdapter, createSlice, EntityId } from '@reduxjs/toolkit';
 import fetchChampions from './fetchChampions';
 import { RootState } from '../glue/store';
+import releaseDates from '../champions/releaseDates.json';
 
 export interface ChampionItem {
   id: number,
@@ -33,5 +34,11 @@ const championsSlice = createSlice({
 });
 
 export const selectChampions = (state: RootState) => state.champions;
+
+export const sortChronologically = (a: EntityId, b: EntityId) => {
+  const aDate = releaseDates[a as keyof typeof releaseDates];
+  const bDate = releaseDates[b as keyof typeof releaseDates];
+  return bDate.localeCompare(aDate);
+}
 
 export default championsSlice.reducer;
