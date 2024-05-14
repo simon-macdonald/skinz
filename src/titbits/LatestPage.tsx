@@ -22,7 +22,8 @@ const LatestPage = () => {
   const skinLines = useAppSelector(selectSkinLines);
   const newestSkinLine = useAppSelector(selectNewestSkinLineId);
   const newestSkinLineId = newestSkinLine?.key;
-  const newestSkinLineReleaseDate = newestSkinLine?.value;
+  const newestSkinLineReleaseDate = new Date(newestSkinLine?.value);
+  const prettyNewestSkinLineReleaseDate = newestSkinLineReleaseDate.toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' });
   const skinIds = useAppSelector(selectChronologicalSkinIds(+newestSkinLineId));
 
   return (
@@ -51,7 +52,7 @@ const LatestPage = () => {
           </Grid>
           <Typography variant="h4" gutterBottom>
             The newest skin line is {skinLines.entities[newestSkinLineId]?.name}.
-            It was released on {newestSkinLineReleaseDate}.
+            It was released on {prettyNewestSkinLineReleaseDate}.
             It currently has {skinIds.length} skins.
           </Typography>
           <Grid container sx={{ marginTop: 0 }} spacing={5} columns={3}>
