@@ -1,26 +1,26 @@
-import React, { useEffect } from 'react';
 import {
   Box,
-  createTheme, CssBaseline, ThemeProvider, useMediaQuery,
+  createTheme, CssBaseline, ThemeProvider, useMediaQuery
 } from '@mui/material';
+import { useEffect } from 'react';
 import {
-  BrowserRouter, Route, Routes,
+  BrowserRouter, Route, Routes
 } from 'react-router-dom';
-import SkinLinePage from '../skinlines/SkinLinePage';
-import HomePage from '../home/HomePage';
-import AboutPage from '../home/AboutPage';
-import NavBar from '../home/NavBar';
-import SkinPage from '../skins/SkinPage';
-import { useAppDispatch } from './hooks';
-import ChampionPage from '../champions/ChampionPage';
-import SkinLineColorPage from '../home/SkinLineColorPage';
-import ColorPage from '../chromas/ColorPage';
 import ChallengePage from '../challenges/ChallengePage';
-import fetchSkins from '../skins/fetchSkins';
-import fetchChampions from '../champions/fetchChampions';
 import fetchChallenges from '../challenges/fetchChallenges';
+import ChampionPage from '../champions/ChampionPage';
+import fetchChampions from '../champions/fetchChampions';
+import ColorPage from '../chromas/ColorPage';
+import AboutPage from '../home/AboutPage';
+import HomePage from '../home/HomePage';
+import NavBar from '../home/NavBar';
+import SkinLineColorPage from '../home/SkinLineColorPage';
 import fetchSkinLines from '../skinlines/fetchSkinLines';
-import TitbitsPage from '../titbits/TitbitsPage';
+import SkinLinePage from '../skinlines/SkinLinePage';
+import fetchSkins from '../skins/fetchSkins';
+import SkinPage from '../skins/SkinPage';
+import LatestPage from '../titbits/LatestPage';
+import { useAppDispatch } from './hooks';
 
 const App = () => {
   const prefersDarkMode = useMediaQuery('(prefers-color-scheme: dark)');
@@ -65,7 +65,7 @@ const App = () => {
             <Route path="/colors/:color/champions/:champions" element={<ColorPage />} />
             <Route path="/skinLines/:id/colors/:color" element={<SkinLineColorPage />} />
             <Route path="/skins/:id" element={<SkinPage />} />
-            <Route path="/titbits" element={<TitbitsPage />} />
+            <Route path="/latest" element={<LatestPage />} />
           </Routes>
         </BrowserRouter>
       </Box>

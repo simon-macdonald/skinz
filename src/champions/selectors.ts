@@ -4,12 +4,10 @@ import { selectSkins } from '../skins/skinSlice';
 
 export const selectNewestChampionId = createSelector(
   selectChampions,
-  (champions) => {
-    return champions.ids
-      .filter((id) => id > 0)
-      .sort(sortChronologically)[0];
-  }
-)
+  (champions) => champions.ids
+    .filter((id) => id > 0)
+    .sort(sortChronologically)[0],
+);
 
 export const selectChampionIdToSkinsMap = createSelector(
   selectSkins,

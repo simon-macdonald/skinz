@@ -38,6 +38,18 @@ const NavBar = () => (
       </LinkReactRouter>
       &nbsp;&nbsp;&nbsp;&nbsp;
       <LinkReactRouter
+        to="/latest"
+        className="button muted-button"
+        style={{
+          textDecoration: 'none',
+        }}
+      >
+        <Typography variant="h6" component="div" color="white">
+          Latest
+        </Typography>
+      </LinkReactRouter>
+      &nbsp;&nbsp;&nbsp;&nbsp;
+      <LinkReactRouter
         to="/challenges"
         className="button muted-button"
         style={{

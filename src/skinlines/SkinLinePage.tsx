@@ -9,6 +9,7 @@ import BrowseDrawer from '../home/BrowseDrawer';
 import { selectChronologicalSkinIds } from '../skins/selectors';
 import SkinCard from '../skins/SkinCard';
 import { selectSkinLines } from './skinLineSlice';
+import { selectSkinLineReleaseDate } from './selectors';
 
 const SkinLinePage = () => {
   const { id } = useParams();
@@ -16,6 +17,8 @@ const SkinLinePage = () => {
   const skinLines = useAppSelector(selectSkinLines);
   const skinIds = useAppSelector(selectChronologicalSkinIds(+id!));
   const skinLine = skinLines.entities[+id!];
+
+  const releaseDate = useAppSelector(selectSkinLineReleaseDate(+id!));
 
   return (
     <>
@@ -36,6 +39,9 @@ const SkinLinePage = () => {
           <Grid item xs={1}>
             <Typography variant="h5">
               Universe: {skinLine?.universe || '...'}
+            </Typography>
+            <Typography variant="h5">
+              Release Date: {releaseDate}
             </Typography>
             <ColorsGrid skinLine={skinLine} />
           </Grid>
