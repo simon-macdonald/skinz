@@ -1,5 +1,6 @@
+import React from 'react';
 import {
-  Container, Grid, Toolbar, Typography
+  Container, Grid, Toolbar, Typography,
 } from '@mui/material';
 import { selectChampions } from '../champions/championSlice';
 import releaseDates from '../champions/releaseDates.json';

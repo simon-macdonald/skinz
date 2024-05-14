@@ -1,4 +1,4 @@
-import { createSelector, EntityId } from '@reduxjs/toolkit';
+import { createSelector } from '@reduxjs/toolkit';
 import _ from 'lodash';
 import { selectSkins } from '../skins/skinSlice';
 import { selectSkinLines } from './skinLineSlice';

@@ -1,10 +1,10 @@
+import React, { useEffect } from 'react';
 import {
   Box,
-  createTheme, CssBaseline, ThemeProvider, useMediaQuery
+  createTheme, CssBaseline, ThemeProvider, useMediaQuery,
 } from '@mui/material';
-import { useEffect } from 'react';
 import {
-  BrowserRouter, Route, Routes
+  BrowserRouter, Route, Routes,
 } from 'react-router-dom';
 import ChallengePage from '../challenges/ChallengePage';
 import fetchChallenges from '../challenges/fetchChallenges';
