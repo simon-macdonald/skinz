@@ -24,7 +24,7 @@ import draftPositions from './draftPositions.json';
 import releaseDates from '../champions/releaseDates.json';
 
 const SHOW_MESSAGE = true;
-const MESSAGE = 'Join the Discord.';
+const MESSAGE = 'Riot broke everything.';
 
 const HomePage = (props: { filterBy: FilterBy, }) => {
   const { filterBy } = props;
