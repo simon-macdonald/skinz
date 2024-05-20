@@ -2,7 +2,7 @@ import { createAsyncThunk } from '@reduxjs/toolkit';
 import { AppDispatch, RootState } from '../glue/store';
 import { SkinLineItem } from './skinLineSlice';
 
-const URL = 'https://raw.communitydragon.org/latest/plugins/rcp-be-lol-game-data/global/default/v1/skinlines.json';
+const URL = 'https://raw.communitydragon.org/14.9/plugins/rcp-be-lol-game-data/global/default/v1/skinlines.json';
 
 const fetchSkinLines = createAsyncThunk<
 // Return type of the payload creator
