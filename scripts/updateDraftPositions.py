@@ -14,5 +14,5 @@ for champion in data:
 
 jsonDump = json.dumps(positions, indent=2, sort_keys=True)
 
-with open('./src/champions/draftPositions.json','w') as f:
+with open('./src/home/draftPositions.json','w') as f:
     f.write(jsonDump)
