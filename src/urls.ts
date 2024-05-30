@@ -1,5 +1,4 @@
-const getAssetUrl = (path: string) => `https://raw.communitydragon.org/14.9/plugins/rcp-be-lol-game-data/global/default/${path.replace('/lol-game-data/assets/', '')}`;
-export const getChampionTileUrl = (championId: number) => `https://raw.communitydragon.org/14.9/plugins/rcp-be-lol-game-data/global/default/v1/champion-tiles/${championId}/${championId}000.jpg`;
-// export const getChampionTileUrl = (championId: number) => `https://cdn.communitydragon.org/14.9/champion/${championId}/splash-art/centered/skin/0`
+const getAssetUrl = (path: string) => `https://raw.communitydragon.org/latest/plugins/rcp-be-lol-game-data/global/default/${path.replace('/lol-game-data/assets/', '')}`.toLowerCase();
+export const getChampionTileUrl = (championAlias: string) => `https://raw.communitydragon.org/latest/plugins/rcp-be-lol-game-data/global/default/assets/characters/${championAlias}/skins/base/images/${championAlias}_splash_tile_0.jpg`.toLowerCase();
 
 export default getAssetUrl;

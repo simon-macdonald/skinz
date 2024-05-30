@@ -18,7 +18,7 @@ export interface GridItemSizes {
   xl: number,
 }
 
-const getChampionImage = (champion: ChampionItem) => (champion.id !== -1 ? getChampionTileUrl(champion.id) : getAssetUrl(champion.squarePortraitPath));
+const getChampionImage = (champion: ChampionItem) => (champion.id !== -1 ? getChampionTileUrl(champion.alias) : getAssetUrl(champion.squarePortraitPath));
 
 const getChampionText = (champion: ChampionItem, display?: boolean) => (display ? 'Click a Champ' : 'Clear');
 
