@@ -10,6 +10,8 @@ import { selectNewestSkinLineId } from '../skinlines/selectors';
 import { selectSkinLines } from '../skinlines/skinLineSlice';
 import { selectChronologicalSkinIds } from '../skins/selectors';
 import SkinCard from '../skins/SkinCard';
+import { selectSkins } from '../skins/skinSlice';
+import _ from 'lodash';
 
 const LatestPage = () => {
   const champions = useAppSelector(selectChampions);
@@ -26,6 +28,8 @@ const LatestPage = () => {
   const prettyNewestSkinLineReleaseDate = newestSkinLineReleaseDate.toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' });
   const skinIds = useAppSelector(selectChronologicalSkinIds(+newestSkinLineId));
 
+  const skins = useAppSelector(selectSkins);
+
   return (
     <Container>
       <Toolbar>
@@ -34,9 +38,9 @@ const LatestPage = () => {
       {newestChampionId !== -1 && (
         <>
           <Typography variant="h4" gutterBottom>
-            The newest champion is {newestChampion?.name}.
+            The newest champion is {newestChampion?.name || '...'}.
             They were released on {newestChampionReleaseDate}.
-            They currently have {championSkins[+newestChampionId]?.length} skins, including baseline.
+            They currently have {championSkins[+newestChampionId]?.length || '...'} skins, including baseline:
           </Typography>
           <Grid container sx={{ marginTop: 0 }} spacing={5} columns={3}>
             {championSkins[+newestChampionId] && (
@@ -51,15 +55,23 @@ const LatestPage = () => {
             )}
           </Grid>
           <Typography variant="h4" gutterBottom>
-            The newest skin line is {skinLines.entities[newestSkinLineId]?.name}.
+            The newest skin line is {skinLines.entities[newestSkinLineId]?.name || '...'}.
             It was released on {prettyNewestSkinLineReleaseDate}.
-            It currently has {skinIds.length} skins.
+            It currently has {skinIds.length || '...'} skins:
           </Typography>
           <Grid container sx={{ marginTop: 0 }} spacing={5} columns={3}>
             {skinLines.entities[newestSkinLineId] && skinIds && skinIds
               .map((skinId) => (
                 <SkinCard id={skinId} key={skinId} />
               ))}
+          </Grid>
+          <Typography variant="h4" gutterBottom>
+            Here are some of the latest skins:
+          </Typography>
+          <Grid container sx={{ marginTop: 0 }} spacing={5} columns={3}>
+            {skins.loading === 'fulfilled' && _.range(0, 10).map((i) =>
+              <SkinCard id={skins.ids[i]} key={skins.ids[i]} />
+            )}
           </Grid>
         </>
       )}
