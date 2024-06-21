@@ -2,6 +2,7 @@ import React from 'react';
 import {
   Container, Grid, Toolbar, Typography,
 } from '@mui/material';
+import _ from 'lodash';
 import { selectChampions } from '../champions/championSlice';
 import releaseDates from '../champions/releaseDates.json';
 import { selectChampionIdToSkinsMap, selectNewestChampionId } from '../champions/selectors';
@@ -11,7 +12,6 @@ import { selectSkinLines } from '../skinlines/skinLineSlice';
 import { selectChronologicalSkinIds } from '../skins/selectors';
 import SkinCard from '../skins/SkinCard';
 import { selectSkins } from '../skins/skinSlice';
-import _ from 'lodash';
 
 const LatestPage = () => {
   const champions = useAppSelector(selectChampions);
@@ -69,9 +69,7 @@ const LatestPage = () => {
             Here are some of the latest skins:
           </Typography>
           <Grid container sx={{ marginTop: 0 }} spacing={5} columns={3}>
-            {skins.loading === 'fulfilled' && _.range(0, 10).map((i) =>
-              <SkinCard id={skins.ids[i]} key={skins.ids[i]} />
-            )}
+            {skins.loading === 'fulfilled' && _.range(0, 10).map((i) => <SkinCard id={skins.ids[i]} key={skins.ids[i]} />)}
           </Grid>
         </>
       )}
