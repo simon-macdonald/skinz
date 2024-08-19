@@ -22,9 +22,10 @@ import { selectSkinLineDisplayStates } from '../skinlines/skinLineSelectors';
 import { selectColorDisplayStates } from '../chromas/colorSelectors';
 import draftPositions from './draftPositions.json';
 import releaseDates from '../champions/releaseDates.json';
+import { selectChampionIdToSkinsMap } from '../champions/selectors';
 
 const SHOW_MESSAGE = true;
-const MESSAGE = 'Join the Discord.';
+const MESSAGE = '"Latest" page fixed.';
 
 const HomePage = (props: { filterBy: FilterBy, }) => {
   const { filterBy } = props;
@@ -69,6 +70,7 @@ const HomePage = (props: { filterBy: FilterBy, }) => {
   const display = useAppSelector(selectDisplay);
   const skinLineDisplayStates = useAppSelector(selectSkinLineDisplayStates(display.champions));
   const colorDisplayStates = useAppSelector(selectColorDisplayStates(display.champions));
+  const championSkins = useAppSelector(selectChampionIdToSkinsMap);
 
   const displayStates
     = display.filterBy === 'chromas'
@@ -158,6 +160,7 @@ const HomePage = (props: { filterBy: FilterBy, }) => {
             .filter((id) => id > 0)
             .filter((id) => displayStates[+id] !== 'hidden')
             .filter((id) => displayStates[+id] !== 'chosen')
+            .filter((id) => championSkins[+id] && championSkins[+id].length !== 1)
             .filter((id) => find === '' || champions.entities[id]!.name.toLowerCase().includes(find.toLowerCase()))
             .filter((id) => draftPosition === '' || _.some(draftPositions[champions.entities[id]!.alias as keyof typeof draftPositions], (r) => draftPosition === r))
             .sort((a, b) => (sortBy === SortBy.Alphabet ? champions.entities[a]!.name.localeCompare(champions.entities[b]!.name) : releaseDates[b as keyof typeof releaseDates].localeCompare(releaseDates[a as keyof typeof releaseDates])))

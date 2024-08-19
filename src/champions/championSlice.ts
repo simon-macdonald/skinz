@@ -38,6 +38,9 @@ export const selectChampions = (state: RootState) => state.champions;
 export const sortChronologically = (a: EntityId, b: EntityId) => {
   const aDate = releaseDates[a as keyof typeof releaseDates];
   const bDate = releaseDates[b as keyof typeof releaseDates];
+  if (!bDate || !aDate) {
+    return 0;
+  }
   return bDate.localeCompare(aDate);
 };
 
