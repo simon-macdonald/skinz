@@ -163,7 +163,7 @@ const HomePage = (props: { filterBy: FilterBy, }) => {
             .filter((id) => championSkins[+id] && championSkins[+id].length !== 1)
             .filter((id) => find === '' || champions.entities[id]!.name.toLowerCase().includes(find.toLowerCase()))
             .filter((id) => draftPosition === '' || _.some(draftPositions[champions.entities[id]!.alias as keyof typeof draftPositions], (r) => draftPosition === r))
-            .sort((a, b) => (sortBy === SortBy.Alphabet ? champions.entities[a]!.name.localeCompare(champions.entities[b]!.name) : releaseDates[b as keyof typeof releaseDates].localeCompare(releaseDates[a as keyof typeof releaseDates])))
+            .sort((a, b) => (sortBy === SortBy.Alphabet ? champions.entities[a]!.name.localeCompare(champions.entities[b]!.name) : (releaseDates[b as keyof typeof releaseDates] || '').localeCompare(releaseDates[a as keyof typeof releaseDates])))
             .map((id) => (
               <PortraitCard id={+id} key={id} sizes={champGridItemSizes} setFindChampion={setFind} />
             ))}
