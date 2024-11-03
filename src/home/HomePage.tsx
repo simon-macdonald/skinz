@@ -25,7 +25,7 @@ import releaseDates from '../champions/releaseDates.json';
 import { selectChampionIdToSkinsMap } from '../champions/selectors';
 
 const SHOW_MESSAGE = true;
-const MESSAGE = '"Latest" page fixed.';
+const MESSAGE = 'Thanks lele';
 
 const HomePage = (props: { filterBy: FilterBy, }) => {
   const { filterBy } = props;
