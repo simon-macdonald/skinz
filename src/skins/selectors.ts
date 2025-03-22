@@ -47,3 +47,22 @@ export const selectChronologicalSkinIds = (skinLineId: number) => createSelector
     });
   },
 );
+
+export const selectSplashTileUrl = (championId: number) => createSelector(
+  selectSkins,
+  (skins) => {
+    if (championId == null) {
+      return '';
+    }
+
+    const STRIP_URL_PREFIX = '/lol-game-data/assets';
+    if (championId === -1) {
+      return 'https://raw.communitydragon.org/latest/plugins/rcp-be-lol-game-data/global/default/v1/champion-icons/-1.png';
+    }
+
+    const BASE_SKIN_POSTFIX = 1000;
+    const baseSkin = skins.entities[championId * BASE_SKIN_POSTFIX]!;
+    const x = baseSkin.tilePath.toLowerCase().substring(STRIP_URL_PREFIX.length);
+    return `https://raw.communitydragon.org/latest/plugins/rcp-be-lol-game-data/global/default${x}`;
+  },
+);

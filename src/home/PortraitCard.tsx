@@ -5,9 +5,9 @@ import React, { useState } from 'react';
 import { ChampionItem, selectChampions } from '../champions/championSlice';
 import { useAppDispatch, useAppSelector } from '../glue/hooks';
 import { selectSkinLines, SkinLineItem } from '../skinlines/skinLineSlice';
-import { selectSkinLineIdAndChampionIdToSkinIdBiMap } from '../skins/selectors';
+import { selectSkinLineIdAndChampionIdToSkinIdBiMap, selectSplashTileUrl } from '../skins/selectors';
 import { selectSkins } from '../skins/skinSlice';
-import getAssetUrl, { getChampionTileUrl } from '../urls';
+import getAssetUrl from '../urls';
 import { clickChamp, selectDisplay } from './displaySlice';
 
 export interface GridItemSizes {
@@ -18,15 +18,18 @@ export interface GridItemSizes {
   xl: number,
 }
 
-const getChampionImage = (champion: ChampionItem) => (champion.id !== -1 ? getChampionTileUrl(champion.alias) : getAssetUrl(champion.squarePortraitPath));
-
 const getChampionText = (champion: ChampionItem, display?: boolean) => (display ? 'Click a Champ' : 'Clear');
 
 const PortraitCard = (props: { id: number, sizes: GridItemSizes, display?: boolean, setFindChampion?: React.Dispatch<React.SetStateAction<string>> }) => {
+  const {
+    id, sizes, display, setFindChampion,
+  } = props;
+
   const champions = useAppSelector(selectChampions);
   const skinLines = useAppSelector(selectSkinLines);
   const skinIds = useAppSelector(selectSkinLineIdAndChampionIdToSkinIdBiMap);
   const skins = useAppSelector(selectSkins);
+  const splashTileUrl = useAppSelector(selectSplashTileUrl(id));
 
   const champs = useAppSelector(selectDisplay);
   const dispatch = useAppDispatch();
@@ -37,9 +40,6 @@ const PortraitCard = (props: { id: number, sizes: GridItemSizes, display?: boole
     setImageLoaded(true);
   };
 
-  const {
-    id, sizes, display, setFindChampion,
-  } = props;
   const champion = champions.entities[id]!;
   const skinLine: SkinLineItem | null
     = champs.hoverSkinLine === 0
@@ -79,9 +79,9 @@ const PortraitCard = (props: { id: number, sizes: GridItemSizes, display?: boole
           >
             <CardMedia
               component="img"
-              image={skinLine === null ? getChampionImage(champion)
+              image={skinLine === null ? splashTileUrl
                 : skinLineSkinsIncludesChampion ? getAssetUrl(skins.entities[skinIds[skinLine.id][id]]!.tilePath)
-                  : getChampionImage(champion)}
+                  : splashTileUrl}
               alt={champion.name}
               onLoad={handleImageLoad}
               sx={{
