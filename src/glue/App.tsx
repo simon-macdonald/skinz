@@ -21,6 +21,8 @@ import fetchSkins from '../skins/fetchSkins';
 import SkinPage from '../skins/SkinPage';
 import LatestPage from '../titbits/LatestPage';
 import { useAppDispatch } from './hooks';
+import fetchCharacters from '../harrypotter/fetchCharacters';
+import CharacterPage from '../harrypotter/CharacterPage';
 
 const App = () => {
   const prefersDarkMode = useMediaQuery('(prefers-color-scheme: dark)');
@@ -32,6 +34,7 @@ const App = () => {
     dispatch(fetchSkinLines(0));
     dispatch(fetchChampions(0));
     dispatch(fetchChallenges(0));
+    dispatch(fetchCharacters(0));
   }, [dispatch]);
 
   const theme = createTheme({
@@ -66,6 +69,7 @@ const App = () => {
             <Route path="/skinLines/:id/colors/:color" element={<SkinLineColorPage />} />
             <Route path="/skins/:id" element={<SkinPage />} />
             <Route path="/latest" element={<LatestPage />} />
+            <Route path="/harrypotter" element={<CharacterPage />} />
           </Routes>
         </BrowserRouter>
       </Box>

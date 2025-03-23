@@ -10,6 +10,7 @@ import skinLinesReducer from '../skinlines/skinLineSlice';
 import skinsReducer from '../skins/skinSlice';
 import colorsReducer from '../chromas/colorSlice';
 import challengesReducer from '../challenges/challengeSlice';
+import charactersReducer from '../harrypotter/characterSlice';
 
 const reducers = combineReducers({
   display: displayReducer,
@@ -19,6 +20,7 @@ const reducers = combineReducers({
   skins: skinsReducer,
   colors: colorsReducer,
   challenges: challengesReducer,
+  characters: charactersReducer,
 });
 
 const migrations = {
